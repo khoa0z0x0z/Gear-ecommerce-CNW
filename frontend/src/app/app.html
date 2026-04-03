@@ -1,0 +1,168 @@
+<div class="topbar">
+  Ho Chi Minh City University of Education
+</div>
+
+<header class="header">
+  <div class="logo">KAT</div>
+
+  <nav class="nav">
+    <a href="#">Home</a>
+    <a href="#">Contact</a>
+    <a href="#">About</a>
+    <a href="#">Sign Up</a>
+  </nav>
+
+  <div class="search-box">
+    <input type="text" placeholder="What are you looking for?" />
+  </div>
+</header>
+
+<section class="hero">
+  <aside class="sidebar">
+    <ul>
+      <li>Laptops & PC</li>
+      <li>Smartphones</li>
+      <li>Tablets & iPods</li>
+      <li>Audio & Headphones</li>
+      <li>Cameras & Photography</li>
+      <li>Smart Watches</li>
+      <li>Gaming Gear</li>
+      <li>Accessories</li>
+      <li>Monitors & TV</li>
+    </ul>
+  </aside>
+
+  <div class="hero-banner">
+    <div class="hero-content">
+      <p>iPhone 16 Pro Max</p>
+      <h1>Experience the Future Today.</h1>
+      <button>Buy Now</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-tag">Categories</div>
+  <h2>Browse By Category</h2>
+
+  <div class="category-grid">
+    <div class="category-card" *ngFor="let item of categories">
+      <div class="icon">{{ item.icon }}</div>
+      <p>{{ item.name }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">This Month</div>
+      <h2>Best Selling Products</h2>
+    </div>
+    <button class="view-all">View All</button>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of bestSellingProducts">
+      <img [src]="product.image" />
+      <h3>{{ product.name }}</h3>
+      <div class="price">
+        <span class="new-price">${{ product.price }}</span>
+        <span class="old-price" *ngIf="product.oldPrice > 0">
+          ${{ product.oldPrice }}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="promo-banner">
+  <div class="promo-text">
+    <p>Music</p>
+    <h2>Party On The Go</h2>
+    <button>Buy Now</button>
+  </div>
+</section>
+
+<div class="center-button">
+  <button class="view-all">View All Products</button>
+</div>
+
+<section class="section">
+  <div class="section-tag">Our Products</div>
+  <h2>Explore Our Products</h2>
+
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of exploreProducts">
+      <img [src]="product.image" />
+      <h3>{{ product.name }}</h3>
+      <div class="price">
+        <span class="new-price">${{ product.price }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-tag">Featured</div>
+  <h2>New Arrival</h2>
+
+  <div class="arrival-layout">
+    <div class="arrival-left">
+      PlayStation 5
+    </div>
+
+    <div class="arrival-right">
+      <div class="small-card">Gaming Laptop</div>
+
+      <div class="small-row">
+        <div class="small-card">Speakers</div>
+        <div class="small-card">Smart Watch</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature-item">
+    <h4>FAST & SECURE DELIVERY</h4>
+    <p>Free shipping for all orders over $100</p>
+  </div>
+
+  <div class="feature-item">
+    <h4>24/7 TECH SUPPORT</h4>
+    <p>Expert help for setup & troubleshooting</p>
+  </div>
+
+  <div class="feature-item">
+    <h4>OFFICIAL WARRANTY</h4>
+    <p>100% authentic & 12-month warranty</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-col">
+    <h4>Support</h4>
+    <p>280 An Duong Vuong Street</p>
+    <p>District 5, Ho Chi Minh City</p>
+    <p>Vietnam</p>
+    <p>kat@gmail.com</p>
+  </div>
+
+  <div class="footer-col">
+    <h4>Account</h4>
+    <p>My Account</p>
+    <p>Login / Register</p>
+    <p>Cart</p>
+    <p>Wishlist</p>
+    <p>Shop</p>
+  </div>
+
+  <div class="footer-col">
+    <h4>Quick Link</h4>
+    <p>Privacy Policy</p>
+    <p>Terms Of Use</p>
+    <p>FAQ</p>
+    <p>Contact</p>
+  </div>
+</footer>

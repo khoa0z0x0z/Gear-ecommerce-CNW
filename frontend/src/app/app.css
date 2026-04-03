@@ -1,0 +1,292 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.topbar {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #222;
+}
+
+.search-box input {
+  padding: 10px 14px;
+  width: 260px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.hero {
+  display: flex;
+  padding: 20px 40px;
+  gap: 20px;
+  background: #fff;
+}
+
+.sidebar {
+  width: 240px;
+  border-right: 1px solid #ddd;
+  padding-right: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 10px 0;
+  color: #333;
+}
+
+.hero-banner {
+  flex: 1;
+  min-height: 320px;
+  background: linear-gradient(to right, #000, #222);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  border-radius: 6px;
+}
+
+.hero-content h1 {
+  font-size: 42px;
+  margin: 16px 0;
+  max-width: 450px;
+}
+
+.hero-content button,
+.view-all {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.section {
+  padding: 50px 40px;
+}
+
+.section-tag {
+  color: #2196f3;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.section h2 {
+  font-size: 34px;
+  margin-bottom: 30px;
+  color: #222;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+}
+
+.category-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 28px 10px;
+  border-radius: 6px;
+}
+
+.category-card .icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 18px;
+  border: 1px solid #e0e0e0;
+}
+
+.product-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  margin-bottom: 14px;
+  border-radius: 4px;
+}
+
+.product-card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
+
+.price {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.new-price {
+  color: #2196f3;
+  font-weight: bold;
+}
+
+.old-price {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.promo-banner {
+  margin: 20px 40px;
+  min-height: 280px;
+  background: linear-gradient(to right, #000, #222);
+  color: #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+}
+
+.promo-banner h2 {
+  font-size: 42px;
+  margin: 10px 0 20px;
+}
+
+.center-button {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.arrival-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.arrival-left,
+.small-card {
+  background: #111;
+  color: white;
+  min-height: 220px;
+  display: flex;
+  align-items: end;
+  padding: 20px;
+  border-radius: 6px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.small-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 40px;
+  text-align: center;
+  background: #fff;
+}
+
+.feature-item {
+  padding: 20px;
+}
+
+.footer {
+  background: #000;
+  color: #fff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 50px 40px;
+}
+
+.footer-col h4 {
+  margin-bottom: 14px;
+}
+
+.footer-col p {
+  margin-bottom: 8px;
+  color: #ccc;
+}
+
+@media (max-width: 992px) {
+  .header,
+  .hero,
+  .section,
+  .features,
+  .footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .category-grid,
+  .product-grid,
+  .features,
+  .footer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+  }
+
+  .arrival-layout {
+    grid-template-columns: 1fr;
+  }
+}
