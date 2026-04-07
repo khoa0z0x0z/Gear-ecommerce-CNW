@@ -1,0 +1,140 @@
+/* =========================================
+   1. KHUNG HEADER CƠ BẢN
+   ========================================= */
+.main-header {
+  display: flex;
+  justify-content: space-between; /* Đẩy 3 cụm Logo - Nav - Search ra xa nhau */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  padding: 20px 0;
+  border-bottom: 1px solid #eaeaea; /* Đường gạch mờ ở dưới */
+  max-width: 1220px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Chữ KAT */
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #111;
+}
+
+/* =========================================
+   2. KHU VỰC LINK ĐIỀU HƯỚNG (Home, Contact...)
+   ========================================= */
+.nav-links {
+  display: flex;
+  gap: 32px; /* Khoảng cách giữa các chữ */
+}
+
+.nav-links a {
+  text-decoration: none; /* Xóa gạch chân xấu xí */
+  color: #111;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  text-decoration: underline; /* Hover vào thì có gạch chân nhẹ */
+}
+
+/* =========================================
+   3. KHU VỰC TÌM KIẾM & NÚT BẤM (Bên phải)
+   ========================================= */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Ô Search */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  width: 200px;
+}
+
+.search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* =========================================
+   4. KHU VỰC AVATAR & DROPDOWN (Code nãy)
+   ========================================= */
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  text-decoration: none; /* Tránh bị gạch chân giỏ hàng */
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-btn {
+  background: #db4444; /* Màu đỏ nổi bật cho avatar */
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* Menu đen lơ lửng */
+.dropdown-menu {
+  position: absolute;
+  top: 150%;
+  right: 0;
+  width: 220px;
+  background: linear-gradient(180deg, #444 0%, #111 100%);
+  border-radius: 8px;
+  padding: 10px 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  text-decoration: none; /* Hover trong menu thì không gạch chân */
+}
