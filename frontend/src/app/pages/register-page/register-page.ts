@@ -1,38 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-page',
-  imports: [CommonModule, FormsModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register-page.html',
   styleUrl: './register-page.css'
 })
-export class RegisterPage {
-  name: string = '';
-  emailOrPhone: string = '';
-  password: string = '';
+export class RegisterPage implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
+  registerForm!: FormGroup;
+  errorMessage: string | null = null;
+  loading: boolean = false;
+
+  ngOnInit() {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   createAccount() {
-    // 1. Kiểm tra rỗng
-    if (!this.name || !this.emailOrPhone || !this.password) {
-      alert('Vui lòng điền đầy đủ thông tin vào các trường bắt buộc (*) nhé!');
-      return;
-    }
-    
-    // 2. Kiểm tra độ dài mật khẩu
-    if (this.password.length < 6) {
-      alert('Mật khẩu phải có ít nhất 6 ký tự để đảm bảo an toàn cho tài khoản của bạn.');
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
       return;
     }
 
-    // 3. Đăng ký thành công
-    alert('🎉 Chúc mừng ' + this.name + '! Đăng ký tài khoản thành công.');
-    
-    // 4. Xóa trắng form sau khi đăng ký
-    this.name = '';
-    this.emailOrPhone = '';
-    this.password = '';
+    this.loading = true;
+    this.errorMessage = null;
+
+    const { name, email, password } = this.registerForm.value;
+
+    this.authService.register({ name, email, password }).subscribe({
+      next: (res) => {
+        alert('🎉 Chúc mừng ' + name + '! Đăng ký tài khoản thành công.');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = err.error?.message || 'Đăng ký thất bại. Email có thể đã tồn tại!';
+      }
+    });
+  }
+
+  isInvalid(controlName: string) {
+    const control = this.registerForm.get(controlName);
+    return control && control.invalid && (control.dirty || control.touched);
   }
 }

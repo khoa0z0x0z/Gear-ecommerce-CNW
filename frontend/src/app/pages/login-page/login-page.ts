@@ -1,35 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css'
 })
-export class LoginPage {
-  emailOrPhone = '';
-  password = '';
+export class LoginPage implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
-  constructor(private router: Router) {}
+  loginForm!: FormGroup;
+  errorMessage: string | null = null;
+
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   handleLogin() {
-    if (!this.emailOrPhone || !this.password) {
-      alert('Vui lòng nhập đầy đủ Email/Số điện thoại và Mật khẩu!');
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
       return;
     }
 
-    alert('🎉 Đăng nhập thành công! Chào mừng bạn quay lại hệ thống.');
-    
-    localStorage.setItem('isLoggedIn', 'true');
-    
-    this.router.navigate(['/']); 
+    const { email, password } = this.loginForm.value;
+    this.errorMessage = null;
+
+    this.authService.login({ email, password }).subscribe({
+      next: (res) => {
+        alert('🎉 Đăng nhập thành công! Chào mừng bạn quay lại hệ thống.');
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Email hoặc mật khẩu không đúng!';
+      }
+    });
   }
 
-  forgotPassword() {
-    alert('Hệ thống đang bảo trì chức năng Quên mật khẩu. Vui lòng quay lại sau!');
+  isInvalid(controlName: string) {
+    const control = this.loginForm.get(controlName);
+    return control && control.invalid && (control.dirty || control.touched);
   }
 }

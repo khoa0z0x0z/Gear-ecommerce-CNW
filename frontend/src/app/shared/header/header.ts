@@ -1,32 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-header', // Giữ nguyên tên selector cũ của bạn nếu nó khác nha
+  selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-  // Biến dùng để bật/tắt cái menu xổ xuống
+  private cartService = inject(CartService);
+  private authService = inject(AuthService);
+
+  isLoggedIn = this.authService.isLoggedIn;
+  cartCount = this.cartService.totalCount;
+  
   showDropdown = false;
 
-  // Tự động kiểm tra xem đã đăng nhập chưa
-  get isLoggedIn() {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  }
-
-  // Bấm vào avatar thì Mở/Đóng menu
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
 
-  // Hàm Đăng xuất
   logout() {
-    localStorage.removeItem('isLoggedIn'); // Vứt thẻ VIP đi
-    this.showDropdown = false; // Đóng menu lại
-    alert('Bạn đã đăng xuất thành công!');
+    this.authService.logout();
+    this.showDropdown = false;
   }
 }

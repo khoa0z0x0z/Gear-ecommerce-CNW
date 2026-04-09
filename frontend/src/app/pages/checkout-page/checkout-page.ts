@@ -1,57 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-checkout-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './checkout-page.html',
   styleUrl: './checkout-page.css'
 })
 export class CheckoutPage implements OnInit {
-  constructor(private router: Router) {}
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private cartService = inject(CartService);
 
-  firstName: string = '';
-  companyName: string = '';
-  streetAddress: string = '';
-  apartment: string = '';
-  townCity: string = '';
-  phoneNumber: string = '';
-  emailAddress: string = '';
-  paymentMethod: string = 'cash';
+  // States
+  cartItems = this.cartService.cartItems;
+  totalPrice = this.cartService.totalPrice;
+  checkoutForm!: FormGroup;
 
-  orderItems: any[] = [];
-
-  // Tự động load dữ liệu từ tủ đồ
   ngOnInit() {
-    const savedCart = localStorage.getItem('kat_cart');
-    if (savedCart) {
-      let items = JSON.parse(savedCart);
-      this.orderItems = items.map((i: any) => ({
-        name: i.name,
-        price: i.price,
-        quantity: i.quantity,
-        image: i.icon
-      }));
-    }
-  }
-
-  getSubtotal() {
-    return this.orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    this.checkoutForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      companyName: [''],
+      streetAddress: ['', Validators.required],
+      apartment: [''],
+      townCity: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      paymentMethod: ['cash', Validators.required],
+      saveInfo: [false]
+    });
   }
 
   placeOrder() {
-    if (!this.firstName || !this.streetAddress || !this.townCity || !this.phoneNumber || !this.emailAddress) {
-      alert('Vui lòng điền đầy đủ các thông tin có dấu (*) để KAT Store giao hàng chính xác cho bạn nhé!');
+    if (this.checkoutForm.invalid) {
+      this.checkoutForm.markAllAsTouched();
+      alert('Vui lòng điền đầy đủ và đúng định dạng các thông tin có dấu (*) để KAT Store giao hàng chính xác cho bạn nhé!');
       return;
     }
 
+    if (this.cartItems().length === 0) {
+      alert('Giỏ hàng trống! Vui lòng chọn sản phẩm trước khi thanh toán.');
+      this.router.navigate(['/']);
+      return;
+    }
+
+    const orderData = this.checkoutForm.value;
+    console.log('Order Placement:', orderData, this.cartItems());
+
     alert('🎉 Đặt hàng thành công! Mã đơn hàng của bạn là #KAT' + Math.floor(Math.random() * 10000));
     
-    // Đặt xong thì dọn sạch tủ đồ
-    localStorage.removeItem('kat_cart');
+    // Clear cart
+    this.cartService.clearCart();
     this.router.navigate(['/']);
+  }
+
+  // Helper for validation display
+  isInvalid(controlName: string) {
+    const control = this.checkoutForm.get(controlName);
+    return control && control.invalid && (control.dirty || control.touched);
   }
 }
