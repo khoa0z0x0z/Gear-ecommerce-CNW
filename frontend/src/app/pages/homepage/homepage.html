@@ -1,0 +1,232 @@
+<section class="homepage">
+  <section class="hero-section">
+    <div class="hero-left">
+      <ul class="category-menu">
+        <li *ngFor="let item of heroCategories">{{ item }}</li>
+      </ul>
+    </div>
+
+    <div class="hero-right">
+      <div class="slide" *ngFor="let b of banners; let i = index" [class.active]="i === currentSlideIndex">
+        <div class="hero-banner-content">
+          <div class="hero-brand-row">
+            <span class="hero-apple"></span>
+            <span>{{ b.tag }}</span>
+          </div>
+
+          <h1>{{ b.title }}</h1>
+
+          <a href="#">{{ b.btnText }} <span>→</span></a>
+        </div>
+
+        <div class="hero-phone-visual">
+          <div class="phone-large"></div>
+          <div class="phone-small"></div>
+        </div>
+      </div>
+
+      <div class="hero-dots">
+        <span *ngFor="let b of banners; let i = index" 
+              [class.active]="i === currentSlideIndex" 
+              (click)="goToSlide(i)">
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="category-section">
+    <div class="section-kicker">
+      <span class="kicker-bar"></span>
+      <span class="section-tag">Categories</span>
+    </div>
+
+    <div class="section-header-row">
+      <h2>Browse By Category</h2>
+
+      <div class="round-arrows">
+        <button>←</button>
+        <button>→</button>
+      </div>
+    </div>
+
+    <div class="category-grid">
+      <div
+        class="category-box"
+        *ngFor="let category of browseCategories"
+      >
+        <div class="category-icon">{{ category.icon }}</div>
+        <div class="category-name">{{ category.name }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="best-selling-section">
+    <div class="section-kicker">
+      <span class="kicker-bar"></span>
+      <span class="section-tag">This Month</span>
+    </div>
+
+    <div class="section-header-row">
+      <h2>Best Selling Products</h2>
+      <button class="view-all-btn" routerLink="/products">View All</button>
+    </div>
+
+    <div class="product-grid four-cols">
+      <div
+        class="product-card"
+        *ngFor="let product of bestSellingProducts; let i = index"
+        [routerLink]="['/products', i + 1]"
+      >
+        <div class="product-image-box">
+          <div class="product-actions">
+            <span>♡</span>
+            <span>👁</span>
+          </div>
+
+          <div class="product-badge">{{ product.badge }}</div>
+        </div>
+
+        <h4>{{ product.name }}</h4>
+
+        <p class="price-row">
+          <span class="new-price">{{ product.price }}</span>
+          <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}</span>
+        </p>
+
+        <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo-banner-section">
+    <div class="promo-content">
+      <p class="promo-small">Music</p>
+      <h2>Party On The Go</h2>
+
+      <div class="countdown-row">
+        <div class="countdown-circle">05 <span>Days</span></div>
+        <div class="countdown-circle">23 <span>Hours</span></div>
+        <div class="countdown-circle">59 <span>Minutes</span></div>
+        <div class="countdown-circle">35 <span>Seconds</span></div>
+      </div>
+
+      <button class="buy-now-btn">Buy Now!</button>
+    </div>
+
+    <div class="promo-speaker-wrap">
+      <div class="promo-speaker-shadow"></div>
+      <div class="promo-speaker">
+        <div class="speaker-logo">JBL</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="center-btn">
+    <button class="view-all-btn" routerLink="/products">View All Products</button>
+  </div>
+
+  <section class="explore-section">
+    <div class="section-kicker">
+      <span class="kicker-bar"></span>
+      <span class="section-tag">Our Products</span>
+    </div>
+
+    <div class="section-header-row">
+      <h2>Explore Our Products</h2>
+
+      <div class="round-arrows">
+        <button>←</button>
+        <button>→</button>
+      </div>
+    </div>
+
+    <div class="product-grid four-cols explore-grid">
+      <div 
+        class="product-card" 
+        *ngFor="let product of exploreProducts; let i = index"
+        [routerLink]="['/products', i + 1]"
+      >
+        <div class="product-image-box">
+          <div class="product-actions">
+            <span>♡</span>
+            <span>👁</span>
+          </div>
+
+          <div class="sale-badge" *ngIf="product.name === 'Drone' || product.name === 'GP11 Shooter USB Gamepad'">
+            NEW
+          </div>
+
+          <div class="product-badge">{{ product.badge }}</div>
+        </div>
+
+        <h4>{{ product.name }}</h4>
+
+        <p class="price-row">
+          <span class="new-price">{{ product.price }}</span>
+        </p>
+
+        <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="new-arrival-section">
+    <div class="section-kicker">
+      <span class="kicker-bar"></span>
+      <span class="section-tag">Featured</span>
+    </div>
+
+    <h2>New Arrival</h2>
+
+    <div class="arrival-grid">
+      <div class="arrival-left">
+        <div class="arrival-content">
+          <h3>PlayStation 5</h3>
+          <p>Next-gen gaming with ultra-high speed SSD and ray tracing.</p>
+          <a href="#">Shop Now</a>
+        </div>
+        <div class="arrival-ps-shape"></div>
+      </div>
+
+      <div class="arrival-right">
+        <div class="arrival-top">
+          <div class="arrival-content">
+            <h3>Gaming Laptop</h3>
+            <p>Immerse yourself in a new world of entertainment.</p>
+            <a href="#">Shop Now</a>
+          </div>
+        </div>
+
+        <div class="arrival-bottom-row">
+          <div class="arrival-small speakers">
+            <div class="arrival-content">
+              <h3>Speakers</h3>
+              <p>Fill your room with high fidelity sound.</p>
+              <a href="#">Shop Now</a>
+            </div>
+          </div>
+
+          <div class="arrival-small watch">
+            <div class="arrival-content">
+              <h3>Smart Watch</h3>
+              <p>Health & connectivity on your wrist.</p>
+              <a href="#">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section">
+    <div class="service-grid">
+      <div class="service-item" *ngFor="let service of services">
+        <div class="service-icon-wrap">
+          <div class="service-icon">{{ service.icon }}</div>
+        </div>
+        <h4>{{ service.title }}</h4>
+        <p>{{ service.desc }}</p>
+      </div>
+    </div>
+  </section>
+</section>

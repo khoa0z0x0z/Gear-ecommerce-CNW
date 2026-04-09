@@ -1,0 +1,179 @@
+.about-page {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 40px 20px 100px;
+}
+
+.breadcrumb {
+  margin-bottom: 80px;
+  color: #888;
+  font-size: 14px;
+}
+
+.breadcrumb .active {
+  color: #111;
+}
+
+/* --- PHẦN STORY --- */
+.story-section {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 140px;
+}
+
+.story-text {
+  flex: 1;
+}
+
+.story-text h1 {
+  font-size: 54px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.story-text p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #000;
+}
+
+.story-image {
+  flex: 1;
+}
+
+.image-box {
+  width: 100%;
+}
+
+.placeholder-img {
+  width: 100%;
+  height: 500px;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  border-radius: 4px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* --- PHẦN STATS --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 140px;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  background: #2f95f5;
+  border-color: #2f95f5;
+  color: #fff;
+  transform: translateY(-5px);
+}
+
+.stat-card .icon-wrap {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* --- PHẦN SERVICES --- */
+.services-grid {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.service-item {
+  max-width: 260px;
+}
+
+.service-icon-wrap {
+  width: 80px;
+  height: 80px;
+  background-color: #c2c2c2;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon {
+  width: 58px;
+  height: 58px;
+  background-color: #2f95f5;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 0 0 2px white;
+}
+
+.service-item h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.service-item p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .story-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  .story-text h1 {
+    font-size: 40px;
+    margin-bottom: 24px;
+  }
+
+  .placeholder-img {
+    height: 320px;
+    font-size: 28px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 80px;
+  }
+
+  .services-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+}

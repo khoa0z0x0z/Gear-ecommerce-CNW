@@ -1,0 +1,41 @@
+<section class="login-page">
+  <div class="login-wrapper">
+    <div class="login-left">
+      <div class="login-image-placeholder">
+        <div class="screen-card one"></div>
+        <div class="screen-card two"></div>
+        <div class="screen-card three"></div>
+      </div>
+    </div>
+
+    <div class="login-right">
+      <h1>Log in to Exclusive</h1>
+      <p class="login-subtitle">Enter your details below</p>
+
+      <form class="login-form">
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Email or Phone Number *"
+            [(ngModel)]="emailOrPhone"
+            name="emailOrPhone"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            placeholder="Password *"
+            [(ngModel)]="password"
+            name="password"
+          />
+        </div>
+
+        <div class="login-actions">
+          <button type="button" class="login-btn" (click)="handleLogin()">Log In</button>
+          <a (click)="forgotPassword()" class="forgot-link" style="cursor: pointer;">Forget Password?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

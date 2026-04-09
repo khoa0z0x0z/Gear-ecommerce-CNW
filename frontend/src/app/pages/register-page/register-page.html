@@ -1,0 +1,58 @@
+<section class="register-page">
+  <div class="register-wrapper">
+
+    <div class="register-left">
+      <div class="register-image-placeholder">
+        <div class="screen-card one"></div>
+        <div class="screen-card two"></div>
+        <div class="screen-card three"></div>
+      </div>
+    </div>
+
+    <div class="register-right">
+      <h1>Create an account</h1>
+      <p class="register-subtitle">Enter your details below</p>
+
+      <form class="register-form">
+
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Name *"
+            [(ngModel)]="name"
+            name="name"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Email or Phone Number *"
+            [(ngModel)]="emailOrPhone"
+            name="emailOrPhone"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            placeholder="Password *"
+            [(ngModel)]="password"
+            name="password"
+          />
+        </div>
+
+        <button type="button" class="register-btn" (click)="createAccount()">
+          Create Account
+        </button>
+
+        <div class="login-link-row">
+          <span>Already have account?</span>
+          <a routerLink="/login">Log in</a>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>
