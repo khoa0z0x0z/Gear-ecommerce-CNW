@@ -26,9 +26,10 @@
       </div>
 
       <div class="hero-dots">
-        <span *ngFor="let b of banners; let i = index" 
-              [class.active]="i === currentSlideIndex" 
-              (click)="goToSlide(i)">
+        <span
+          *ngFor="let b of banners; let i = index"
+          [class.active]="i === currentSlideIndex"
+          (click)="goToSlide(i)">
         </span>
       </div>
     </div>
@@ -50,10 +51,7 @@
     </div>
 
     <div class="category-grid">
-      <div
-        class="category-box"
-        *ngFor="let category of browseCategories"
-      >
+      <div class="category-box" *ngFor="let category of browseCategories">
         <div class="category-icon">{{ category.icon }}</div>
         <div class="category-name">{{ category.name }}</div>
       </div>
@@ -83,7 +81,9 @@
             <span>👁</span>
           </div>
 
-          <div class="product-badge">{{ product.badge }}</div>
+          <div class="product-badge">
+            <img [src]="product.image" [alt]="product.name">
+          </div>
         </div>
 
         <h4>{{ product.name }}</h4>
@@ -141,8 +141,8 @@
     </div>
 
     <div class="product-grid four-cols explore-grid">
-      <div 
-        class="product-card" 
+      <div
+        class="product-card"
         *ngFor="let product of exploreProducts; let i = index"
         [routerLink]="['/products', i + 1]"
       >
@@ -156,7 +156,9 @@
             NEW
           </div>
 
-          <div class="product-badge">{{ product.badge }}</div>
+          <div class="product-badge">
+            <img [src]="product.image" [alt]="product.name">
+          </div>
         </div>
 
         <h4>{{ product.name }}</h4>

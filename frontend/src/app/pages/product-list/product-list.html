@@ -15,7 +15,10 @@
           <span>♡</span>
           <span>👁</span>
         </div>
-        <div class="product-badge">{{ product.badge }}</div>
+
+        <div class="product-badge">
+          <img [src]="product.image" [alt]="product.name">
+        </div>
       </div>
 
       <h4>{{ product.name }}</h4>

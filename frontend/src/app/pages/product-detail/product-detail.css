@@ -43,9 +43,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 42px;
   cursor: pointer;
   transition: 0.2s;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .thumb-box.active {
@@ -61,10 +68,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 30px;
 }
 
-.main-product-icon {
-  font-size: 180px;
+.main-product-image {
+  width: 80%;
+  max-width: 360px;
+  object-fit: contain;
 }
 
 .detail-info h1 {
@@ -290,8 +300,18 @@
 }
 
 .related-icon {
-  font-size: 90px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: 0.2s;
+}
+
+.related-icon img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
 }
 
 .sale-badge {

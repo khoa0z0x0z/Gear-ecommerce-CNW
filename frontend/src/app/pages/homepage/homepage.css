@@ -93,6 +93,12 @@
   background: #fff;
   padding: 24px;
   border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.hero-left:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
 }
 
 .category-menu {
@@ -102,10 +108,21 @@
 }
 
 .category-menu li {
-  padding: 12px 0;
+  padding: 14px 16px;
   border-bottom: 1px solid #ececec;
   font-size: 15px;
   color: #222;
+  cursor: pointer;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.category-menu li:hover {
+  background: #f3f8ff;
+  color: #2f95f5;
+  border-left: 3px solid #2f95f5;
+  padding-left: 24px;
 }
 
 .category-menu li:last-child {
@@ -310,8 +327,17 @@
 }
 
 .product-badge {
-  font-size: 74px;
-  line-height: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-badge img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
 }
 
 .product-actions {
