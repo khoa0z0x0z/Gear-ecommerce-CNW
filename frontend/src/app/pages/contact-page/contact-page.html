@@ -1,0 +1,44 @@
+<section class="contact-page">
+  <div class="breadcrumb">
+    <span>Home</span> / <strong>Contact</strong>
+  </div>
+
+  <div class="contact-container">
+    <div class="contact-info-card">
+      <div class="info-block">
+        <div class="icon-title">
+          <span class="icon phone-icon">📞</span>
+          <h3>Call To Us</h3>
+        </div>
+        <p>We are available 24/7, 7 days a week.</p>
+        <p>Phone: 028 3835 2020</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="info-block">
+        <div class="icon-title">
+          <span class="icon mail-icon">✉️</span>
+          <h3>Write To US</h3>
+        </div>
+        <p>Fill out our form and we will contact you within 24 hours.</p>
+        <p>Emails: customer@exclusive.com</p>
+        <p>Emails: support@exclusive.com</p>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <div class="form-row">
+        <input type="text" placeholder="Your Name *" class="input-field" [(ngModel)]="userName">
+        <input type="email" placeholder="Your Email *" class="input-field" [(ngModel)]="userEmail">
+        <input type="tel" placeholder="Your Phone *" class="input-field" [(ngModel)]="userPhone">
+      </div>
+      
+      <textarea placeholder="Your Message" class="textarea-field"></textarea>
+      
+      <div class="submit-row">
+        <button class="send-btn" (click)="sendMessage()">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>

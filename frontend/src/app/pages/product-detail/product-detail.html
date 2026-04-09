@@ -1,0 +1,119 @@
+<section class="product-detail-page">
+  <div class="breadcrumb">
+    <span>Account</span>
+    <span>/</span>
+    <span>Gaming</span>
+    <span>/</span>
+    <span class="active">Gaming Keyboards</span>
+  </div>
+
+  <div class="detail-main">
+    <div class="detail-gallery">
+      <div class="thumb-list">
+        <button
+          class="thumb-box"
+          *ngFor="let item of thumbnails"
+          [class.active]="selectedImage.icon === item.icon"
+          (click)="selectImage(item)"
+          type="button"
+        >
+          {{ item.icon }}
+        </button>
+      </div>
+
+      <div class="main-image-box">
+        <div class="main-product-icon">{{ selectedImage.icon }}</div>
+      </div>
+    </div>
+
+    <div class="detail-info">
+      <h1>RedThunder K10 Wired Gaming Keyboard and Mouse</h1>
+
+      <div class="rating-stock-row">
+        <span class="stars">★★★★★</span>
+        <span class="review-text">(150 Reviews)</span>
+        <span class="divider">|</span>
+        <span class="stock-text">In Stock</span>
+      </div>
+
+      <p class="price">$192.00</p>
+
+      <p class="description">
+        RedThunder K10 Wired Gaming Keyboard and Mouse and Wrist Rest Combo,
+        RGB Backlit, Mechanical Feel Anti-ghosting Keyboard + 7D 7200 DPI
+        Mega-soft Leather Wrist Rest 3 in 1 PC Gamer Accessories(Pink)
+      </p>
+
+      <div class="line"></div>
+
+      <div class="color-row">
+        <span class="label">Colours:</span>
+        <div class="color-dot pink"></div>
+        <div class="color-dot black active"></div>
+      </div>
+
+      <div class="buy-row">
+        <div class="qty-box">
+          <button type="button" (click)="decreaseQty()">-</button>
+          <span>{{ quantity }}</span>
+          <button type="button" class="plus" (click)="increaseQty()">+</button>
+        </div>
+
+        <button class="buy-btn" type="button" (click)="buyNow()">Buy Now</button>
+
+        <button class="wishlist-btn" type="button">♡</button>
+      </div>
+
+      <div class="delivery-box">
+        <div class="delivery-item">
+          <div class="delivery-icon">🚚</div>
+          <div>
+            <h4>Free Delivery</h4>
+            <p>Enter your postal code for Delivery Availability</p>
+          </div>
+        </div>
+
+        <div class="delivery-item">
+          <div class="delivery-icon">↩️</div>
+          <div>
+            <h4>Return Delivery</h4>
+            <p>Free 30 Days Delivery Returns. Details</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="related-section">
+    <div class="section-kicker">
+      <span class="kicker-bar"></span>
+      <span class="section-tag">Related Item</span>
+    </div>
+
+    <div class="related-grid">
+      <div class="related-card" *ngFor="let product of relatedProducts">
+        <div class="related-image-box">
+          <span class="sale-badge" *ngIf="product.badge">{{ product.badge }}</span>
+
+          <div class="card-actions">
+            <span>♡</span>
+            <span>👁</span>
+          </div>
+
+          <div class="related-icon">{{ product.icon }}</div>
+
+          <button class="hover-add-cart-btn" type="button">Add To Cart</button>
+        </div>
+
+        <h4>{{ product.name }}</h4>
+
+        <p class="price-row">
+          <span class="new-price">{{ product.price }}</span>
+          <span class="old-price">{{ product.oldPrice }}</span>
+        </p>
+
+        <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+      </div>
+    </div>
+  </section>
+</section>

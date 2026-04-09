@@ -1,0 +1,42 @@
+<section class="about-page">
+  <div class="breadcrumb">
+    <span>Home</span> / <span class="active">About</span>
+  </div>
+
+  <div class="story-section">
+    <div class="story-text">
+      <h1>KAT's Shop</h1>
+      <p>
+        <strong>KAT's Shop – Nâng tầm trải nghiệm số của bạn.</strong>
+        Chuyên cung cấp thiết bị điện tử chính hãng với chính sách bảo hành uy tín
+        và dịch vụ khách hàng chuyên nghiệp. Chúng tôi cam kết mang lại những giá
+        trị thực thông qua những sản phẩm công nghệ chất lượng cao, giúp cuộc sống
+        và công việc của bạn trở nên đơn giản, hiệu quả hơn.
+      </p>
+    </div>
+
+    <div class="story-image">
+      <div class="image-box">
+        <div class="placeholder-img">KAT ELECTRONICS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let item of stats">
+      <div class="icon-wrap">{{ item.icon }}</div>
+      <h3>{{ item.value }}</h3>
+      <p>{{ item.label }}</p>
+    </div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-item" *ngFor="let s of services">
+      <div class="service-icon-wrap">
+        <div class="service-icon">{{ s.icon }}</div>
+      </div>
+      <h4>{{ s.title }}</h4>
+      <p>{{ s.desc }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+<section class="product-list-page">
+  <div class="page-header">
+    <h2>All Products</h2>
+    <p>Explore our complete collection of premium tech gear.</p>
+  </div>
+
+  <div class="product-grid four-cols">
+    <div
+      class="product-card"
+      *ngFor="let product of allProducts; let i = index"
+      [routerLink]="['/products', i + 1]"
+    >
+      <div class="product-image-box">
+        <div class="product-actions">
+          <span>♡</span>
+          <span>👁</span>
+        </div>
+        <div class="product-badge">{{ product.badge }}</div>
+      </div>
+
+      <h4>{{ product.name }}</h4>
+
+      <p class="price-row">
+        <span class="new-price">{{ product.price }}</span>
+        <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}</span>
+      </p>
+
+      <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+    </div>
+  </div>
+</section>

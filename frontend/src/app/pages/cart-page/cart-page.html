@@ -1,0 +1,74 @@
+<section class="cart-page">
+  <div class="breadcrumb">
+    <span>Home</span> / <span class="active">Cart</span>
+  </div>
+
+  <div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="cart-items-section">
+      <div class="cart-header">
+        <div class="col-product">Product</div>
+        <div class="col-price">Price</div>
+        <div class="col-qty">Quantity</div>
+        <div class="col-subtotal">Subtotal</div>
+      </div>
+
+      <div class="cart-item-row" *ngFor="let item of cartItems">
+        <div class="col-product">
+          <button class="remove-btn" (click)="removeItem(item.id)">×</button>
+          <div class="product-icon">{{ item.icon }}</div>
+          <span class="product-name">{{ item.name }}</span>
+        </div>
+        
+        <div class="col-price">${{ item.price }}</div>
+        
+        <div class="col-qty">
+          <div class="qty-control">
+            <button (click)="decreaseQty(item)">-</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="increaseQty(item)">+</button>
+          </div>
+        </div>
+        
+        <div class="col-subtotal">${{ item.price * item.quantity }}</div>
+      </div>
+
+      <div class="cart-actions">
+        <button class="outline-btn" routerLink="/">Return To Shop</button>
+        <button class="outline-btn">Update Cart</button>
+      </div>
+    </div>
+
+    <div class="cart-total-section">
+      <div class="coupon-box">
+        <input type="text" placeholder="Coupon Code">
+        <button class="apply-btn">Apply Coupon</button>
+      </div>
+
+      <div class="total-box">
+        <h3>Cart Total</h3>
+        <div class="total-row">
+          <span>Subtotal:</span>
+          <span>${{ getSubtotal() }}</span>
+        </div>
+        <div class="total-row line">
+          <span>Shipping:</span>
+          <span>Free</span>
+        </div>
+        <div class="total-row final-total">
+          <span>Total:</span>
+          <span>${{ getSubtotal() }}</span>
+        </div>
+        <button class="checkout-btn" (click)="checkout()">Proceed to checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-state">
+      <div class="empty-icon">🛒</div>
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven't added anything to your cart yet.</p>
+      <button class="checkout-btn" routerLink="/">Go back to shopping</button>
+    </div>
+  </ng-template>
+</section>
