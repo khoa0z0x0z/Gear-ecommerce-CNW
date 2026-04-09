@@ -13,16 +13,16 @@
         <button
           class="thumb-box"
           *ngFor="let item of thumbnails"
-          [class.active]="selectedImage.icon === item.icon"
+          [class.active]="selectedImage.image === item.image"
           (click)="selectImage(item)"
           type="button"
         >
-          {{ item.icon }}
+          <img [src]="item.image" alt="thumbnail">
         </button>
       </div>
 
       <div class="main-image-box">
-        <div class="main-product-icon">{{ selectedImage.icon }}</div>
+        <img [src]="selectedImage.image" alt="main product image" class="main-product-image">
       </div>
     </div>
 
@@ -100,7 +100,9 @@
             <span>👁</span>
           </div>
 
-          <div class="related-icon">{{ product.icon }}</div>
+          <div class="related-icon">
+            <img [src]="product.image" [alt]="product.name">
+          </div>
 
           <button class="hover-add-cart-btn" type="button">Add To Cart</button>
         </div>
