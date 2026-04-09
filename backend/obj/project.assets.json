@@ -89,11 +89,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\hcmue\\III\\II\\THNN\\gear-ecommerce\\backend\\backend.csproj",
+      "projectUniqueName": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "D:\\hcmue\\III\\II\\THNN\\gear-ecommerce\\backend\\backend.csproj",
+      "projectPath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\hcmue\\III\\II\\THNN\\gear-ecommerce\\backend\\obj\\",
+      "outputPath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
