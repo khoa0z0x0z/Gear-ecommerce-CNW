@@ -13,5 +13,7 @@ public class Category
     [MaxLength(500)]
     public string? Description { get; set; }
 
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

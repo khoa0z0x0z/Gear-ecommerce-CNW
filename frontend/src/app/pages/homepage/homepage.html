@@ -72,8 +72,8 @@
     <div class="product-grid four-cols">
       <div
         class="product-card"
-        *ngFor="let product of bestSellingProducts; let i = index"
-        [routerLink]="['/products', i + 1]"
+        *ngFor="let product of bestSellingProducts(); let i = index"
+        [routerLink]="['/products', product.id]"
       >
         <div class="product-image-box">
           <div class="product-actions">
@@ -96,8 +96,8 @@
         <h4>{{ product.name }}</h4>
 
         <p class="price-row">
-          <span class="new-price">{{ product.price }}</span>
-          <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}</span>
+          <span class="new-price">{{ product.price | number:'1.0-0' }} VNĐ</span>
+          <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice | number:'1.0-0' }} VNĐ</span>
         </p>
 
         <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
@@ -150,8 +150,8 @@
     <div class="product-grid four-cols explore-grid">
       <div
         class="product-card"
-        *ngFor="let product of exploreProducts; let i = index"
-        [routerLink]="['/products', i + 1]"
+        *ngFor="let product of exploreProducts(); let i = index"
+        [routerLink]="['/products', product.id]"
       >
         <div class="product-image-box">
           <div class="product-actions">
@@ -178,7 +178,7 @@
         <h4>{{ product.name }}</h4>
 
         <p class="price-row">
-          <span class="new-price">{{ product.price }}</span>
+          <span class="new-price">{{ product.price | number:'1.0-0' }} VNĐ</span>
         </p>
 
         <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>

@@ -4,9 +4,11 @@ export interface Product {
     description: string;
     price: number;
     oldPrice?: number;
-    image: string;
-    category: string;
-    rating: string;
+    image?: string;
+    imageUrls?: string[];
+    category?: string;
+    categoryName?: string;
+    rating?: string;
     isNew?: boolean;
 }
 

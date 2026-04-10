@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core'; 
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -39,7 +39,7 @@ export class RegisterPage implements OnInit {
 
     const { name, email, password } = this.registerForm.value;
 
-    this.authService.register({ name, email, password }).subscribe({
+    this.authService.register({ fullName: name, email, password }).subscribe({
       next: (res) => {
         alert('🎉 Chúc mừng ' + name + '! Đăng ký tài khoản thành công.');
         this.router.navigate(['/login']);

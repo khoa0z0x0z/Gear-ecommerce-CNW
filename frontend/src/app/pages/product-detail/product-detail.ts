@@ -1,7 +1,8 @@
-import { Component, OnInit, inject, signal } from '@angular/core'; 
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -15,38 +16,62 @@ export class ProductDetail implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cartService = inject(CartService);
+  private productService = inject(ProductService);
 
   // State
   product = signal<Product | null>(null);
   quantity = signal(1);
   selectedColor = signal('black');
+  thumbnails = signal<{ image: string }[]>([]);
+  selectedImage = signal<{ image: string }>({ image: '' });
 
-  thumbnails = [
-    { image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png' },
-    { image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png' },
-    { image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png' }
-  ];
-
-  selectedImage = signal(this.thumbnails[0]);
-
-  relatedProducts = [
-    { id: 101, name: 'HAVIT HV-G92 Gamepad', price: 120, oldPrice: 160, rating: '(88)', image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png' },
-    { id: 102, name: 'AK-900 Wired Keyboard', price: 960, oldPrice: 1160, rating: '(75)', image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png' }
-  ];
+  relatedProducts = signal<any[]>([]);
 
   ngOnInit() {
-    // Get ID from URL and load product
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    
-    // Mocking product load for now
-    this.product.set({
-      id: id || 1,
-      name: 'RedThunder K10 Wired Gaming Keyboard and Mouse',
-      price: 192,
-      description: 'RedThunder K10 Wired Gaming Keyboard and Mouse and Wrist Rest Combo, RGB Backlit, Mechanical Feel Anti-ghosting Keyboard.',
-      category: 'Gaming Gear',
-      rating: '(150 Reviews)',
-      image: this.thumbnails[0].image
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      if (id) {
+        this.loadProduct(id);
+      }
+    });
+  }
+
+  loadProduct(id: number) {
+    this.productService.getById(id).subscribe({
+      next: (p) => {
+        this.product.set(p);
+
+        // Map images
+        if (p.imageUrls && p.imageUrls.length > 0) {
+          const thumbs = p.imageUrls.map(url => ({ image: url }));
+          this.thumbnails.set(thumbs);
+          this.selectedImage.set(thumbs[0]);
+        } else {
+          const defaultImg = { image: 'https://via.placeholder.com/500' };
+          this.thumbnails.set([defaultImg]);
+          this.selectedImage.set(defaultImg);
+        }
+
+        // Mock related for now, or fetch by category
+        this.loadRelatedProducts(p.categoryName || '');
+      },
+      error: (err) => {
+        console.error('Error loading product:', err);
+      }
+    });
+  }
+
+  loadRelatedProducts(category: string) {
+    this.productService.getAll().subscribe(all => {
+      const related = all
+        .filter(p => p.categoryName === category && p.id !== this.product()?.id)
+        .slice(0, 4)
+        .map(p => ({
+          ...p,
+          image: p.imageUrls?.[0] || 'https://via.placeholder.com/300',
+          rating: '(88)'
+        }));
+      this.relatedProducts.set(related);
     });
   }
 

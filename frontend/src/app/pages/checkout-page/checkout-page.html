@@ -63,14 +63,14 @@
             </span>
             <span>{{ item.name }}</span>
           </div>
-          <div class="item-price">${{ item.price * item.quantity }}</div>
+          <div class="item-price">{{ (item.price * item.quantity) | number:'1.0-0' }} VNĐ</div>
         </div>
       </div>
 
       <div class="summary-totals">
         <div class="total-row">
           <span>Subtotal:</span>
-          <span>${{ totalPrice() }}</span>
+          <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
         </div>
         <div class="total-row line">
           <span>Shipping:</span>
@@ -78,7 +78,7 @@
         </div>
         <div class="total-row final">
           <span>Total:</span>
-          <span>${{ totalPrice() }}</span>
+          <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
         </div>
       </div>
 

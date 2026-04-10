@@ -10,7 +10,8 @@ public class MappingProfile : Profile
     {
         // User Mappings
         CreateMap<User, UserDto>();
-        CreateMap<UserRegisterDto, User>();
+        CreateMap<UserRegisterDto, User>()
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName));
 
         // Category Mappings
         CreateMap<Category, CategoryDto>().ReverseMap();

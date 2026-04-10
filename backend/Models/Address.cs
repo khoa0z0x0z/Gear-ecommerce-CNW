@@ -24,6 +24,8 @@ public class Address
 
     public bool IsDefault { get; set; } = false;
 
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
     [ForeignKey("UserId")]
     public virtual User? User { get; set; }
 }

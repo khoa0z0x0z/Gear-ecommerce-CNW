@@ -20,7 +20,7 @@ export class AboutPage {
     {
       icon: '🚚',
       title: 'FAST & SECURE DELIVERY',
-      desc: 'Free shipping for all orders over $100'
+      desc: 'Free shipping for all orders over 2.000.000 VNĐ'
     },
     {
       icon: '🎧',

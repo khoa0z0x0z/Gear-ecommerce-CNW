@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-homepage',
@@ -10,25 +11,15 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './homepage.css'
 })
 export class Homepage implements OnInit, OnDestroy {
+  private productService = inject(ProductService);
   private cartService = inject(CartService);
-  
+
+  bestSellingProducts = signal<any[]>([]);
+  exploreProducts = signal<any[]>([]);
+
   // Method to add items to cart from the homepage
   addToCart(product: any) {
-    // Basic mapping: handle price as number (remove $)
-    const priceNum = typeof product.price === 'string' 
-      ? parseFloat(product.price.replace('$', '')) 
-      : product.price;
-
-    this.cartService.addToCart({
-      id: Math.random(), // For mockup, real products will have IDs
-      name: product.name,
-      price: priceNum,
-      image: product.image,
-      description: 'Mock product description',
-      category: 'Electronics',
-      rating: product.rating
-    });
-    
+    this.cartService.addToCart(product);
     alert(`Added ${product.name} to cart!`);
   }
 
@@ -42,7 +33,7 @@ export class Homepage implements OnInit, OnDestroy {
       btnText: 'Buy Now →'
     },
     {
-      tag: 'MacBook Pro M3',
+      tag: 'MacBook Pro M3 Max',
       title: 'Power Meets \nPortability.',
       btnText: 'Shop Laptops →'
     },
@@ -55,6 +46,21 @@ export class Homepage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.startAutoPlay();
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService.getAll().subscribe({
+      next: (products) => {
+        const mapped = products.map(p => ({
+          ...p,
+          image: p.imageUrls && p.imageUrls.length > 0 ? p.imageUrls[0] : 'https://via.placeholder.com/300',
+          rating: '(65)' // Mock rating for now
+        }));
+        this.bestSellingProducts.set(mapped.slice(0, 4));
+        this.exploreProducts.set(mapped.slice(4, 12));
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -96,93 +102,11 @@ export class Homepage implements OnInit, OnDestroy {
     { icon: '🎮', name: 'Gaming' }
   ];
 
-  bestSellingProducts = [
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Laptop Lenovo Legion 7',
-    price: '$260',
-    oldPrice: '$360',
-    rating: '(65)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'iPad 11 inch 2025',
-    price: '$960',
-    oldPrice: '$1160',
-    rating: '(65)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'iPhone 16 Pro Max',
-    price: '$160',
-    oldPrice: '$170',
-    rating: '(65)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Galaxy Z Fold7',
-    price: '$360',
-    oldPrice: '',
-    rating: '(65)'
-  }
-];
-
-exploreProducts = [
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Wireless Earbuds',
-    price: '$100',
-    rating: '(35)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'CANON EOS DSLR Camera',
-    price: '$360',
-    rating: '(95)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'ASUS FHD Gaming Laptop',
-    price: '$700',
-    rating: '(325)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Power Bank',
-    price: '$500',
-    rating: '(145)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Drone',
-    price: '$980',
-    rating: '(65)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Mechanical Keyboard',
-    price: '$100',
-    rating: '(55)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'GP11 Shooter USB Gamepad',
-    price: '$60',
-    rating: '(65)'
-  },
-  {
-    image: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_744_1_47.png',
-    name: 'Gaming Mouse',
-    price: '$60',
-    rating: '(55)'
-  }
-];
-
   services = [
     {
       icon: '🚚',
       title: 'FAST & SECURE DELIVERY',
-      desc: 'Free shipping for all orders over $100'
+      desc: 'Free shipping for all orders over 2.000.000 VNĐ'
     },
     {
       icon: '🎧',

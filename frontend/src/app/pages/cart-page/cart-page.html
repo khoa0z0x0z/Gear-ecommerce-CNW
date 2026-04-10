@@ -21,7 +21,7 @@
         <span class="product-name">{{ item.name }}</span>
       </div>
 
-      <div class="col-price">${{ item.price }}</div>
+      <div class="col-price">{{ item.price | number:'1.0-0' }} VNĐ</div>
 
       <div class="col-qty">
         <div class="qty-control">
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="col-subtotal">${{ item.price * item.quantity }}</div>
+      <div class="col-subtotal">{{ (item.price * item.quantity) | number:'1.0-0' }} VNĐ</div>
     </div>
 
     <!-- NÚT RETURN SHOP -->
@@ -49,9 +49,9 @@
 
       <div class="total-box">
         <h3>Cart Total</h3>
-        <div class="total-row"><span>Subtotal:</span><span>${{ totalPrice() }}</span></div>
+        <div class="total-row"><span>Subtotal:</span><span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span></div>
         <div class="total-row"><span>Shipping:</span><span>Free</span></div>
-        <div class="total-row final-total line"><span>Total:</span><span>${{ totalPrice() }}</span></div>
+        <div class="total-row final-total line"><span>Total:</span><span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span></div>
         <button class="checkout-btn" (click)="checkout()">Process to checkout</button>
       </div>
     </div>

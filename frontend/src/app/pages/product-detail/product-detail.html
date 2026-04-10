@@ -12,7 +12,7 @@
       <div class="thumb-list">
         <button
           class="thumb-box"
-          *ngFor="let item of thumbnails"
+          *ngFor="let item of thumbnails()"
           [class.active]="selectedImage().image === item.image"
           (click)="selectImage(item)"
           type="button"
@@ -36,7 +36,7 @@
         <span class="stock-text">In Stock</span>
       </div>
 
-      <p class="price">${{ p.price }}.00</p>
+      <p class="price">{{ p.price | number:'1.0-0' }} VNĐ</p>
 
       <p class="description">
         {{ p.description }}
@@ -92,7 +92,7 @@
     </div>
 
     <div class="related-grid">
-      <div class="related-card" *ngFor="let rel of relatedProducts">
+      <div class="related-card" *ngFor="let rel of relatedProducts()">
         <div class="related-image-box">
           <div class="card-actions">
             <span>♡</span>
@@ -109,8 +109,8 @@
         <h4>{{ rel.name }}</h4>
 
         <p class="price-row">
-          <span class="new-price">${{ rel.price }}</span>
-          <span class="old-price" *ngIf="rel.oldPrice">${{ rel.oldPrice }}</span>
+          <span class="new-price">{{ rel.price | number:'1.0-0' }} VNĐ</span>
+          <span class="old-price" *ngIf="rel.oldPrice">{{ rel.oldPrice | number:'1.0-0' }} VNĐ</span>
         </p>
 
         <p class="rating-row">★★★★★ <span>{{ rel.rating }}</span></p>

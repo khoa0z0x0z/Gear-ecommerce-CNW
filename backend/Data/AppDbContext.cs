@@ -71,5 +71,52 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Wishlist>()
             .HasIndex(w => w.UserId)
             .IsUnique();
+
+        // Configure Default Values
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.Property(u => u.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(u => u.IsActive).HasDefaultValue(true);
+            entity.Property(u => u.Role).HasDefaultValue("Customer");
+        });
+
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.Property(c => c.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+        });
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.Property(p => p.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(p => p.UpdatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(p => p.IsActive).HasDefaultValue(true);
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.Property(o => o.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(o => o.Status).HasDefaultValue("Pending");
+        });
+
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.Property(p => p.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(p => p.Status).HasDefaultValue("Pending");
+        });
+
+        modelBuilder.Entity<Review>(entity =>
+        {
+            entity.Property(r => r.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+        });
+
+        modelBuilder.Entity<Address>(entity =>
+        {
+            entity.Property(a => a.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+        });
+
+        modelBuilder.Entity<Contact>(entity =>
+        {
+            entity.Property(c => c.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+        });
     }
 }

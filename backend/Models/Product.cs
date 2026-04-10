@@ -23,6 +23,7 @@ public class Product
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
     [ForeignKey("CategoryId")]
     public virtual Category? Category { get; set; }

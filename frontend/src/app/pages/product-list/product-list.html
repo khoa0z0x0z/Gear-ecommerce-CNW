@@ -74,8 +74,8 @@
           <h4>{{ product.name }}</h4>
 
           <p class="price-row">
-            <span class="new-price">${{ product.price }}</span>
-            <span class="old-price" *ngIf="product.oldPrice">${{ product.oldPrice }}</span>
+            <span class="new-price">{{ product.price | number:'1.0-0' }} VNĐ</span>
+            <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice | number:'1.0-0' }} VNĐ</span>
           </p>
 
           <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
