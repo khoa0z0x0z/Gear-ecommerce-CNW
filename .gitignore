@@ -1,0 +1,24 @@
+# .gitignore for .NET and Angular
+
+# .NET
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+# Angular
+node_modules/
+dist/
+.angular/
+.editorconfig
+src/assets/i18n/*.json
+src/environments/environment.prod.ts
+
+# Misc
+.DS_Store
+*.log
+.env
+build_errors.txt
