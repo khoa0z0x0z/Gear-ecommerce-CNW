@@ -15,6 +15,8 @@ export class LoginPage implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private readonly adminEmail = 'admin@gmail.com';
+  private readonly adminPassword = '123456';
 
   loginForm!: FormGroup;
   errorMessage: string | null = null;
@@ -34,6 +36,16 @@ export class LoginPage implements OnInit {
 
     const { email, password } = this.loginForm.value;
     this.errorMessage = null;
+
+    // Allow admin login directly from the default login page.
+    if (email === this.adminEmail && password === this.adminPassword) {
+      localStorage.setItem('isAdminLoggedIn', 'true');
+      alert('Đăng nhập admin thành công!');
+      this.router.navigate(['/admin']);
+      return;
+    }
+
+    localStorage.removeItem('isAdminLoggedIn');
 
     this.authService.login({ email, password }).subscribe({
       next: (res) => {

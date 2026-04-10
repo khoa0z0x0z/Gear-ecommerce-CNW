@@ -3,3 +3,12 @@ body {
   background: #f5f5f5;
   font-family: Arial, sans-serif;
 }
+
+a.menu-item {
+  text-decoration: none;
+  color: inherit;
+}
+
+a.menu-item:visited {
+  color: inherit;
+}

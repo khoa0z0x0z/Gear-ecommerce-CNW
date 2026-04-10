@@ -1,0 +1,78 @@
+<section class="admin-dashboard-page">
+  
+  <aside class="admin-sidebar">
+    <div class="sidebar-top">
+      <h1 class="dashboard-title">Admin<br>Dashboard</h1>
+
+      <nav class="sidebar-menu">
+        <a class="menu-item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">📦</span>
+          <span>Products</span>
+        </a>
+
+        <a class="menu-item" routerLink="/admin/customers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">👥</span>
+          <span>Customers</span>
+        </a>
+
+        <a class="menu-item" routerLink="/admin/settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <button class="logout-btn" type="button" (click)="logout()">
+      <span>↩</span>
+      <span>Logout</span>
+    </button>
+  </aside>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      
+      <div class="content-header">
+        <div>
+          <h2>Customers</h2>
+          <p>View and manage customer accounts</p>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <input type="text" placeholder="Search customers..." class="search-input">
+      </div>
+
+      <div class="table-card">
+        <table class="customers-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Orders</th>
+              <th>Total Spent</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of customers">
+              <td class="font-medium">{{ customer.name }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.orders }}</td>
+              <td>{{ customer.totalSpent }}</td>
+              <td>
+                <select [(ngModel)]="customer.status" class="status-select" [ngClass]="{ 'is-active': customer.status === 'Active', 'is-inactive': customer.status === 'Inactive' }">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </td>
+              <td><a href="#" class="action-link">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+
+</section>
