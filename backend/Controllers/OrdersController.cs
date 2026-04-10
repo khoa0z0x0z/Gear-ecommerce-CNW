@@ -62,4 +62,11 @@ public class OrdersController : ControllerBase
         if (!success) return NotFound();
         return Ok(new { message = "Order status updated successfully" });
     }
+
+    [HttpGet("revenue-stats")]
+    public async Task<IActionResult> GetRevenueStats([FromQuery] string type = "month", [FromQuery] int? year = null)
+    {
+        var stats = await _orderService.GetRevenueStatsAsync(type, year);
+        return Ok(stats);
+    }
 }

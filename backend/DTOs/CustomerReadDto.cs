@@ -1,0 +1,12 @@
+namespace backend.DTOs;
+
+public class CustomerReadDto
+{
+    public int Id { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public string? FullName { get; set; }
+    public string? Phone { get; set; }
+    public int OrderCount { get; set; }
+    public decimal TotalSpent { get; set; }
+    public string Status { get; set; } = "Active";
+}

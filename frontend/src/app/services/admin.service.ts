@@ -33,7 +33,34 @@ export class AdminService {
     }
 
     getCustomers(): Observable<any[]> {
-        // We'll implement this later in the UsersController, but point to it now
         return this.http.get<any[]>(`${environment.apiUrl}/users/customers`);
+    }
+
+    getCustomerDetails(id: number): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/users/${id}/details`);
+    }
+
+    toggleCustomerStatus(id: number): Observable<any> {
+        return this.http.put(`${environment.apiUrl}/users/${id}/toggle-status`, {});
+    }
+
+    resetCustomerPassword(id: number, newPassword: string): Observable<any> {
+        return this.http.put(`${environment.apiUrl}/users/${id}/reset-password`, JSON.stringify(newPassword), {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    getRevenueStats(type: string = 'month', year?: number): Observable<any[]> {
+        let url = `${this.apiUrl}/revenue-stats?type=${type}`;
+        if (year) url += `&year=${year}`;
+        return this.http.get<any[]>(url);
+    }
+
+    getSettings(): Observable<any[]> {
+        return this.http.get<any[]>(`${environment.apiUrl}/settings`);
+    }
+
+    saveSettings(settings: any[]): Observable<any> {
+        return this.http.put(`${environment.apiUrl}/settings`, settings);
     }
 }

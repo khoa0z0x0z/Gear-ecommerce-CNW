@@ -12,4 +12,5 @@ public interface IOrderService
     Task<IEnumerable<OrderReadDto>> GetAllOrdersAsync();
     Task<bool> UpdateOrderStatusAsync(int orderId, string status);
     Task<DashboardStatsDto> GetDashboardStatsAsync();
+    Task<List<MonthlyRevenueDto>> GetRevenueStatsAsync(string type, int? year);
 }

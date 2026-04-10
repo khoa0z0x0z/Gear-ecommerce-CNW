@@ -28,18 +28,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let customer of customers">
-              <td class="font-medium">{{ customer.name }}</td>
+            <tr *ngFor="let customer of customers()">
+              <td class="font-medium">{{ customer.fullName || 'User #' + customer.id }}</td>
               <td>{{ customer.email }}</td>
-              <td>{{ customer.orders }}</td>
-              <td>{{ customer.totalSpent }}</td>
+              <td>{{ customer.orderCount }}</td>
+              <td class="font-bold">{{ customer.totalSpent | number:'1.0-0' }} VNĐ</td>
               <td>
-                <select [(ngModel)]="customer.status" class="status-select" [ngClass]="{ 'is-active': customer.status === 'Active', 'is-inactive': customer.status === 'Inactive' }">
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
+                <span class="status-badge" [ngClass]="{ 'is-active': customer.status === 'Active', 'is-inactive': customer.status === 'Inactive' }">
+                  {{ customer.status }}
+                </span>
+                <button (click)="onToggleStatus(customer.id)" class="toggle-btn" [title]="customer.status === 'Active' ? 'Block' : 'Unblock'">
+                  {{ customer.status === 'Active' ? '🔒' : '🔓' }}
+                </button>
               </td>
-              <td><a href="#" class="action-link">View</a></td>
+              <td class="actions-cell">
+                <button (click)="onViewDetails(customer.id)" class="action-btn view">View</button>
+                <button (click)="onResetPassword(customer.id)" class="action-btn reset">Key</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -48,4 +53,71 @@
     </section>
   </main>
 
+  <!-- Detail Modal -->
+  <div class="modal-overlay" *ngIf="selectedCustomer()" (click)="closeDetails()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Customer Details</h3>
+        <button class="close-btn" (click)="closeDetails()">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>Profile</h4>
+          <div class="info-grid">
+            <div class="info-item"><label>Name:</label> <span>{{ selectedCustomer().fullName || 'N/A' }}</span></div>
+            <div class="info-item"><label>Email:</label> <span>{{ selectedCustomer().email }}</span></div>
+            <div class="info-item"><label>Phone:</label> <span>{{ selectedCustomer().phone || 'N/A' }}</span></div>
+            <div class="info-item"><label>Joined:</label> <span>{{ selectedCustomer().createdAt | date:'mediumDate' }}</span></div>
+            <div class="info-item">
+              <label>Status:</label> 
+              <span [class.text-red]="!selectedCustomer().isActive" [class.text-green]="selectedCustomer().isActive">
+                {{ selectedCustomer().isActive ? 'Active' : 'Blocked' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h4>Addresses</h4>
+          <ul class="address-list">
+            <li *ngFor="let addr of selectedCustomer().addresses">
+              <span class="addr-text">{{ addr.fullAddress }}, {{ addr.city }}</span>
+              <span class="badge" *ngIf="addr.isDefault">Default</span>
+            </li>
+            <li *ngIf="selectedCustomer().addresses.length === 0">No addresses found.</li>
+          </ul>
+        </div>
+
+        <div class="detail-section">
+          <h4>Recent Orders</h4>
+          <div class="scroll-table">
+            <table class="modal-table">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of selectedCustomer().orders">
+                  <td>#{{ order.id }}</td>
+                  <td>{{ order.createdAt | date:'shortDate' }}</td>
+                  <td>{{ order.totalAmount | number }} VNĐ</td>
+                  <td>
+                    <span class="s-badge">{{ order.status }}</span>
+                  </td>
+                </tr>
+                <tr *ngIf="selectedCustomer().orders.length === 0">
+                   <td colspan="4" class="empty-txt">No orders found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

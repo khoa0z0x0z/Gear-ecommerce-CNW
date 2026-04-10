@@ -19,6 +19,7 @@ export class AuthService {
       tap(res => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.user.role);
+        localStorage.setItem('userId', res.user.id);
         localStorage.setItem('isLoggedIn', 'true');
         this.isLoggedIn.set(true);
       })

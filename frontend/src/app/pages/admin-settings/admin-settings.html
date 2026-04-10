@@ -7,39 +7,88 @@
       <div class="content-header">
         <div>
           <h2>Settings</h2>
-          <p>Configure your admin dashboard</p>
+          <p>Configure your store parameters and security</p>
         </div>
       </div>
 
+      <!-- Settings Tabs -->
+      <div class="settings-tabs">
+        <button [class.active]="activeTab() === 'store'" (click)="activeTab.set('store')">Store Info</button>
+        <button [class.active]="activeTab() === 'shipping'" (click)="activeTab.set('shipping')">Shipping</button>
+        <button [class.active]="activeTab() === 'payment'" (click)="activeTab.set('payment')">Payment</button>
+        <button [class.active]="activeTab() === 'security'" (click)="activeTab.set('security')">Security</button>
+      </div>
+
       <div class="settings-card">
-        <div class="card-header">
-          <h3>General Settings</h3>
-          <p>Manage your account preferences</p>
+        <!-- Store Info Tab -->
+        <div *ngIf="activeTab() === 'store'" class="tab-content">
+          <div class="section-header">
+            <h3>Store Information</h3>
+            <p>Public details about your business</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group" *ngFor="let s of getSettingsByGroup('Store')">
+              <label>{{ s.description }}</label>
+              <input type="text" [(ngModel)]="s.value">
+            </div>
+          </div>
+          <button class="save-btn" (click)="saveSettings()">Save Store Info</button>
         </div>
 
-        <div class="form-group">
-          <label>Store Name</label>
-          <input type="text" [(ngModel)]="settings.storeName">
+        <!-- Shipping Tab -->
+        <div *ngIf="activeTab() === 'shipping'" class="tab-content">
+          <div class="section-header">
+            <h3>Shipping Rules</h3>
+            <p>Configure rates and thresholds</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group" *ngFor="let s of getSettingsByGroup('Shipping')">
+              <label>{{ s.description }}</label>
+              <input type="number" [(ngModel)]="s.value">
+            </div>
+          </div>
+          <button class="save-btn" (click)="saveSettings()">Save Shipping Rules</button>
         </div>
 
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" [(ngModel)]="settings.email">
+        <!-- Payment Tab -->
+        <div *ngIf="activeTab() === 'payment'" class="tab-content">
+          <div class="section-header">
+            <h3>Payment Methods</h3>
+            <p>Configure payment options and bank info</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group" *ngFor="let s of getSettingsByGroup('Payment')">
+              <label>{{ s.description }}</label>
+              <input type="text" [(ngModel)]="s.value">
+            </div>
+          </div>
+          <button class="save-btn" (click)="saveSettings()">Save Payment Info</button>
         </div>
 
-        <div class="form-group">
-          <label>Currency</label>
-          <input type="text" [(ngModel)]="settings.currency">
+        <!-- Security Tab -->
+        <div *ngIf="activeTab() === 'security'" class="tab-content">
+          <div class="section-header">
+            <h3>Admin Security</h3>
+            <p>Change your administrator password</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" [(ngModel)]="passwordForm.currentPassword" placeholder="Enter current password...">
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" [(ngModel)]="passwordForm.newPassword" placeholder="Enter new password...">
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" [(ngModel)]="passwordForm.confirmPassword" placeholder="Confirm new password...">
+            </div>
+          </div>
+          <button class="save-btn" (click)="changePassword()">Change Password</button>
         </div>
-
-        <div class="divider"></div>
-
-        <button class="save-btn" (click)="saveSettings()">
-          Save Changes
-        </button>
       </div>
 
     </section>
   </main>
-
 </section>

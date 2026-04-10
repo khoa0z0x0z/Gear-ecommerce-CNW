@@ -62,6 +62,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -94,6 +95,25 @@ using (var scope = app.Services.CreateScope())
             IsActive = true
         };
         context.Users.Add(admin);
+        context.SaveChanges();
+    }
+
+    // Seed Settings
+    if (!context.Settings.Any())
+    {
+        context.Settings.AddRange(new List<backend.Models.Settings>
+        {
+            new() { Key = "StoreName", Value = "Antigravity Gear", Group = "Store", Description = "Tên hiển thị của cửa hàng" },
+            new() { Key = "StoreEmail", Value = "contact@antigravity.vn", Group = "Store", Description = "Email liên hệ chính thức" },
+            new() { Key = "StorePhone", Value = "0901234567", Group = "Store", Description = "Số điện thoại hỗ trợ" },
+            new() { Key = "StoreAddress", Value = "280 An Dương Vương, P4, Q5, TP.HCM", Group = "Store", Description = "Địa chỉ trụ sở chính" },
+            new() { Key = "ShippingFee", Value = "30000", Group = "Shipping", Description = "Phí vận chuyển mặc định (VNĐ)" },
+            new() { Key = "FreeShippingThreshold", Value = "2000000", Group = "Shipping", Description = "Ngưỡng đơn hàng được miễn phí ship (VNĐ)" },
+            new() { Key = "EnableCOD", Value = "true", Group = "Payment", Description = "Cho phép thanh toán khi nhận hàng" },
+            new() { Key = "BankName", Value = "Vietcombank", Group = "Payment", Description = "Tên ngân hàng" },
+            new() { Key = "BankAccountName", Value = "NGUYEN VAN A", Group = "Payment", Description = "Tên chủ tài khoản" },
+            new() { Key = "BankAccountNumber", Value = "1234567890", Group = "Payment", Description = "Số tài khoản ngân hàng" }
+        });
         context.SaveChanges();
     }
 }

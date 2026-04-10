@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
@@ -16,6 +16,7 @@ export class Homepage implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private categoryService = inject(CategoryService);
+  private router = inject(Router);
 
   bestSellingProducts = signal<any[]>([]);
   exploreProducts = signal<any[]>([]);
@@ -55,6 +56,11 @@ export class Homepage implements OnInit, OnDestroy {
   autoPlayInterval: any;
 
   ngOnInit() {
+    const role = localStorage.getItem('role');
+    if (role === 'Admin') {
+      this.router.navigate(['/admin']);
+      return;
+    }
     this.startAutoPlay();
     this.loadProducts();
     this.loadCategories();
@@ -63,7 +69,7 @@ export class Homepage implements OnInit, OnDestroy {
   loadProducts() {
     this.productService.getAll().subscribe({
       next: (products) => {
-        const mapped = products.map(p => ({
+        const mapped = products.map((p: any) => ({
           ...p,
           image: p.imageUrls && p.imageUrls.length > 0 ? p.imageUrls[0] : 'https://via.placeholder.com/300',
           rating: '(65)' // Mock rating for now
@@ -75,8 +81,8 @@ export class Homepage implements OnInit, OnDestroy {
 
         categoriesForHero.forEach(catName => {
           const topInCat = mapped
-            .filter(p => p.categoryName === catName)
-            .sort((a, b) => (b.sold || 0) - (a.sold || 0))[0];
+            .filter((p: any) => p.categoryName === catName)
+            .sort((a: any, b: any) => (b.sold || 0) - (a.sold || 0))[0];
 
           if (topInCat) {
             heroItems.push({

@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminSidebar } from '../../components/admin-sidebar/admin-sidebar';
+import { AdminService } from '../../services/admin.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-admin-settings',
@@ -12,30 +15,62 @@ import { AdminSidebar } from '../../components/admin-sidebar/admin-sidebar';
   styleUrl: './admin-settings.css'
 })
 export class AdminSettings implements OnInit {
-  constructor(private router: Router) { }
+  private adminService = inject(AdminService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  ngOnInit() {
-    const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
-    if (!isAdminLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-  }
+  activeTab = signal<'store' | 'shipping' | 'payment' | 'security'>('store');
+  settings = signal<any[]>([]);
 
-  // Dữ liệu mặc định của form settings
-  settings = {
-    storeName: 'My Store',
-    email: 'admin@example.com',
-    currency: 'VND'
+  passwordForm = {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   };
 
-  saveSettings() {
-    alert('Settings saved successfully!');
-    // Ở đây bạn có thể gọi API để lưu vào database
+  ngOnInit() {
+    this.loadSettings();
   }
 
-  // Các hàm điều hướng Sidebar
+  loadSettings() {
+    this.adminService.getSettings().subscribe({
+      next: (data) => this.settings.set(data),
+      error: (err) => console.error('Error loading settings', err)
+    });
+  }
+
+  getSettingsByGroup(group: string) {
+    return this.settings().filter(s => s.group === group);
+  }
+
+  saveSettings() {
+    this.adminService.saveSettings(this.settings()).subscribe({
+      next: () => alert('Cấu hình đã được lưu thành công! ✅'),
+      error: (err) => alert('Có lỗi xảy ra khi lưu cấu hình. ❌')
+    });
+  }
+
+  changePassword() {
+    if (this.passwordForm.newPassword !== this.passwordForm.confirmPassword) {
+      alert('Mật khẩu xác nhận không khớp! ❌');
+      return;
+    }
+
+    const userId = localStorage.getItem('userId');
+    const adminId = userId ? parseInt(userId, 10) : null;
+    if (!adminId) { alert('Không tìm thấy thông tin Admin. ❌'); return; }
+
+    this.adminService.resetCustomerPassword(adminId, this.passwordForm.newPassword).subscribe({
+      next: () => {
+        alert('Đổi mật khẩu thành công! 🔑');
+        this.passwordForm = { currentPassword: '', newPassword: '', confirmPassword: '' };
+      },
+      error: (err) => alert('Lỗi khi đổi mật khẩu! ❌')
+    });
+  }
+
   logout() {
-    localStorage.removeItem('isAdminLoggedIn');
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

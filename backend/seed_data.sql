@@ -146,6 +146,7 @@ INSERT INTO ProductImages (ProductId, ImageUrl, IsPrimary) VALUES
 INSERT INTO ProductAttributes (ProductId, AttributeName, AttributeValue) VALUES
 (1, N'Kết nối', N'Bluetooth 5.1 / Wired'),
 (1, N'Switch', N'Gateron Mechanical'),
+(1, N'Layout', N'75%'),
 (2, N'Kết nối', N'2.4Ghz / Bluetooth / USB-C'),
 (2, N'Keycap', N'PBT Double-shot'),
 (3, N'Công nghệ', N'Razer Optical Switches'),
@@ -187,3 +188,19 @@ INSERT INTO ProductAttributes (ProductId, AttributeName, AttributeValue) VALUES
 (33, N'Loại đệm', N'Mousse đúc nguyên khối'),
 (34, N'Cơ chế', N'Công thái học (Ergonomic)'),
 (35, N'Tay ghế', N'4D Adjustable');
+
+-- ======================================================
+-- SETTINGS
+-- ======================================================
+DELETE FROM Settings;
+INSERT INTO Settings ([Key], [Value], [Group], [Description]) VALUES
+('StoreName', N'Antigravity Gear', 'Store', N'Tên hiển thị của cửa hàng'),
+('StoreEmail', 'contact@antigravity.vn', 'Store', N'Email liên hệ chính thức'),
+('StorePhone', '0901234567', 'Store', N'Số điện thoại hỗ trợ'),
+('StoreAddress', N'280 An Dương Vương, P4, Q5, TP.HCM', 'Store', N'Địa chỉ trụ sở chính'),
+('ShippingFee', '30000', 'Shipping', N'Phí vận chuyển mặc định (VNĐ)'),
+('FreeShippingThreshold', '2000000', 'Shipping', N'Ngưỡng đơn hàng được miễn phí ship (VNĐ)'),
+('EnableCOD', 'true', 'Payment', N'Cho phép thanh toán khi nhận hàng'),
+('BankName', 'Vietcombank', 'Payment', N'Tên ngân hàng'),
+('BankAccountName', N'NGUYEN VAN A', 'Payment', N'Tên chủ tài khoản'),
+('BankAccountNumber', '1234567890', 'Payment', N'Số tài khoản ngân hàng');

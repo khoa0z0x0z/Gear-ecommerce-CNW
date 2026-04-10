@@ -8,6 +8,19 @@
           <h2>Business Statistics</h2>
           <p>Detailed performance analytics and reporting</p>
         </div>
+        <div class="header-actions">
+          <div class="toggle-group">
+            <button [class.active]="viewType() === 'month'" (click)="onViewTypeChange('month')">Monthly</button>
+            <button [class.active]="viewType() === 'year'" (click)="onViewTypeChange('year')">Yearly</button>
+          </div>
+          
+          <div class="filter-select" *ngIf="viewType() === 'month'">
+            <label>Year:</label>
+            <select [ngModel]="selectedYear()" (ngModelChange)="selectedYear.set($event); onYearChange()">
+              <option *ngFor="let y of availableYears" [value]="y">{{ y }}</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <!-- Stats Cards -->
@@ -40,11 +53,13 @@
       <div class="charts-row">
         <!-- Revenue Chart (CSS Bars) -->
         <div class="chart-card">
-          <h3>Revenue Overview (Monthly)</h3>
+          <h3>Revenue Overview ({{ viewType() === 'month' ? 'By Month' : 'By Year' }})</h3>
           <div class="bar-chart">
-            <div class="bar-item" *ngFor="let item of stats()?.revenueChart">
+            <div class="bar-item" *ngFor="let item of customRevenueChart()">
               <div class="bar-wrap">
-                <div class="bar-fill" [style.height.%]="getBarHeight(item.revenue)"></div>
+                <div class="bar-fill" [style.height.%]="getBarHeight(item.revenue)">
+                  <span class="tip" *ngIf="item.revenue > 0">{{ item.revenue | number:'1.0-0' }}</span>
+                </div>
               </div>
               <span class="bar-label">{{ item.month }}</span>
             </div>

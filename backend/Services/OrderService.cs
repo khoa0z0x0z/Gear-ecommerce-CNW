@@ -173,4 +173,64 @@ public class OrderService : IOrderService
 
         return stats;
     }
+
+    public async Task<List<MonthlyRevenueDto>> GetRevenueStatsAsync(string type, int? year)
+    {
+        if (type == "year")
+        {
+            // Last 12 years
+            var currentYear = DateTime.Now.Year;
+            var startYear = currentYear - 11;
+            
+            var query = await _context.Orders
+                .Where(o => o.CreatedAt.Year >= startYear)
+                .GroupBy(o => o.CreatedAt.Year)
+                .Select(g => new
+                {
+                    Year = g.Key,
+                    Revenue = g.Sum(o => o.TotalAmount)
+                })
+                .ToListAsync();
+
+            // Fill missing years with 0
+            var result = new List<MonthlyRevenueDto>();
+            for (int y = startYear; y <= currentYear; y++)
+            {
+                var match = query.FirstOrDefault(q => q.Year == y);
+                result.Add(new MonthlyRevenueDto
+                {
+                    Month = y.ToString(),
+                    Revenue = match?.Revenue ?? 0
+                });
+            }
+            return result;
+        }
+        else
+        {
+            // 12 months for specific year
+            int targetYear = year ?? DateTime.Now.Year;
+            
+            var query = await _context.Orders
+                .Where(o => o.CreatedAt.Year == targetYear)
+                .GroupBy(o => o.CreatedAt.Month)
+                .Select(g => new
+                {
+                    Month = g.Key,
+                    Revenue = g.Sum(o => o.TotalAmount)
+                })
+                .ToListAsync();
+
+            var result = new List<MonthlyRevenueDto>();
+            for (int m = 1; m <= 12; m++)
+            {
+                var match = query.FirstOrDefault(q => q.Month == m);
+                result.Add(new MonthlyRevenueDto
+                {
+                    Month = "T" + m,
+                    Revenue = match?.Revenue ?? 0
+                });
+            }
+            return result;
+        }
+    }
 }

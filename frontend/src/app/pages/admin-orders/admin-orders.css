@@ -1,12 +1,12 @@
 .admin-dashboard-page {
-    display: grid;
-    grid-template-columns: 290px 1fr;
-    min-height: calc(100vh - 80px);
+    display: flex;
+    min-height: 100vh;
     background: #fcfcfc;
 }
 
 .admin-main {
-    flex-grow: 1;
+    flex: 1;
+    margin-left: 260px;
     background-color: #fcfcfc;
     overflow-y: auto;
 }
