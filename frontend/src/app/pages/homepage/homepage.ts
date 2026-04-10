@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-homepage',
+  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css'
@@ -13,9 +15,35 @@ import { ProductService } from '../../services/product.service';
 export class Homepage implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private categoryService = inject(CategoryService);
 
   bestSellingProducts = signal<any[]>([]);
   exploreProducts = signal<any[]>([]);
+  categories = signal<any[]>([]);
+  heroProducts = signal<any[]>([]);
+
+  // Sliding categories logic
+  categoryPageIndex = signal(0);
+  itemsPerPage = 6;
+
+  visibleCategories = computed(() => {
+    const all = this.categories();
+    const start = this.categoryPageIndex() * this.itemsPerPage;
+    return all.slice(start, start + this.itemsPerPage);
+  });
+
+  nextCategories() {
+    const maxPage = Math.ceil(this.categories().length / this.itemsPerPage) - 1;
+    if (this.categoryPageIndex() < maxPage) {
+      this.categoryPageIndex.set(this.categoryPageIndex() + 1);
+    }
+  }
+
+  prevCategories() {
+    if (this.categoryPageIndex() > 0) {
+      this.categoryPageIndex.set(this.categoryPageIndex() - 1);
+    }
+  }
 
   // Method to add items to cart from the homepage
   addToCart(product: any) {
@@ -26,27 +54,10 @@ export class Homepage implements OnInit, OnDestroy {
   currentSlideIndex = 0;
   autoPlayInterval: any;
 
-  banners = [
-    {
-      tag: 'iPhone 16 Pro Max',
-      title: 'Experience the \nFuture Today.',
-      btnText: 'Buy Now →'
-    },
-    {
-      tag: 'MacBook Pro M3 Max',
-      title: 'Power Meets \nPortability.',
-      btnText: 'Shop Laptops →'
-    },
-    {
-      tag: 'Sony WH-1000XM5',
-      title: 'Immersive Audio \nEverywhere.',
-      btnText: 'Discover More →'
-    }
-  ];
-
   ngOnInit() {
     this.startAutoPlay();
     this.loadProducts();
+    this.loadCategories();
   }
 
   loadProducts() {
@@ -57,8 +68,38 @@ export class Homepage implements OnInit, OnDestroy {
           image: p.imageUrls && p.imageUrls.length > 0 ? p.imageUrls[0] : 'https://via.placeholder.com/300',
           rating: '(65)' // Mock rating for now
         }));
-        this.bestSellingProducts.set(mapped.slice(0, 4));
+
+        // Pick best selling from specific categories for Hero
+        const categoriesForHero = ['Laptop', 'Điện thoại', 'Bàn phím cơ'];
+        const heroItems: any[] = [];
+
+        categoriesForHero.forEach(catName => {
+          const topInCat = mapped
+            .filter(p => p.categoryName === catName)
+            .sort((a, b) => (b.sold || 0) - (a.sold || 0))[0];
+
+          if (topInCat) {
+            heroItems.push({
+              tag: topInCat.categoryName,
+              title: topInCat.name + '\n' + topInCat.description,
+              btnText: 'Buy Now →',
+              image: topInCat.image,
+              id: topInCat.id
+            });
+          }
+        });
+
+        this.heroProducts.set(heroItems);
+        this.bestSellingProducts.set(mapped.sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 4));
         this.exploreProducts.set(mapped.slice(4, 12));
+      }
+    });
+  }
+
+  loadCategories() {
+    this.categoryService.getAll().subscribe({
+      next: (cats) => {
+        this.categories.set(cats);
       }
     });
   }
@@ -71,8 +112,11 @@ export class Homepage implements OnInit, OnDestroy {
 
   startAutoPlay() {
     this.autoPlayInterval = setInterval(() => {
-      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.banners.length;
-    }, 3000);
+      const len = this.heroProducts().length;
+      if (len > 0) {
+        this.currentSlideIndex = (this.currentSlideIndex + 1) % len;
+      }
+    }, 4000);
   }
 
   goToSlide(index: number) {
@@ -81,26 +125,20 @@ export class Homepage implements OnInit, OnDestroy {
     this.startAutoPlay();
   }
 
-  heroCategories = [
-    'Laptops & PC',
-    'Smartphones',
-    'Tablets & iPods',
-    'Audio & Headphones',
-    'Cameras & Photography',
-    'Smart Watches',
-    'Gaming Gear',
-    'Accessories',
-    'Monitors & TV'
-  ];
+  // Icons mapping for browse categories
+  private categoryIcons: { [key: string]: string } = {
+    'Bàn phím cơ': '⌨️',
+    'Chuột Gaming': '🖱️',
+    'Tai nghe': '🎧',
+    'Laptop': '💻',
+    'Điện thoại': '📱',
+    'Lót chuột': '⬛',
+    'Ghế Gaming': '💺'
+  };
 
-  browseCategories = [
-    { icon: '📱', name: 'Phones' },
-    { icon: '🖥️', name: 'Computers' },
-    { icon: '⌚', name: 'SmartWatches' },
-    { icon: '📷', name: 'Camera' },
-    { icon: '🎧', name: 'HeadPhones' },
-    { icon: '🎮', name: 'Gaming' }
-  ];
+  getIcon(name: string): string {
+    return this.categoryIcons[name] || '📦';
+  }
 
   services = [
     {

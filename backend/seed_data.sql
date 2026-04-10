@@ -35,60 +35,60 @@ SET IDENTITY_INSERT Categories OFF;
 SET IDENTITY_INSERT Products ON;
 
 -- Category 1: Bàn phím
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(1, N'Keychron K2', N'Bàn phím không dây', 1800000, 50, 1),
-(2, N'Akko 3068B', N'Layout 65% nhỏ gọn', 1600000, 30, 1),
-(3, N'Razer Huntsman', N'Switch quang học', 4000000, 15, 1),
-(4, N'Corsair K70', N'Fullsize cao cấp', 3500000, 20, 1),
-(5, N'Leopold FC750R', N'Độ bền cực cao', 3200000, 10, 1);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(1, N'Keychron K2', N'Bàn phím không dây', 1800000, 50, 120, 1),
+(2, N'Akko 3068B', N'Layout 65% nhỏ gọn', 1600000, 30, 85, 1),
+(3, N'Razer Huntsman', N'Switch quang học', 4000000, 15, 45, 1),
+(4, N'Corsair K70', N'Fullsize cao cấp', 3500000, 20, 30, 1),
+(5, N'Leopold FC750R', N'Độ bền cực cao', 3200000, 10, 15, 1);
 
 -- Category 2: Chuột
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(6, N'Logitech G Pro X', N'Siêu nhẹ 63g', 3100000, 40, 2),
-(7, N'Razer DeathAdder V3', N'Cảm biến 30K', 3500000, 25, 2),
-(8, N'SteelSeries Rival 3', N'Giá rẻ hiệu năng cao', 800000, 100, 2),
-(9, N'Zowie EC2', N'Chuột FPS huyền thoại', 1900000, 30, 2),
-(10, N'Glorious Model O', N'Vỏ tổ ong', 1400000, 50, 2);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(6, N'Logitech G Pro X', N'Siêu nhẹ 63g', 3100000, 40, 200, 2),
+(7, N'Razer DeathAdder V3', N'Cảm biến 30K', 3500000, 25, 150, 2),
+(8, N'SteelSeries Rival 3', N'Giá rẻ hiệu năng cao', 800000, 100, 300, 2),
+(9, N'Zowie EC2', N'Chuột FPS huyền thoại', 1900000, 30, 90, 2),
+(10, N'Glorious Model O', N'Vỏ tổ ong', 1400000, 50, 110, 2);
 
 -- Category 3: Tai nghe
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(11, N'HyperX Cloud II', N'Âm thanh 7.1', 2500000, 60, 3),
-(12, N'Logitech G733', N'Không dây RGB', 2900000, 20, 3),
-(13, N'Razer BlackShark', N'Chống ồn cực tốt', 2200000, 45, 3),
-(14, N'SteelSeries Arctis 7', N'Lossless wireless', 4500000, 15, 3),
-(15, N'Corsair HS80', N'Dolby Atmos', 3800000, 25, 3);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(11, N'HyperX Cloud II', N'Âm thanh 7.1', 2500000, 60, 250, 3),
+(12, N'Logitech G733', N'Không dây RGB', 2900000, 20, 80, 3),
+(13, N'Razer BlackShark', N'Chống ồn cực tốt', 2200000, 45, 120, 3),
+(14, N'SteelSeries Arctis 7', N'Lossless wireless', 4500000, 15, 40, 3),
+(15, N'Corsair HS80', N'Dolby Atmos', 3800000, 25, 55, 3);
 
 -- Category 4: Laptop
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(16, N'ROG Strix G16', N'RTX 4060, i7-13650H', 38000000, 10, 4),
-(17, N'MacBook M3', N'Mỏng nhẹ mạnh mẽ', 32000000, 15, 4),
-(18, N'MSI Katana 15', N'Giá rẻ hiệu năng cao', 24000000, 20, 4),
-(19, N'Acer Helios Neo', N'Tản nhiệt cực đỉnh', 31000000, 8, 4),
-(20, N'Dell XPS 15', N'Đẳng cấp văn phòng', 50000000, 5, 4);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(16, N'ROG Strix G16', N'RTX 4060, i7-13650H', 38000000, 10, 25, 4),
+(17, N'MacBook M3', N'Mỏng nhẹ mạnh mẽ', 32000000, 15, 60, 4),
+(18, N'MSI Katana 15', N'Giá rẻ hiệu năng cao', 24000000, 20, 45, 4),
+(19, N'Acer Helios Neo', N'Tản nhiệt cực đỉnh', 31000000, 8, 12, 4),
+(20, N'Dell XPS 15', N'Đẳng cấp văn phòng', 50000000, 5, 8, 4);
 
 -- Category 5: Điện thoại
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(21, N'iPhone 15 Pro', N'Titan tự nhiên', 28000000, 20, 5),
-(22, N'Samsung S24 Ultra', N'Galaxy AI', 26000000, 25, 5),
-(23, N'ROG Phone 8', N'Chiến game đỉnh cao', 27000000, 10, 5),
-(24, N'iPad Pro M4', N'Màn hình OLED', 27500000, 15, 5),
-(25, N'Xiaomi 14', N'Camera Leica', 18000000, 30, 5);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(21, N'iPhone 15 Pro', N'Titan tự nhiên', 28000000, 20, 150, 5),
+(22, N'Samsung S24 Ultra', N'Galaxy AI', 26000000, 25, 130, 5),
+(23, N'ROG Phone 8', N'Chiến game đỉnh cao', 27000000, 10, 40, 5),
+(24, N'iPad Pro M4', N'Màn hình OLED', 27500000, 15, 35, 5),
+(25, N'Xiaomi 14', N'Camera Leica', 18000000, 30, 95, 5);
 
 -- Category 6: Lót chuột
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(26, N'SteelSeries Qck+', N'Vải mịn Large', 450000, 100, 6),
-(27, N'Razer Gigantus', N'Chống trượt', 550000, 80, 6),
-(28, N'Logitech G640', N'Độ ma sát thấp', 600000, 50, 6),
-(29, N'Lót chuột Custom', N'In hình theo yêu cầu', 250000, 200, 6),
-(30, N'Asus ROG Scabbard', N'Cực đại 90x40', 1200000, 30, 6);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(26, N'SteelSeries Qck+', N'Vải mịn Large', 450000, 100, 500, 6),
+(27, N'Razer Gigantus', N'Chống trượt', 550000, 80, 350, 6),
+(28, N'Logitech G640', N'Độ ma sát thấp', 600000, 50, 200, 6),
+(29, N'Lót chuột Custom', N'In hình theo yêu cầu', 250000, 200, 400, 6),
+(30, N'Asus ROG Scabbard', N'Cực đại 90x40', 1200000, 30, 120, 6);
 
 -- Category 7: Ghế Gaming
-INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
-(31, N'Secretlab Titan', N'Ghế số 1 thế giới', 12000000, 5, 7),
-(32, N'Warrior Raider', N'Da PU cao cấp', 3500000, 15, 7),
-(33, N'E-Dra Midnight', N'Rẻ mà bền', 2200000, 20, 7),
-(34, N'Sihoo M57', N'Công thái học', 3800000, 25, 7),
-(35, N'Anda Seat Kaiser', N'Khung thép chắc chắn', 8500000, 10, 7);
+INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
+(31, N'Secretlab Titan', N'Ghế số 1 thế giới', 12000000, 5, 15, 7),
+(32, N'Warrior Raider', N'Da PU cao cấp', 3500000, 15, 40, 7),
+(33, N'E-Dra Midnight', N'Rẻ mà bền', 2200000, 20, 65, 7),
+(34, N'Sihoo M57', N'Công thái học', 3800000, 25, 50, 7),
+(35, N'Anda Seat Kaiser', N'Khung thép chắc chắn', 8500000, 10, 20, 7);
 
 SET IDENTITY_INSERT Products OFF;
 
@@ -96,41 +96,49 @@ SET IDENTITY_INSERT Products OFF;
 -- PRODUCT IMAGES
 -- ======================================================
 INSERT INTO ProductImages (ProductId, ImageUrl, IsPrimary) VALUES
-(1, 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500', 1),
-(2, 'https://images.unsplash.com/photo-1595225476474-87563907a212?w=500', 1),
-(3, 'https://images.unsplash.com/photo-1626958390898-162d3577f593?w=500', 1),
-(4, 'https://images.unsplash.com/photo-1618384881928-0288219493f0?w=500', 1),
-(5, 'https://images.unsplash.com/photo-1541140532154-b024d715b909?w=500', 1),
-(6, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', 1),
-(7, 'https://images.unsplash.com/photo-1527814732934-94a1a5d13599?w=500', 1),
-(8, 'https://images.unsplash.com/photo-1613141411244-0e4ac259d217?w=500', 1),
-(9, 'https://images.unsplash.com/photo-1563297007-0686b7003af7?w=500', 1),
-(10, 'https://images.unsplash.com/photo-1605773527852-c546a8584ea3?w=500', 1),
-(11, 'https://images.unsplash.com/photo-1612444530582-fc66183b16f7?w=500', 1),
-(12, 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500', 1),
-(13, 'https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?w=500', 1),
-(14, 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500', 1),
-(15, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', 1),
-(16, 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500', 1),
-(17, 'https://images.unsplash.com/photo-1517336714467-d23784a1c67d?w=500', 1),
-(18, 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500', 1),
-(19, 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1d?w=500', 1),
-(20, 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500', 1),
-(21, 'https://images.unsplash.com/photo-1696446701796-da61225697cc?w=500', 1),
-(22, 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500', 1),
-(23, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500', 1),
-(24, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500', 1),
-(25, 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500', 1),
-(26, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', 1),
-(27, 'https://images.unsplash.com/photo-1629429464245-48cb615e4f4c?w=500', 1),
-(28, 'https://images.unsplash.com/photo-1631553127988-3485780eb178?w=500', 1),
-(29, 'https://images.unsplash.com/photo-1600084053334-757482855163?w=500', 1),
-(30, 'https://images.unsplash.com/photo-1616509091215-574349ab9027?w=500', 1),
-(31, 'https://images.unsplash.com/photo-1598550476439-6847785fce6c?w=500', 1),
-(32, 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=500', 1),
-(33, 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=500', 1),
-(34, 'https://images.unsplash.com/photo-1505797149-43b007664a3d?w=500', 1),
-(35, 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=500', 1);
+-- Hình Bàn phím (1-5)
+(1, 'https://cdn.shopify.com/s/files/1/0608/5145/4022/files/Keychron-K2-6.png?v=1728319130', 1),
+(2, 'https://akkogear.com.vn/wp-content/uploads/2021/11/ban-phim-co-akko-3068b-multi-modes-black-pink02.jpg', 1),
+(3, 'https://product.hstatic.net/1000333506/product/dition_rgb_chroma_razer_optical_linear_switch_black_rz03_03080100_r3m1_0db25d29b7c24a33b120f785d0fcd723.jpg', 1),--
+(4, 'https://bizweb.dktcdn.net/100/410/941/products/1-e41a5415-d6d4-4ec1-83d7-463eca3e2b78.jpg?v=1613968257280', 1),--
+(5, 'https://images-na.ssl-images-amazon.com/images/I/71XCJrkpp-L.jpg', 1),--
+-- Hình Chuột (6-10)
+(6, 'https://bizweb.dktcdn.net/thumb/1024x1024/100/598/846/products/41863-1.jpg?v=1758297157970', 1),
+(7, 'https://hanoicomputercdn.com/media/product/67663_chuot_game_khong_day_razer_deathadder_v3_pro_ergonomic_usb_rgb_rz01_04630100_r3a1_0004_5.jpg', 1),
+(8, 'https://owlgaming.vn/wp-content/uploads/2021/01/Chu%E1%BB%99t-SteelSeries-Rival-3-4.jpg', 1),
+(9, 'https://image.benq.com/is/image/benqco/03-ec2-c-back-left-45-202501?$ResponsivePreset$&fmt=png-alpha', 1),
+(10, 'https://owlgaming.vn/wp-content/uploads/2023/08/chuot-khong-day-glorious-model-o-2-wireless-matte-white.jpg', 1),
+-- Hình Tai nghe (11-15)
+(11, 'https://laptop88.vn/media/product/5783_16.jpg', 1),
+(12, 'https://bizweb.dktcdn.net/thumb/1024x1024/100/598/846/products/oip-sg5iizl8fodnq5jkq9cndghaig.jpg?v=1775638813637', 1),
+(13, 'https://product.hstatic.net/200000637319/product/71u8xpmccxl._ac_sl1500___1__c0f2108126be464790dfaada7b92fdbd.jpg', 1),
+(14, 'https://hanoicomputercdn.com/media/product/79118_tai_nghe_gaming_khong_day_steelseries_arctis_7_white_1.jpg', 1),
+(15, 'https://product.hstatic.net/200000722513/product/led_rgb_wireless_ca_9011235_ap_0001_2_436fee75cc8d499e9d7619b9efef8acd_8f3b7e1f606c49b8b209034703d29d54.jpg', 1),
+-- Hình Laptop (16-20)
+(16, 'https://bizweb.dktcdn.net/thumb/grande/100/512/769/products/h732-2-copy-ff8f0d62-ab2b-4162-8c68-72ebadac0b4d.jpg?v=1714908745957', 1),
+(17, 'https://macstores.vn/wp-content/uploads/2024/03/macbook_air_2024_m3_13inch__16gb_512gb_silver_1-300x300.jpg', 1),
+(18, 'https://lapvip.vn/upload/products/thumb_800x0/httpslaptopworldvnmediaproduct250-22701-msi-crosshair-16-hx-ai-d2xw-5jpg-1753931384.jpg', 1),
+(19, 'https://cdn2.cellphones.com.vn/x/media/catalog/product/t/e/text_ng_n_14__9_26_1.png', 1),
+(20, 'https://www.laptopvip.vn/images/ab__webp/detailed/31/notebook-xps-15-9530-t-black-g--4-~1-clce-or-www.laptopvip.vn-1683083662.webp', 1),
+-- Hình Điện thoại (21-25)
+(21, 'https://hanoicomputercdn.com/media/product/76341_natural_titanium_update__3_.jpg', 1),
+(22, 'https://azmobile.net/pic/product/8a6ce85b-4cce-4e0a-8c0f-0c74b7c5c541.jpg', 1),
+(23, 'https://images-na.ssl-images-amazon.com/images/I/71jfVe7scjL.jpg', 1),
+(24, 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_5_10_638509284806101849_danh-gia-ipad-pro-2024-6.jpeg', 1),
+(25, 'https://viostore.vn/wp-content/uploads/2024/02/4-2.png', 1),
+-- Hình Lót chuột (26-30)
+(26, 'https://m.media-amazon.com/images/I/41fv54TCDyL.jpg', 1),
+(27, 'https://nguyencongpc.vn/media/product/19829-razer-gigantus-v2-large-2.jpg', 1),
+(28, 'https://bizweb.dktcdn.net/thumb/grande/100/598/846/products/oip-rh-t6ndl-scsvuzekbosmqhae3.webp?v=1762414115513', 1),
+(29, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m9n5ohw5skg264', 1),
+(30, 'https://product.hstatic.net/1000129940/product/asus-rog-scabbard_3fa28e59031e4ed2af7e1bdde54bbc5c.jpg', 1),
+-- Hình Ghế (31-35)
+(31, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ45-0ixRQ33tU74CKJW-KRGDn9lqGgRnIrbw&s', 1),
+(32, 'https://akkogear.com.vn/wp-content/uploads/2023/06/ghe-choi-game-warrior-wgc203-black-red-01.jpg', 1),
+(33, 'https://owlgaming.vn/wp-content/uploads/2020/06/e-dra-midnight-gaming-chair-egc205-01.jpg', 1),
+(34, 'https://m.media-amazon.com/images/I/71O-02eW61L.jpg', 1),
+(35, 'https://www.andaseat.com/cdn/shop/files/AndaSeat-new-kaiser-4-series-gaming-chair-bentley-brown-45.webp?v=1769062951&width=720', 1);
+
 
 -- ======================================================
 -- PRODUCT ATTRIBUTES

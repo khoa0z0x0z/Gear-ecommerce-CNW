@@ -10,8 +10,15 @@ export interface Product {
     categoryName?: string;
     rating?: string;
     isNew?: boolean;
+    sold?: number;
 }
 
 export interface CartItem extends Product {
     quantity: number;
+}
+
+export interface Category {
+    id: number;
+    name: string;
+    description?: string;
 }

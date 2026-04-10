@@ -2,32 +2,32 @@
   <section class="hero-section">
     <div class="hero-left">
       <ul class="category-menu">
-        <li *ngFor="let item of heroCategories">{{ item }}</li>
+        <li *ngFor="let cat of categories()" [routerLink]="['/products']" [queryParams]="{ category: cat.name }">
+          {{ cat.name }}
+        </li>
       </ul>
     </div>
 
     <div class="hero-right">
-      <div class="slide" *ngFor="let b of banners; let i = index" [class.active]="i === currentSlideIndex">
+      <div class="slide" *ngFor="let p of heroProducts(); let i = index" [class.active]="i === currentSlideIndex">
         <div class="hero-banner-content">
           <div class="hero-brand-row">
-            <span class="hero-apple"></span>
-            <span>{{ b.tag }}</span>
+            <span class="hero-tag-badge">{{ p.tag }}</span>
           </div>
 
-          <h1>{{ b.title }}</h1>
+          <h1>{{ p.title }}</h1>
 
-          <a href="#">{{ b.btnText }} <span>→</span></a>
+          <a [routerLink]="['/products', p.id]">{{ p.btnText }} <span>→</span></a>
         </div>
 
-        <div class="hero-phone-visual">
-          <div class="phone-large"></div>
-          <div class="phone-small"></div>
+        <div class="hero-product-visual">
+          <img [src]="p.image" [alt]="p.title">
         </div>
       </div>
 
       <div class="hero-dots">
         <span
-          *ngFor="let b of banners; let i = index"
+          *ngFor="let p of heroProducts(); let i = index"
           [class.active]="i === currentSlideIndex"
           (click)="goToSlide(i)">
         </span>
@@ -45,15 +45,15 @@
       <h2>Browse By Category</h2>
 
       <div class="round-arrows">
-        <button>←</button>
-        <button>→</button>
+        <button (click)="prevCategories()" [style.opacity]="categoryPageIndex() === 0 ? 0.3 : 1" [disabled]="categoryPageIndex() === 0">←</button>
+        <button (click)="nextCategories()" [style.opacity]="visibleCategories().length < itemsPerPage ? 0.3 : 1" [disabled]="visibleCategories().length < itemsPerPage">→</button>
       </div>
     </div>
 
     <div class="category-grid">
-      <div class="category-box" *ngFor="let category of browseCategories">
-        <div class="category-icon">{{ category.icon }}</div>
-        <div class="category-name">{{ category.name }}</div>
+      <div class="category-box" *ngFor="let cat of visibleCategories()" [routerLink]="['/products']" [queryParams]="{ category: cat.name }">
+        <div class="category-icon">{{ getIcon(cat.name) }}</div>
+        <div class="category-name">{{ cat.name }}</div>
       </div>
     </div>
   </section>

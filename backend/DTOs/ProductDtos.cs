@@ -10,6 +10,7 @@ public class ProductReadDto
     public int CategoryId { get; set; }
     public string? CategoryName { get; set; }
     public List<string> ImageUrls { get; set; } = new();
+    public int Sold { get; set; }
 }
 
 public class ProductUpsertDto

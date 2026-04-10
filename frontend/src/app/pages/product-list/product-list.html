@@ -10,7 +10,7 @@
       <div class="filter-group">
         <h3>Categories</h3>
         <ul class="filter-list">
-          <li *ngFor="let cat of categories" 
+          <li *ngFor="let cat of categoriesList()" 
               [class.active]="selectedCategory() === cat"
               (click)="setCategory(cat)">
             {{ cat }}
@@ -21,7 +21,7 @@
       <div class="filter-group">
         <h3>Brands</h3>
         <ul class="filter-list">
-          <li *ngFor="let brand of brands" 
+          <li *ngFor="let brand of brandsList" 
               [class.active]="selectedBrand() === brand"
               (click)="setBrand(brand)">
             {{ brand }}
