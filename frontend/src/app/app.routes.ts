@@ -10,6 +10,11 @@ import { CheckoutPage } from './pages/checkout-page/checkout-page';
 import { NotFound } from './pages/not-found/not-found';
 import { AboutPage } from './pages/about-page/about-page';
 
+import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
+import { AdminAddProduct } from './pages/admin-add-product/admin-add-product';
+import { AdminCustomers } from './pages/admin-customers/admin-customers';
+import { AdminSettings } from './pages/admin-settings/admin-settings'; // <-- Đã import component Settings
+
 export const routes: Routes = [
   { path: '', component: Homepage },
   { path: 'products', component: ProductList },
@@ -20,5 +25,13 @@ export const routes: Routes = [
   { path: 'contact', component: ContactPage },
   { path: 'checkout', component: CheckoutPage },
   { path: 'about', component: AboutPage },
+
+  // ADMIN
+  { path: 'admin', component: AdminDashboard },
+  { path: 'admin/products', component: AdminDashboard },
+  { path: 'admin/add-product', component: AdminAddProduct },
+  { path: 'admin/customers', component: AdminCustomers },
+  { path: 'admin/settings', component: AdminSettings }, // <-- Đã khai báo route cho Settings
+
   { path: '**', component: NotFound }
 ];

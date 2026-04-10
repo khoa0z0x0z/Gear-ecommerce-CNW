@@ -1,0 +1,281 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Đảm bảo khung bao phủ toàn màn hình trừ phần header có sẵn của bạn */
+.admin-dashboard-page {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  min-height: calc(100vh - 80px); /* Tùy chỉnh 80px này theo chiều cao header thật của bạn */
+  background: #fcfcfc;
+}
+
+/* ============ SIDEBAR ============ */
+.admin-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-top {
+  padding: 28px 22px;
+}
+
+.brand-logo {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+.dashboard-title {
+  font-size: 30px;
+  line-height: 1.25;
+  margin: 0 0 34px;
+  color: #111;
+  font-weight: 700;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.menu-item {
+  width: 100%;
+  border: none;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: 0.25s ease;
+  text-align: left;
+}
+
+.menu-item.active {
+  background: #000b2e;
+  color: #fff;
+}
+
+.menu-item:hover {
+  background: #e5e5e5;
+}
+
+.menu-item.active:hover {
+  background: #000b2e;
+}
+
+.menu-icon {
+  font-size: 22px;
+}
+
+.logout-btn {
+  margin: 0 22px 24px;
+  height: 54px;
+  border: 1px solid #e3e3e3;
+  border-radius: 14px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  font-size: 17px;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #f7f7f7;
+}
+
+/* ============ MAIN CONTENT ============ */
+.admin-main {
+  flex-grow: 1;
+  background-color: #fcfcfc;
+  overflow-y: auto; /* Cho phép cuộn phần nội dung bên phải nếu quá dài */
+}
+
+.admin-content {
+  padding: 40px;
+  max-width: 1400px;
+}
+
+.content-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.content-header h2 {
+  font-size: 36px;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.content-header p {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.add-product-btn {
+  border: none;
+  background: #000b2e;
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* FILTERS */
+.filter-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.filter-title-row {
+  display: flex;
+  align-items: center;
+}
+
+.filter-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-btn {
+  height: 40px;
+  min-width: 170px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 15px;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 500;
+}
+
+select.filter-btn {
+  appearance: none;
+}
+
+.filter-btn:hover {
+  background: #f9f9f9;
+  border-color: #ccc;
+}
+
+/* PRODUCTS GRID */
+.admin-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.admin-product-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.admin-product-image {
+  height: 300px;
+  background: #f3f4f6;
+}
+
+.admin-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-product-info {
+  padding: 20px;
+}
+
+.admin-product-info h3 {
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.sold-text {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+}
+
+.edit-btn {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #f0f0f0;
+}
+
+.empty-state {
+  margin-top: 16px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .admin-product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .admin-dashboard-page { grid-template-columns: 1fr; }
+  .admin-sidebar { display: none; }
+}

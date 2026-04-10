@@ -1,0 +1,144 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* KHUNG LAYOUT CHÍNH */
+.admin-dashboard-page {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  min-height: calc(100vh - 80px);
+  background: #fcfcfc;
+}
+
+/* ============ SIDEBAR ============ */
+.admin-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-top { padding: 28px 22px; }
+.brand-logo { font-size: 24px; font-weight: 800; margin-bottom: 30px; letter-spacing: 2px; }
+.dashboard-title { font-size: 30px; line-height: 1.25; margin: 0 0 34px; color: #111; font-weight: 700; }
+.sidebar-menu { display: flex; flex-direction: column; gap: 14px; }
+
+.menu-item {
+  width: 100%; border: none; background: #f5f5f5; display: flex; align-items: center;
+  gap: 14px; padding: 16px 20px; border-radius: 14px; font-size: 18px;
+  font-weight: 600; color: #333; cursor: pointer; transition: 0.25s ease; text-align: left;
+}
+.menu-item.active { background: #000b2e; color: #fff; }
+.menu-item:hover { background: #e5e5e5; }
+.menu-item.active:hover { background: #000b2e; }
+
+.menu-icon { font-size: 22px; }
+
+.logout-btn {
+  margin: 0 22px 24px; height: 54px; border: 1px solid #e3e3e3; border-radius: 14px;
+  background: #fff; display: flex; align-items: center; gap: 12px; padding: 0 18px;
+  font-size: 17px; color: #1f2937; cursor: pointer;
+}
+.logout-btn:hover { background: #f7f7f7; }
+
+/* ============ MAIN CONTENT ============ */
+.admin-main {
+  flex-grow: 1;
+  background-color: #fcfcfc;
+  overflow-y: auto;
+}
+
+.admin-content {
+  padding: 40px;
+  max-width: 1000px; /* Thu hẹp lại một chút cho form Settings đẹp hơn */
+}
+
+.content-header {
+  margin-bottom: 30px;
+}
+.content-header h2 { font-size: 32px; color: #111; margin-bottom: 8px; }
+.content-header p { font-size: 16px; color: #6b7280; }
+
+/* ============ SETTINGS CARD ============ */
+.settings-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card-header {
+  margin-bottom: 24px;
+}
+.card-header h3 {
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 6px;
+}
+.card-header p {
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background: #fcfcfc;
+  transition: 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #000b2e;
+  background: #fff;
+}
+
+.divider {
+  height: 1px;
+  background-color: #f3f4f6;
+  margin: 30px 0 24px 0;
+  max-width: 600px;
+}
+
+.save-btn {
+  background: #000b2e;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #111827;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .admin-dashboard-page { grid-template-columns: 1fr; }
+  .admin-sidebar { display: none; }
+}

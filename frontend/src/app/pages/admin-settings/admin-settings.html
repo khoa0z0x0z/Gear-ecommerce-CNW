@@ -1,0 +1,72 @@
+<section class="admin-dashboard-page">
+  
+  <aside class="admin-sidebar">
+    <div class="sidebar-top">
+      <h1 class="dashboard-title">Admin<br>Dashboard</h1>
+
+      <nav class="sidebar-menu">
+        <a class="menu-item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">📦</span>
+          <span>Products</span>
+        </a>
+
+        <a class="menu-item" routerLink="/admin/customers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">👥</span>
+          <span>Customers</span>
+        </a>
+
+        <a class="menu-item" routerLink="/admin/settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <button class="logout-btn" type="button" (click)="logout()">
+      <span>↩</span>
+      <span>Logout</span>
+    </button>
+  </aside>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      
+      <div class="content-header">
+        <div>
+          <h2>Settings</h2>
+          <p>Configure your admin dashboard</p>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <h3>General Settings</h3>
+          <p>Manage your account preferences</p>
+        </div>
+
+        <div class="form-group">
+          <label>Store Name</label>
+          <input type="text" [(ngModel)]="settings.storeName">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="settings.email">
+        </div>
+
+        <div class="form-group">
+          <label>Currency</label>
+          <input type="text" [(ngModel)]="settings.currency">
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="save-btn" (click)="saveSettings()">
+          Save Changes
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+</section>

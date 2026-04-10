@@ -1,0 +1,79 @@
+<section class="admin-dashboard-page">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-top">
+      <h2 class="brand-logo">KAT</h2>
+      <h1 class="dashboard-title">Admin<br>Dashboard</h1>
+
+      <nav class="sidebar-menu">
+        <a class="menu-item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">📦</span>
+          <span>Products</span>
+        </a>
+
+        <a class="menu-item" routerLink="/admin/customers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">👥</span>
+          <span>Customers</span>
+        </a>
+
+        <a class="menu-item" routerLink="/admin/settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="menu-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <button class="logout-btn" type="button" (click)="logout()">
+      <span>↩</span>
+      <span>Logout</span>
+    </button>
+  </aside>
+
+  <main class="admin-main">
+    <section class="admin-content">
+
+      <p class="back" (click)="cancel()">← Back to Products</p>
+
+      <h2>Add New Product</h2>
+      <p class="sub">Fill in the information below to add a new product</p>
+
+      <div class="form-card">
+        <h3>Basic Information</h3>
+
+        <div class="grid">
+          <input placeholder="Product Name" [(ngModel)]="product.name">
+
+          <select [(ngModel)]="product.category">
+            <option value="">Select category</option>
+            <option>Laptop</option>
+            <option>Phone</option>
+          </select>
+
+          <input placeholder="SKU" [(ngModel)]="product.sku">
+          <input placeholder="Price (VND)" [(ngModel)]="product.price">
+          <input placeholder="Stock Quantity" [(ngModel)]="product.stock">
+
+          <select [(ngModel)]="product.status">
+            <option value="">Select status</option>
+            <option>Active</option>
+            <option>Out of stock</option>
+          </select>
+        </div>
+
+        <textarea placeholder="Description" [(ngModel)]="product.description"></textarea>
+      </div>
+
+      <div class="form-card">
+        <h3>Product Image</h3>
+        <input placeholder="Paste image URL..." [(ngModel)]="product.image">
+      </div>
+
+      <div class="btn-row">
+        <button class="add-btn" (click)="submit()">Add Product</button>
+        <button class="cancel-btn" (click)="cancel()">Cancel</button>
+      </div>
+
+    </section>
+  </main>
+
+</section>
