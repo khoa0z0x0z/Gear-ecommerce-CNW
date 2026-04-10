@@ -7,13 +7,13 @@
     <span class="active">Gaming Keyboards</span>
   </div>
 
-  <div class="detail-main">
+  <div class="detail-main" *ngIf="product() as p">
     <div class="detail-gallery">
       <div class="thumb-list">
         <button
           class="thumb-box"
           *ngFor="let item of thumbnails"
-          [class.active]="selectedImage.image === item.image"
+          [class.active]="selectedImage().image === item.image"
           (click)="selectImage(item)"
           type="button"
         >
@@ -22,44 +22,45 @@
       </div>
 
       <div class="main-image-box">
-        <img [src]="selectedImage.image" alt="main product image" class="main-product-image">
+        <img [src]="selectedImage().image" alt="main product image" class="main-product-image">
       </div>
     </div>
 
     <div class="detail-info">
-      <h1>RedThunder K10 Wired Gaming Keyboard and Mouse</h1>
+      <h1>{{ p.name }}</h1>
 
       <div class="rating-stock-row">
         <span class="stars">★★★★★</span>
-        <span class="review-text">(150 Reviews)</span>
+        <span class="review-text">{{ p.rating }}</span>
         <span class="divider">|</span>
         <span class="stock-text">In Stock</span>
       </div>
 
-      <p class="price">$192.00</p>
+      <p class="price">${{ p.price }}.00</p>
 
       <p class="description">
-        RedThunder K10 Wired Gaming Keyboard and Mouse and Wrist Rest Combo,
-        RGB Backlit, Mechanical Feel Anti-ghosting Keyboard + 7D 7200 DPI
-        Mega-soft Leather Wrist Rest 3 in 1 PC Gamer Accessories(Pink)
+        {{ p.description }}
       </p>
 
       <div class="line"></div>
 
       <div class="color-row">
         <span class="label">Colours:</span>
-        <div class="color-dot pink"></div>
-        <div class="color-dot black active"></div>
+        <div class="color-dot pink" [class.active]="selectedColor() === 'pink'" (click)="setColor('pink')"></div>
+        <div class="color-dot black" [class.active]="selectedColor() === 'black'" (click)="setColor('black')"></div>
       </div>
 
       <div class="buy-row">
         <div class="qty-box">
           <button type="button" (click)="decreaseQty()">-</button>
-          <span>{{ quantity }}</span>
+          <span>{{ quantity() }}</span>
           <button type="button" class="plus" (click)="increaseQty()">+</button>
         </div>
 
         <button class="buy-btn" type="button" (click)="buyNow()">Buy Now</button>
+        
+        <!-- Added logic for Add to Cart -->
+        <button class="buy-btn" type="button" (click)="addToCart()" style="background: #111; margin-left: -10px;">Add to Cart</button>
 
         <button class="wishlist-btn" type="button">♡</button>
       </div>
@@ -91,30 +92,28 @@
     </div>
 
     <div class="related-grid">
-      <div class="related-card" *ngFor="let product of relatedProducts">
+      <div class="related-card" *ngFor="let rel of relatedProducts">
         <div class="related-image-box">
-          <span class="sale-badge" *ngIf="product.badge">{{ product.badge }}</span>
-
           <div class="card-actions">
             <span>♡</span>
             <span>👁</span>
           </div>
 
           <div class="related-icon">
-            <img [src]="product.image" [alt]="product.name">
+            <img [src]="rel.image" [alt]="rel.name">
           </div>
 
-          <button class="hover-add-cart-btn" type="button">Add To Cart</button>
+          <button class="hover-add-cart-btn" type="button" (click)="addToCart()">Add To Cart</button>
         </div>
 
-        <h4>{{ product.name }}</h4>
+        <h4>{{ rel.name }}</h4>
 
         <p class="price-row">
-          <span class="new-price">{{ product.price }}</span>
-          <span class="old-price">{{ product.oldPrice }}</span>
+          <span class="new-price">${{ rel.price }}</span>
+          <span class="old-price" *ngIf="rel.oldPrice">${{ rel.oldPrice }}</span>
         </p>
 
-        <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+        <p class="rating-row">★★★★★ <span>{{ rel.rating }}</span></p>
       </div>
     </div>
   </section>

@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-homepage',
@@ -9,6 +10,28 @@ import { RouterLink } from '@angular/router';
   styleUrl: './homepage.css'
 })
 export class Homepage implements OnInit, OnDestroy {
+  private cartService = inject(CartService);
+  
+  // Method to add items to cart from the homepage
+  addToCart(product: any) {
+    // Basic mapping: handle price as number (remove $)
+    const priceNum = typeof product.price === 'string' 
+      ? parseFloat(product.price.replace('$', '')) 
+      : product.price;
+
+    this.cartService.addToCart({
+      id: Math.random(), // For mockup, real products will have IDs
+      name: product.name,
+      price: priceNum,
+      image: product.image,
+      description: 'Mock product description',
+      category: 'Electronics',
+      rating: product.rating
+    });
+    
+    alert(`Added ${product.name} to cart!`);
+  }
+
   currentSlideIndex = 0;
   autoPlayInterval: any;
 

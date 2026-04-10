@@ -84,6 +84,13 @@
           <div class="product-badge">
             <img [src]="product.image" [alt]="product.name">
           </div>
+          
+          <!-- Thêm nút Add to Cart (đã bổ sung logic) -->
+          <button (click)="addToCart(product); $event.stopPropagation()" 
+                  style="position: absolute; bottom: 0; left: 0; width: 100%; background: #000; color: #fff; border: none; padding: 10px; cursor: pointer; display: none;"
+                  class="add-to-cart-btn">
+            Add To Cart
+          </button>
         </div>
 
         <h4>{{ product.name }}</h4>
@@ -159,6 +166,13 @@
           <div class="product-badge">
             <img [src]="product.image" [alt]="product.name">
           </div>
+
+          <!-- Thêm nút Add to Cart -->
+          <button (click)="addToCart(product); $event.stopPropagation()" 
+                  style="position: absolute; bottom: 0; left: 0; width: 100%; background: #000; color: #fff; border: none; padding: 10px; cursor: pointer; display: none;"
+                  class="add-to-cart-btn">
+            Add To Cart
+          </button>
         </div>
 
         <h4>{{ product.name }}</h4>
@@ -232,3 +246,10 @@
     </div>
   </section>
 </section>
+
+<!-- CSS fix để hiện nút Add to Cart khi hover trong file homepage.css -->
+<style>
+  .product-image-box:hover .add-to-cart-btn {
+    display: block !important;
+  }
+</style>

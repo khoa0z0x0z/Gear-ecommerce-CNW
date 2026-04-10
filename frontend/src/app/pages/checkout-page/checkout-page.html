@@ -1,58 +1,66 @@
 <section class="checkout-page">
   <div class="breadcrumb">
-    <span>Account</span> / <span>My Account</span> / <span>Product</span> / <span>View Cart</span> / <span class="active">CheckOut</span>
+    <span>Account</span> / <span>My Account</span> / <span>Product</span> / <span routerLink="/cart" style="cursor: pointer;">View Cart</span> / <span class="active">CheckOut</span>
   </div>
 
   <h2>Billing Details</h2>
 
-  <div class="checkout-container">
+  <div class="checkout-container" [formGroup]="checkoutForm">
     <div class="billing-form">
       <div class="form-group">
         <label>First Name<span class="required">*</span></label>
-        <input type="text" [(ngModel)]="firstName">
+        <input type="text" formControlName="firstName" [class.error-border]="isInvalid('firstName')">
+        <span class="error-msg" *ngIf="isInvalid('firstName')">First name is required</span>
       </div>
 
       <div class="form-group">
         <label>Company Name</label>
-        <input type="text" [(ngModel)]="companyName">
+        <input type="text" formControlName="companyName">
       </div>
 
       <div class="form-group">
         <label>Street Address<span class="required">*</span></label>
-        <input type="text" [(ngModel)]="streetAddress">
+        <input type="text" formControlName="streetAddress" [class.error-border]="isInvalid('streetAddress')">
+        <span class="error-msg" *ngIf="isInvalid('streetAddress')">Address is required</span>
       </div>
 
       <div class="form-group">
         <label>Apartment, floor, etc. (optional)</label>
-        <input type="text" [(ngModel)]="apartment">
+        <input type="text" formControlName="apartment">
       </div>
 
       <div class="form-group">
         <label>Town / City<span class="required">*</span></label>
-        <input type="text" [(ngModel)]="townCity">
+        <input type="text" formControlName="townCity" [class.error-border]="isInvalid('townCity')">
+        <span class="error-msg" *ngIf="isInvalid('townCity')">City is required</span>
       </div>
 
       <div class="form-group">
         <label>Phone Number<span class="required">*</span></label>
-        <input type="tel" [(ngModel)]="phoneNumber">
+        <input type="tel" formControlName="phoneNumber" [class.error-border]="isInvalid('phoneNumber')">
+        <span class="error-msg" *ngIf="isInvalid('phoneNumber')">Invalid phone number (10 digits)</span>
       </div>
 
       <div class="form-group">
         <label>Email Address<span class="required">*</span></label>
-        <input type="email" [(ngModel)]="emailAddress">
+        <input type="email" formControlName="emailAddress" [class.error-border]="isInvalid('emailAddress')">
+        <span class="error-msg" *ngIf="isInvalid('emailAddress')">Valid email is required</span>
       </div>
 
       <div class="checkbox-group">
-        <input type="checkbox" id="saveInfo">
+        <input type="checkbox" id="saveInfo" formControlName="saveInfo">
         <label for="saveInfo">Save this information for faster check-out next time</label>
       </div>
     </div>
 
     <div class="order-summary-card">
       <div class="order-items">
-        <div class="item-row" *ngFor="let item of orderItems">
+        <div class="item-row" *ngFor="let item of cartItems()">
           <div class="item-name">
-            <span class="item-icon">{{ item.image }}</span>
+            <span class="item-icon">
+                <img [src]="item.image" style="width: 32px; height: 32px; object-fit: contain;" *ngIf="item.image">
+                <span *ngIf="!item.image">📦</span>
+            </span>
             <span>{{ item.name }}</span>
           </div>
           <div class="item-price">${{ item.price * item.quantity }}</div>
@@ -62,7 +70,7 @@
       <div class="summary-totals">
         <div class="total-row">
           <span>Subtotal:</span>
-          <span>${{ getSubtotal() }}</span>
+          <span>${{ totalPrice() }}</span>
         </div>
         <div class="total-row line">
           <span>Shipping:</span>
@@ -70,31 +78,36 @@
         </div>
         <div class="total-row final">
           <span>Total:</span>
-          <span>${{ getSubtotal() }}</span>
+          <span>${{ totalPrice() }}</span>
         </div>
       </div>
 
       <div class="payment-methods">
         <div class="radio-group">
-          <input type="radio" id="bank" name="payment" value="bank" [(ngModel)]="paymentMethod">
+          <input type="radio" id="bank" value="bank" formControlName="paymentMethod">
           <label for="bank">Bank</label>
-          <div class="bank-icons" *ngIf="paymentMethod === 'bank'">
+          <div class="bank-icons" *ngIf="checkoutForm.get('paymentMethod')?.value === 'bank'">
              <span class="fake-card">💳</span>
              <span class="fake-card">🏦</span>
           </div>
         </div>
         <div class="radio-group">
-          <input type="radio" id="cash" name="payment" value="cash" [(ngModel)]="paymentMethod">
+          <input type="radio" id="cash" value="cash" formControlName="paymentMethod">
           <label for="cash">Cash on delivery</label>
         </div>
       </div>
 
       <div class="coupon-row">
         <input type="text" placeholder="Coupon Code">
-        <button class="apply-btn">Apply Coupon</button>
+        <button class="apply-btn" type="button">Apply Coupon</button>
       </div>
 
       <button class="place-order-btn" (click)="placeOrder()">Place Order</button>
     </div>
   </div>
 </section>
+
+<style>
+  .error-border { border: 1px solid #ff4d4f !important; }
+  .error-msg { color: #ff4d4f; font-size: 11px; margin-top: 4px; display: block; }
+</style>

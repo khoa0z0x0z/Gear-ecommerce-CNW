@@ -6,7 +6,7 @@
     <a routerLink="/contact">Contact</a>
     <a routerLink="/about">About</a>
     
-    <a *ngIf="!isLoggedIn" routerLink="/register">Sign Up</a>
+    <a *ngIf="!isLoggedIn()" routerLink="/register">Sign Up</a>
   </nav>
 
   <div class="nav-actions">
@@ -15,8 +15,13 @@
       <button class="search-icon">🔍</button>
     </div>
 
-    <div class="user-area" *ngIf="isLoggedIn">
-      <a routerLink="/cart" class="icon-btn">🛒</a>
+    <div class="user-area" *ngIf="isLoggedIn()">
+      <a routerLink="/cart" class="icon-btn" style="position: relative;">
+        🛒
+        <span *ngIf="cartCount() > 0" style="position: absolute; top: -5px; right: -10px; background: #db4444; color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          {{ cartCount() }}
+        </span>
+      </a>
       
       <div class="avatar-container">
         <button class="icon-btn avatar-btn" (click)="toggleDropdown()">👤</button>
@@ -29,5 +34,7 @@
         </div>
       </div>
     </div>
+    
+    <a *ngIf="!isLoggedIn()" routerLink="/login" style="text-decoration: none; color: #111; font-weight: 500;">Login</a>
   </div>
 </header>

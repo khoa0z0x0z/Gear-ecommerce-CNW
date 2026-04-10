@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, inject } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/product.model';
 
 @Component({
   selector: 'app-cart-page',
@@ -9,47 +11,28 @@ import { RouterLink, Router } from '@angular/router';
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css'
 })
-export class CartPage implements OnInit {
-  cartItems: any[] = []; // Bắt đầu với giỏ trống
+export class CartPage {
+  private cartService = inject(CartService);
+  private router = inject(Router);
 
-  constructor(private router: Router) {}
+  // Bind to the service signals
+  cartItems = this.cartService.cartItems;
+  totalPrice = this.cartService.totalPrice;
 
-  // Tự động load đồ từ tủ
-  ngOnInit() {
-    const savedCart = localStorage.getItem('kat_cart');
-    if (savedCart) {
-      this.cartItems = JSON.parse(savedCart); 
-    }
+  increaseQty(item: CartItem) {
+    this.cartService.updateQuantity(item.id, item.quantity + 1);
   }
 
-  // Cập nhật lại tủ đồ khi có thay đổi
-  updateStorage() {
-    localStorage.setItem('kat_cart', JSON.stringify(this.cartItems));
-  }
-
-  increaseQty(item: any) {
-    item.quantity++;
-    this.updateStorage(); 
-  }
-
-  decreaseQty(item: any) {
-    if (item.quantity > 1) {
-      item.quantity--;
-      this.updateStorage(); 
-    }
+  decreaseQty(item: CartItem) {
+    this.cartService.updateQuantity(item.id, item.quantity - 1);
   }
 
   removeItem(id: number) {
-    this.cartItems = this.cartItems.filter(item => item.id !== id);
-    this.updateStorage(); 
-  }
-
-  getSubtotal() {
-    return this.cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    this.cartService.removeFromCart(id);
   }
 
   checkout() {
-    if (this.cartItems.length === 0) {
+    if (this.cartItems().length === 0) {
       alert('Giỏ hàng đang trống! Vui lòng quay lại trang chủ chọn đồ nha.');
     } else {
       this.router.navigate(['/checkout']);

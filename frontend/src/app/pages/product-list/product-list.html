@@ -4,31 +4,91 @@
     <p>Explore our complete collection of premium tech gear.</p>
   </div>
 
-  <div class="product-grid four-cols">
-    <div
-      class="product-card"
-      *ngFor="let product of allProducts; let i = index"
-      [routerLink]="['/products', i + 1]"
-    >
-      <div class="product-image-box">
-        <div class="product-actions">
-          <span>♡</span>
-          <span>👁</span>
-        </div>
+  <div class="product-content-wrapper">
+    <!-- Sidebar Filters -->
+    <aside class="filter-sidebar">
+      <div class="filter-group">
+        <h3>Categories</h3>
+        <ul class="filter-list">
+          <li *ngFor="let cat of categories" 
+              [class.active]="selectedCategory() === cat"
+              (click)="setCategory(cat)">
+            {{ cat }}
+          </li>
+        </ul>
+      </div>
 
-        <div class="product-badge">
-          <img [src]="product.image" [alt]="product.name">
+      <div class="filter-group">
+        <h3>Brands</h3>
+        <ul class="filter-list">
+          <li *ngFor="let brand of brands" 
+              [class.active]="selectedBrand() === brand"
+              (click)="setBrand(brand)">
+            {{ brand }}
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="product-main">
+      <div class="list-top-bar">
+        <div class="results-count">
+          Showing {{ filteredProducts().length }} results
+        </div>
+        <div class="sort-box">
+          <label class="mr-2 text-sm text-gray-600">Sort by: </label>
+          <select class="sort-select" [value]="sortBy()" (change)="setSort($any($event.target).value)">
+            <option value="newest">Newest Arrival</option>
+            <option value="priceLow">Price: Low to High</option>
+            <option value="priceHigh">Price: High to Low</option>
+          </select>
         </div>
       </div>
 
-      <h4>{{ product.name }}</h4>
+      <div class="product-grid three-cols">
+        <div
+          class="product-card"
+          *ngFor="let product of filteredProducts()"
+          [routerLink]="['/products', product.id]"
+        >
+          <div class="product-image-box">
+            <div class="product-actions">
+              <span>♡</span>
+              <span [routerLink]="['/products', product.id]">👁</span>
+            </div>
 
-      <p class="price-row">
-        <span class="new-price">{{ product.price }}</span>
-        <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}</span>
-      </p>
+            <div class="sale-badge" *ngIf="product.oldPrice">
+              SALE
+            </div>
 
-      <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
-    </div>
+            <div class="product-badge">
+              <img [src]="product.image" [alt]="product.name">
+            </div>
+
+            <button class="add-to-cart-overlay" (click)="addToCart(product); $event.stopPropagation()">
+              Add To Cart
+            </button>
+          </div>
+
+          <h4>{{ product.name }}</h4>
+
+          <p class="price-row">
+            <span class="new-price">${{ product.price }}</span>
+            <span class="old-price" *ngIf="product.oldPrice">${{ product.oldPrice }}</span>
+          </p>
+
+          <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" *ngIf="filteredProducts().length > 0">
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>→</button>
+      </div>
+    </main>
   </div>
 </section>
