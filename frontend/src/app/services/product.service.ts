@@ -23,4 +23,16 @@ export class ProductService {
   search(term: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/search?term=${term}`);
   }
+
+  create(product: any): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, product);
+  }
+
+  update(id: number, product: any): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

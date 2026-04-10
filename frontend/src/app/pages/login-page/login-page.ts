@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core'; 
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -37,20 +37,19 @@ export class LoginPage implements OnInit {
     const { email, password } = this.loginForm.value;
     this.errorMessage = null;
 
-    // Allow admin login directly from the default login page.
-    if (email === this.adminEmail && password === this.adminPassword) {
-      localStorage.setItem('isAdminLoggedIn', 'true');
-      alert('Đăng nhập admin thành công!');
-      this.router.navigate(['/admin']);
-      return;
-    }
-
-    localStorage.removeItem('isAdminLoggedIn');
-
     this.authService.login({ email, password }).subscribe({
       next: (res) => {
-        alert('🎉 Đăng nhập thành công! Chào mừng bạn quay lại hệ thống.');
-        this.router.navigate(['/']);
+        const role = localStorage.getItem('role');
+
+        if (role === 'Admin') {
+          localStorage.setItem('isAdminLoggedIn', 'true');
+          alert('🎉 Đăng nhập Admin thành công!');
+          this.router.navigate(['/admin']);
+        } else {
+          localStorage.removeItem('isAdminLoggedIn');
+          alert('🎉 Đăng nhập thành công! Chào mừng bạn quay lại hệ thống.');
+          this.router.navigate(['/']);
+        }
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Email hoặc mật khẩu không đúng!';

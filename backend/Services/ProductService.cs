@@ -39,18 +39,57 @@ public class ProductService : IProductService
     public async Task<ProductReadDto> CreateProductAsync(ProductUpsertDto productDto)
     {
         var product = _mapper.Map<Product>(productDto);
+        
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
+
+        // Add Images after Product ID is generated
+        if (productDto.ImageUrls != null && productDto.ImageUrls.Any())
+        {
+            foreach (var (url, index) in productDto.ImageUrls.Select((u, i) => (u, i)))
+            {
+                _context.ProductImages.Add(new ProductImage
+                {
+                    ImageUrl = url,
+                    IsPrimary = index == 0,
+                    ProductId = product.Id
+                });
+            }
+            await _context.SaveChangesAsync();
+        }
+
         return _mapper.Map<ProductReadDto>(product);
     }
 
     public async Task<ProductReadDto?> UpdateProductAsync(int id, ProductUpsertDto productDto)
     {
-        var product = await _context.Products.FindAsync(id);
+        var product = await _context.Products
+            .Include(p => p.ProductImages)
+            .FirstOrDefaultAsync(p => p.Id == id);
         if (product == null) return null;
 
         _mapper.Map(productDto, product);
+
+        // Remove existing images
+        var existingImages = _context.ProductImages.Where(i => i.ProductId == id);
+        _context.ProductImages.RemoveRange(existingImages);
         await _context.SaveChangesAsync();
+
+        // Add new images
+        if (productDto.ImageUrls != null && productDto.ImageUrls.Any())
+        {
+            foreach (var (url, index) in productDto.ImageUrls.Select((u, i) => (u, i)))
+            {
+                _context.ProductImages.Add(new ProductImage
+                {
+                    ImageUrl = url,
+                    IsPrimary = index == 0,
+                    ProductId = id
+                });
+            }
+            await _context.SaveChangesAsync();
+        }
+
         return _mapper.Map<ProductReadDto>(product);
     }
 

@@ -25,6 +25,13 @@ export class CheckoutPage implements OnInit {
   checkoutForm!: FormGroup;
 
   ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Vui lòng đăng nhập để tiến hành thanh toán!');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.checkoutForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       companyName: [''],
@@ -53,24 +60,10 @@ export class CheckoutPage implements OnInit {
 
     const form = this.checkoutForm.value;
     const orderBody = {
-      addressId: 0, // In real app, we might select/create address first. 
-      // For now, the backend will handle address if we send Address object or use simple logic.
-      // Since our Order controller expects AddressId, I'll assume we used a default or created one.
-      // To keep it simple, I'll pass 1 (assuming at least one address exists or modify controller later)
-      address: {
-        fullAddress: `${form.streetAddress}, ${form.apartment}`,
-        city: form.townCity,
-        district: '',
-        ward: ''
-      },
-      totalAmount: this.totalPrice(),
-      shippingFee: 0,
-      note: form.companyName,
-      orderDetails: this.cartItems().map(item => ({
-        productId: item.id,
-        quantity: item.quantity,
-        price: item.price
-      }))
+      addressId: 0,
+      note: form.companyName || '',
+      city: form.townCity,
+      fullAddress: `${form.streetAddress}${form.apartment ? ', ' + form.apartment : ''}`
     };
 
     this.orderService.createOrder(orderBody).subscribe({

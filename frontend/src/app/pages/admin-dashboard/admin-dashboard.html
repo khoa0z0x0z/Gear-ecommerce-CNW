@@ -1,32 +1,5 @@
 <section class="admin-dashboard-page">
-  
-  <aside class="admin-sidebar">
-    <div class="sidebar-top">
-      <h1 class="dashboard-title">Admin<br>Dashboard</h1>
-
-      <nav class="sidebar-menu">
-        <a class="menu-item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <span class="menu-icon">📦</span>
-          <span>Products</span>
-        </a>
-
-        <a class="menu-item" routerLink="/admin/customers" routerLinkActive="active">
-          <span class="menu-icon">👥</span>
-          <span>Customers</span>
-        </a>
-
-        <a class="menu-item" routerLink="/admin/settings" routerLinkActive="active">
-          <span class="menu-icon">⚙️</span>
-          <span>Settings</span>
-        </a>
-      </nav>
-    </div>
-
-    <button class="logout-btn" type="button" (click)="logout()">
-      <span>↩</span>
-      <span>Logout</span>
-    </button>
-  </aside>
+  <app-admin-sidebar></app-admin-sidebar>
 
   <main class="admin-main">
     <section class="admin-content">
@@ -50,12 +23,11 @@
         </div>
 
         <div class="filter-row">
-          <select class="filter-btn" [value]="selectedCategory" (change)="selectedCategory = $any($event.target).value">
+          <select class="filter-btn" [(ngModel)]="selectedCategory">
             <option value="all">Category: All</option>
-            <option value="Phone">Phone</option>
-            <option value="Laptop">Laptop</option>
-            <option value="Tablet">Tablet</option>
+            <option *ngFor="let cat of categories()" [value]="cat.name">{{ cat.name }}</option>
           </select>
+          <!-- ... rest of filters ... -->
 
           <select class="filter-btn" [value]="selectedPriceRange" (change)="selectedPriceRange = $any($event.target).value">
             <option value="all">Price: All</option>
@@ -80,21 +52,24 @@
         </div>
       </div>
 
-      <div class="admin-product-grid">
-        <div class="admin-product-card" *ngFor="let product of filteredProducts">
-          <div class="admin-product-image">
-            <img [src]="product.image" [alt]="product.name" />
-          </div>
+      <div class="slider-container">
+        <div class="admin-product-grid">
+          <div class="admin-product-card" *ngFor="let product of filteredProducts">
+            <div class="admin-product-image">
+              <img [src]="product.image" [alt]="product.name" />
+            </div>
 
-          <div class="admin-product-info">
-            <h3>{{ product.name }}</h3>
-            <p class="sold-text">{{ product.sold }} sold</p>
+            <div class="admin-product-info">
+              <h3>{{ product.name }}</h3>
+              <p class="sold-text">{{ product.sold }} sold</p>
 
-            <div class="product-bottom">
-              <span class="price">{{ product.price }}</span>
-              <button type="button" class="edit-btn" (click)="editProduct(product.name)">
-                Edit
-              </button>
+              <div class="product-bottom">
+                <span class="price">{{ product.priceValue | number:'1.0-0' }} VND</span>
+                <div class="actions">
+                  <button type="button" class="edit-btn" (click)="editProduct(product.id)">Edit</button>
+                  <button type="button" class="delete-btn" (click)="deleteProduct(product.id)">Delete</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

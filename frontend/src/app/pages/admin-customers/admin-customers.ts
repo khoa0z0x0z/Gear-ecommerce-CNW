@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
+import { AdminSidebar } from '../../components/admin-sidebar/admin-sidebar';
 
 type CustomerStatus = 'Active' | 'Inactive';
 
@@ -17,12 +17,12 @@ type Customer = {
 @Component({
   selector: 'app-admin-customers',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, AdminSidebar],
   templateUrl: './admin-customers.html',
   styleUrl: './admin-customers.css'
 })
 export class AdminCustomers implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit() {
     const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';

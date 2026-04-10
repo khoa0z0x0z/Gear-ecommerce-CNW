@@ -9,4 +9,5 @@ public interface ICartService
     Task<CartReadDto> UpdateQuantityAsync(int userId, CartItemUpdateDto itemDto);
     Task<bool> RemoveFromCartAsync(int userId, int productId);
     Task<bool> ClearCartAsync(int userId);
+    Task<CartReadDto> SyncCartAsync(int userId, IEnumerable<CartItemUpdateDto> items);
 }

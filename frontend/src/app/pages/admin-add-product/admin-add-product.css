@@ -8,8 +8,10 @@
 /* KHUNG LAYOUT CHÍNH */
 .admin-dashboard-page {
   display: grid;
-  grid-template-columns: 290px 1fr; /* Độ rộng sidebar y hệt 2 trang kia */
-  min-height: calc(100vh - 80px); /* Bỏ bớt chiều cao của Header gốc */
+  grid-template-columns: 290px 1fr;
+  /* Độ rộng sidebar y hệt 2 trang kia */
+  min-height: calc(100vh - 80px);
+  /* Bỏ bớt chiều cao của Header gốc */
   background: #fcfcfc;
 }
 
@@ -22,28 +24,83 @@
   justify-content: space-between;
 }
 
-.sidebar-top { padding: 28px 22px; }
-.brand-logo { font-size: 24px; font-weight: 800; margin-bottom: 30px; letter-spacing: 2px; }
-.dashboard-title { font-size: 30px; line-height: 1.25; margin: 0 0 34px; color: #111; font-weight: 700; }
-.sidebar-menu { display: flex; flex-direction: column; gap: 14px; }
+.sidebar-top {
+  padding: 28px 22px;
+}
+
+.brand-logo {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+.dashboard-title {
+  font-size: 30px;
+  line-height: 1.25;
+  margin: 0 0 34px;
+  color: #111;
+  font-weight: 700;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
 .menu-item {
-  width: 100%; border: none; background: #f5f5f5; display: flex; align-items: center;
-  gap: 14px; padding: 16px 20px; border-radius: 14px; font-size: 18px;
-  font-weight: 600; color: #333; cursor: pointer; transition: 0.25s ease; text-align: left;
+  width: 100%;
+  border: none;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: 0.25s ease;
+  text-align: left;
 }
-.menu-item.active { background: #000b2e; color: #fff; }
-.menu-item:hover { background: #e5e5e5; }
-.menu-item.active:hover { background: #000b2e; }
 
-.menu-icon { font-size: 22px; }
+.menu-item.active {
+  background: #000b2e;
+  color: #fff;
+}
+
+.menu-item:hover {
+  background: #e5e5e5;
+}
+
+.menu-item.active:hover {
+  background: #000b2e;
+}
+
+.menu-icon {
+  font-size: 22px;
+}
 
 .logout-btn {
-  margin: 0 22px 24px; height: 54px; border: 1px solid #e3e3e3; border-radius: 14px;
-  background: #fff; display: flex; align-items: center; gap: 12px; padding: 0 18px;
-  font-size: 17px; color: #1f2937; cursor: pointer;
+  margin: 0 22px 24px;
+  height: 54px;
+  border: 1px solid #e3e3e3;
+  border-radius: 14px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  font-size: 17px;
+  color: #1f2937;
+  cursor: pointer;
 }
-.logout-btn:hover { background: #f7f7f7; }
+
+.logout-btn:hover {
+  background: #f7f7f7;
+}
 
 /* ============ MAIN CONTENT ============ */
 .admin-main {
@@ -64,10 +121,22 @@
   font-weight: 500;
   display: inline-block;
 }
-.back:hover { color: #111; }
 
-h2 { margin-bottom: 5px; font-size: 32px; color: #111; }
-.sub { color: #666; margin-bottom: 30px; font-size: 16px; }
+.back:hover {
+  color: #111;
+}
+
+h2 {
+  margin-bottom: 5px;
+  font-size: 32px;
+  color: #111;
+}
+
+.sub {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
 
 /* FORM CHUẨN */
 .form-card {
@@ -75,7 +144,7 @@ h2 { margin-bottom: 5px; font-size: 32px; color: #111; }
   padding: 24px;
   border-radius: 16px;
   margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   border: 1px solid #eee;
 }
 
@@ -88,25 +157,43 @@ h2 { margin-bottom: 5px; font-size: 32px; color: #111; }
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
-input, select, textarea {
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  /* Gray 700 */
+}
+
+input,
+select,
+textarea {
   width: 100%;
-  padding: 14px;
-  border: 1px solid #ddd;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
   border-radius: 10px;
   outline: none;
   font-size: 15px;
-  transition: 0.2s;
+  transition: all 0.2s;
+  background: #fff;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: #000b2e;
+  box-shadow: 0 0 0 4px rgba(0, 11, 46, 0.05);
 }
 
 textarea {
-  margin-top: 16px;
   height: 120px;
   resize: vertical;
 }
@@ -128,7 +215,10 @@ textarea {
   font-size: 16px;
   font-weight: 600;
 }
-.add-btn:hover { background: #111827; }
+
+.add-btn:hover {
+  background: #111827;
+}
 
 .cancel-btn {
   background: #f5f5f5;
@@ -140,4 +230,7 @@ textarea {
   font-size: 16px;
   font-weight: 600;
 }
-.cancel-btn:hover { background: #e5e5e5; }
+
+.cancel-btn:hover {
+  background: #e5e5e5;
+}

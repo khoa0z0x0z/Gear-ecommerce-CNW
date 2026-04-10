@@ -32,6 +32,12 @@ public class CartsController : ControllerBase
         return Ok(await _cartService.AddToCartAsync(UserId, itemDto));
     }
 
+    [HttpPost("sync")]
+    public async Task<IActionResult> SyncCart(IEnumerable<CartItemUpdateDto> items)
+    {
+        return Ok(await _cartService.SyncCartAsync(UserId, items));
+    }
+
     [HttpPut("items")]
     public async Task<IActionResult> UpdateQuantity(CartItemUpdateDto itemDto)
     {

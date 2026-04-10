@@ -8,6 +8,7 @@ public class OrderReadDto
     public decimal ShippingFee { get; set; }
     public string? Status { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string? CustomerName { get; set; }
     public List<OrderDetailReadDto> OrderDetails { get; set; } = new();
 }
 
@@ -23,4 +24,8 @@ public class OrderCreateDto
 {
     public int AddressId { get; set; }
     public string? Note { get; set; }
+    
+    // Optional address fields for auto-creation
+    public string? City { get; set; }
+    public string? FullAddress { get; set; }
 }

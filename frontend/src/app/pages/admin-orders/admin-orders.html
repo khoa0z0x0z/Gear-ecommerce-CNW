@@ -1,0 +1,55 @@
+<section class="admin-dashboard-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      <div class="content-header">
+        <div>
+          <h2>Order Management</h2>
+          <p>View and update customer orders</p>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders()">
+              <td>#{{ order.id }}</td>
+              <td>{{ order.customerName || 'Customer #' + order.userId }}</td>
+              <td>{{ order.createdAt | date:'short' }}</td>
+              <td class="font-bold">{{ order.totalAmount | number:'1.0-0' }} VNĐ</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>
+                <select [ngModel]="order.status" (ngModelChange)="updateStatus(order.id, $event)" class="status-select">
+                  <option value="Pending">Pending</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="empty-state" *ngIf="orders().length === 0">
+          No orders found in the system.
+        </div>
+      </div>
+    </section>
+  </main>
+</section>

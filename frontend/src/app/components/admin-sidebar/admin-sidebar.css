@@ -1,0 +1,80 @@
+.admin-sidebar {
+    background: #ffffff;
+    border-right: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.sidebar-top {
+    padding: 28px 22px;
+}
+
+.dashboard-title {
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 0 0 34px;
+    color: #111;
+    font-weight: 700;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.menu-item {
+    width: 100%;
+    border: none;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: 0.25s ease;
+    text-decoration: none;
+}
+
+.menu-item.active {
+    background: #000b2e;
+    color: #fff !important;
+}
+
+.menu-item:hover {
+    background: #e5e5e5;
+}
+
+.menu-item.active:hover {
+    background: #000b2e;
+}
+
+.menu-icon {
+    font-size: 22px;
+}
+
+.logout-btn {
+    margin: 0 22px 24px;
+    height: 54px;
+    border: 1px solid #e3e3e3;
+    border-radius: 14px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 18px;
+    font-size: 17px;
+    color: #1f2937;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background: #f7f7f7;
+}

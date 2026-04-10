@@ -13,7 +13,9 @@ import { AboutPage } from './pages/about-page/about-page';
 import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { AdminAddProduct } from './pages/admin-add-product/admin-add-product';
 import { AdminCustomers } from './pages/admin-customers/admin-customers';
-import { AdminSettings } from './pages/admin-settings/admin-settings'; // <-- Đã import component Settings
+import { AdminSettings } from './pages/admin-settings/admin-settings';
+import { AdminOrders } from './pages/admin-orders/admin-orders';
+import { AdminStats } from './pages/admin-stats/admin-stats';
 
 export const routes: Routes = [
   { path: '', component: Homepage },
@@ -30,8 +32,11 @@ export const routes: Routes = [
   { path: 'admin', component: AdminDashboard },
   { path: 'admin/products', component: AdminDashboard },
   { path: 'admin/add-product', component: AdminAddProduct },
+  { path: 'admin/edit-product/:id', component: AdminAddProduct },
   { path: 'admin/customers', component: AdminCustomers },
-  { path: 'admin/settings', component: AdminSettings }, // <-- Đã khai báo route cho Settings
+  { path: 'admin/orders', component: AdminOrders },
+  { path: 'admin/stats', component: AdminStats },
+  { path: 'admin/settings', component: AdminSettings },
 
   { path: '**', component: NotFound }
 ];

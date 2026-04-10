@@ -20,10 +20,12 @@ public class MappingProfile : Profile
         CreateMap<Product, ProductReadDto>()
             .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
             .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ProductImages.Select(i => i.ImageUrl)));
-        CreateMap<ProductUpsertDto, Product>();
+        CreateMap<ProductUpsertDto, Product>()
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore());
 
         // Order Mappings
-        CreateMap<Order, OrderReadDto>();
+        CreateMap<Order, OrderReadDto>()
+            .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.User != null ? src.User.FullName : null));
         CreateMap<OrderDetail, OrderDetailReadDto>()
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null));
         CreateMap<OrderCreateDto, Order>();

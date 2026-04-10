@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { RouterLinkActive } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminSidebar } from '../../components/admin-sidebar/admin-sidebar';
+import { ProductService } from '../../services/product.service';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/product.model';
 
 type AdminProduct = {
+  id: number;
   name: string;
   sold: number;
   price: string;
   priceValue: number;
-  category: 'Phone' | 'Laptop' | 'Tablet';
+  category: string;
   status: 'Active' | 'Out of stock';
   image: string;
 };
@@ -17,59 +21,60 @@ type AdminProduct = {
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, AdminSidebar],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css'
 })
 export class AdminDashboard implements OnInit {
-  constructor(private router: Router) {}
+  private productService = inject(ProductService);
+  private categoryService = inject(CategoryService);
+  private router = inject(Router);
 
   selectedCategory = 'all';
   selectedPriceRange = 'all';
   selectedStatus = 'all';
   selectedSort = 'sold-desc';
 
-  products: AdminProduct[] = [
-    {
-      name: 'iPhone 15 Pro',
-      sold: 234,
-      price: '28.500.000đ',
-      priceValue: 28500000,
-      category: 'Phone',
-      status: 'Active',
-      image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=1200&auto=format&fit=crop'
-    },
-    {
-      name: 'Samsung Galaxy S24',
-      sold: 189,
-      price: '24.300.000đ',
-      priceValue: 24300000,
-      category: 'Phone',
-      status: 'Active',
-      image: 'https://images.unsplash.com/photo-1706372047074-8f9d1d0d2c5f?q=80&w=1200&auto=format&fit=crop'
-    },
-    {
-      name: 'MacBook Air M3',
-      sold: 156,
-      price: '29.100.000đ',
-      priceValue: 29100000,
-      category: 'Laptop',
-      status: 'Active',
-      image: 'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?q=80&w=1200&auto=format&fit=crop'
-    },
-    {
-      name: 'iPad Pro',
-      sold: 143,
-      price: '23.700.000đ',
-      priceValue: 23700000,
-      category: 'Tablet',
-      status: 'Out of stock',
-      image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=1200&auto=format&fit=crop'
+  products = signal<AdminProduct[]>([]);
+  categories = signal<Category[]>([]);
+
+  ngOnInit() {
+    const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
+    if (!isAdminLoggedIn) {
+      this.router.navigate(['/login']);
+      return;
     }
-  ];
+    this.loadData();
+  }
+
+  loadData() {
+    this.categoryService.getAll().subscribe({
+      next: (cats) => this.categories.set(cats)
+    });
+
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService.getAll().subscribe({
+      next: (data) => {
+        const mapped: AdminProduct[] = data.map(p => ({
+          id: p.id,
+          name: p.name,
+          sold: p.sold || 0,
+          price: (p.price || 0).toLocaleString('vi-VN') + 'đ',
+          priceValue: p.price,
+          category: p.categoryName || '',
+          status: 'Active',
+          image: (p.imageUrls && p.imageUrls.length > 0) ? p.imageUrls[0] : (p.image || 'https://via.placeholder.com/300')
+        }));
+        this.products.set(mapped);
+      }
+    });
+  }
 
   get filteredProducts(): AdminProduct[] {
-    const byCategory = this.products.filter((product) => {
+    const byCategory = this.products().filter((product) => {
       return this.selectedCategory === 'all' || product.category === this.selectedCategory;
     });
 
@@ -103,13 +108,6 @@ export class AdminDashboard implements OnInit {
     this.selectedSort = 'sold-desc';
   }
 
-  ngOnInit() {
-    const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
-    if (!isAdminLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-  }
-
   logout() {
     localStorage.removeItem('isAdminLoggedIn');
     this.router.navigate(['/login']);
@@ -119,15 +117,19 @@ export class AdminDashboard implements OnInit {
     this.router.navigate(['/admin/add-product']);
   }
 
-  editProduct(productName: string) {
-    alert(`Bạn vừa bấm Edit cho sản phẩm: ${productName}`);
+  editProduct(id: number) {
+    this.router.navigate(['/admin/edit-product', id]);
   }
 
-  goCustomers() {
-    this.router.navigate(['/admin/customers']);
-  }
-
-  goSettings() {
-    this.router.navigate(['/admin/settings']);
+  deleteProduct(id: number) {
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+      this.productService.delete(id).subscribe({
+        next: () => {
+          alert('Xóa sản phẩm thành công!');
+          this.loadData();
+        },
+        error: (err) => alert('Lỗi khi xóa sản phẩm')
+      });
+    }
   }
 }

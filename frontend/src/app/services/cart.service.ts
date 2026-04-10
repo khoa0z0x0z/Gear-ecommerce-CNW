@@ -34,7 +34,32 @@ export class CartService {
 
     // Check login status and sync
     effect(() => {
-      if (this.authService.isLoggedIn()) {
+      const loggedIn = this.authService.isLoggedIn();
+      if (loggedIn) {
+        const localItems = this.loadCartFromStorage();
+        if (localItems.length > 0) {
+          this.syncLocalCartWithBackend(localItems);
+        } else {
+          this.loadCartFromBackend();
+        }
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  private syncLocalCartWithBackend(items: CartItem[]) {
+    const syncData = items.map(item => ({
+      productId: item.id,
+      quantity: item.quantity
+    }));
+
+    this.http.post<any>(`${this.apiUrl}/sync`, syncData).subscribe({
+      next: (cart) => {
+        // Clear local storage to prevent resyncing same data
+        localStorage.removeItem('kat_cart');
+        this.loadCartFromBackend();
+      },
+      error: (err) => {
+        console.error('Cart Sync Error:', err);
         this.loadCartFromBackend();
       }
     });

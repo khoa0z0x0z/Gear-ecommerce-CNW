@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
-  
+
   // Signal to track login status
   isLoggedIn = signal<boolean>(localStorage.getItem('isLoggedIn') === 'true');
 
@@ -18,6 +18,7 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(res => {
         localStorage.setItem('token', res.token);
+        localStorage.setItem('role', res.user.role);
         localStorage.setItem('isLoggedIn', 'true');
         this.isLoggedIn.set(true);
       })

@@ -75,6 +75,26 @@ public class CartService : ICartService
         return await _context.SaveChangesAsync() > 0;
     }
 
+    public async Task<CartReadDto> SyncCartAsync(int userId, IEnumerable<CartItemUpdateDto> items)
+    {
+        var cart = await GetOrCreateCartAsync(userId);
+        foreach (var itemDto in items)
+        {
+            var cartItem = cart.CartItems.FirstOrDefault(i => i.ProductId == itemDto.ProductId);
+            if (cartItem != null)
+            {
+                cartItem.Quantity += itemDto.Quantity;
+            }
+            else
+            {
+                cart.CartItems.Add(new CartItem { ProductId = itemDto.ProductId, Quantity = itemDto.Quantity });
+            }
+        }
+
+        await _context.SaveChangesAsync();
+        return _mapper.Map<CartReadDto>(cart);
+    }
+
     private async Task<Cart> GetOrCreateCartAsync(int userId)
     {
         var cart = await _context.Carts

@@ -34,12 +34,16 @@ public class AuthService : IAuthService
         return _mapper.Map<UserDto>(user);
     }
 
-    public async Task<string?> LoginAsync(UserLoginDto loginDto)
+    public async Task<LoginResponseDto?> LoginAsync(UserLoginDto loginDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
             return null;
 
-        return _jwtHelper.GenerateToken(user);
+        return new LoginResponseDto
+        {
+            Token = _jwtHelper.GenerateToken(user),
+            User = _mapper.Map<UserDto>(user)
+        };
     }
 }

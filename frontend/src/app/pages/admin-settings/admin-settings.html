@@ -1,32 +1,5 @@
 <section class="admin-dashboard-page">
-  
-  <aside class="admin-sidebar">
-    <div class="sidebar-top">
-      <h1 class="dashboard-title">Admin<br>Dashboard</h1>
-
-      <nav class="sidebar-menu">
-        <a class="menu-item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <span class="menu-icon">📦</span>
-          <span>Products</span>
-        </a>
-
-        <a class="menu-item" routerLink="/admin/customers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <span class="menu-icon">👥</span>
-          <span>Customers</span>
-        </a>
-
-        <a class="menu-item" routerLink="/admin/settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <span class="menu-icon">⚙️</span>
-          <span>Settings</span>
-        </a>
-      </nav>
-    </div>
-
-    <button class="logout-btn" type="button" (click)="logout()">
-      <span>↩</span>
-      <span>Logout</span>
-    </button>
-  </aside>
+  <app-admin-sidebar></app-admin-sidebar>
 
   <main class="admin-main">
     <section class="admin-content">

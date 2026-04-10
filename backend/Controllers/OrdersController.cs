@@ -41,4 +41,25 @@ public class OrdersController : ControllerBase
         if (order == null) return BadRequest("Cart is empty or invalid");
         return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
     }
+
+    // Admin endpoints
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllOrders()
+    {
+        return Ok(await _orderService.GetAllOrdersAsync());
+    }
+
+    [HttpGet("stats")]
+    public async Task<IActionResult> GetStats()
+    {
+        return Ok(await _orderService.GetDashboardStatsAsync());
+    }
+
+    [HttpPut("{id}/status")]
+    public async Task<IActionResult> UpdateStatus(int id, [FromBody] string status)
+    {
+        var success = await _orderService.UpdateOrderStatusAsync(id, status);
+        if (!success) return NotFound();
+        return Ok(new { message = "Order status updated successfully" });
+    }
 }

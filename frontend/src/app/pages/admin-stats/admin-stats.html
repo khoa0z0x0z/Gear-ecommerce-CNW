@@ -1,0 +1,72 @@
+<section class="admin-dashboard-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      <div class="content-header">
+        <div>
+          <h2>Business Statistics</h2>
+          <p>Detailed performance analytics and reporting</p>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon rev">💰</div>
+          <div class="stat-info">
+            <span class="stat-label">Total Revenue</span>
+            <h3 class="stat-value">{{ stats()?.totalRevenue | number:'1.0-0' }} VNĐ</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon ord">📦</div>
+          <div class="stat-info">
+            <span class="stat-label">Total Orders</span>
+            <h3 class="stat-value">{{ stats()?.totalOrders }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon cus">👥</div>
+          <div class="stat-info">
+            <span class="stat-label">Customers</span>
+            <h3 class="stat-value">{{ stats()?.totalCustomers }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <!-- Revenue Chart (CSS Bars) -->
+        <div class="chart-card">
+          <h3>Revenue Overview (Monthly)</h3>
+          <div class="bar-chart">
+            <div class="bar-item" *ngFor="let item of stats()?.revenueChart">
+              <div class="bar-wrap">
+                <div class="bar-fill" [style.height.%]="getBarHeight(item.revenue)"></div>
+              </div>
+              <span class="bar-label">{{ item.month }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Products List -->
+        <div class="chart-card">
+          <h3>Top Selling Products</h3>
+          <div class="top-products-list">
+            <div class="product-item" *ngFor="let p of stats()?.topProducts; let i = index">
+              <span class="rank">{{ i + 1 }}</span>
+              <div class="p-info">
+                <span class="p-name">{{ p.name }}</span>
+                <span class="p-sold">{{ p.sold }} units sold</span>
+              </div>
+              <span class="p-rev">{{ p.revenue | number:'1.0-0' }} VNĐ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+</section>

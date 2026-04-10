@@ -79,6 +79,25 @@ app.UseCors("AllowAngular");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Seed Admin User
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    if (!context.Users.Any(u => u.Email == "admin@gmail.com"))
+    {
+        var admin = new backend.Models.User
+        {
+            Email = "admin@gmail.com",
+            FullName = "Administrator",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456"),
+            Role = "Admin",
+            IsActive = true
+        };
+        context.Users.Add(admin);
+        context.SaveChanges();
+    }
+}
+
 app.MapControllers();
 
 app.Run();
