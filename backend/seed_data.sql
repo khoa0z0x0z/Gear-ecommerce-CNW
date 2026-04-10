@@ -1,5 +1,5 @@
 -- SEED DATA FOR ECOMMERCEDB
--- Run this in SQL Server Management Studio or via dotnet-ef
+-- Run this in SQL Server Management Studio
 
 -- Cleanup existing data
 DELETE FROM ProductAttributes;
@@ -7,79 +7,94 @@ DELETE FROM ProductImages;
 DELETE FROM Products;
 DELETE FROM Categories;
 
--- Reset Identities
+-- RESET IDENTITIES (Optional since we use IDENTITY_INSERT)
 DBCC CHECKIDENT ('Categories', RESEED, 0);
 DBCC CHECKIDENT ('Products', RESEED, 0);
 DBCC CHECKIDENT ('ProductImages', RESEED, 0);
 DBCC CHECKIDENT ('ProductAttributes', RESEED, 0);
 
--- Categories
-INSERT INTO Categories (Name, Description) VALUES
-(N'Bàn phím cơ', N'Keyboard Gaming'),
-(N'Chuột Gaming', N'Mouse Gaming'),
-(N'Tai nghe', N'Headset Gaming'),
-(N'Laptop', N'Gaming & Workstation'),
-(N'Điện thoại', N'Smartphone & Tablet'),
-(N'Lót chuột', N'Mousepad'),
-(N'Ghế Gaming', N'Gaming Chair');
+-- ======================================================
+-- CATEGORIES (Explicit IDs: 1-7)
+-- ======================================================
+SET IDENTITY_INSERT Categories ON;
+
+INSERT INTO Categories (Id, Name, Description) VALUES
+(1, N'Bàn phím cơ', N'Keyboard Gaming'),
+(2, N'Chuột Gaming', N'Mouse Gaming'),
+(3, N'Tai nghe', N'Headset Gaming'),
+(4, N'Laptop', N'Gaming & Workstation'),
+(5, N'Điện thoại', N'Smartphone & Tablet'),
+(6, N'Lót chuột', N'Mousepad'),
+(7, N'Ghế Gaming', N'Gaming Chair');
+
+SET IDENTITY_INSERT Categories OFF;
+
+-- ======================================================
+-- PRODUCTS (Explicit IDs: 1-35)
+-- ======================================================
+SET IDENTITY_INSERT Products ON;
 
 -- Category 1: Bàn phím
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'Keychron K2', N'Bàn phím không dây', 1800000, 50, 1),
-(N'Akko 3068B', N'Layout 65% nhỏ gọn', 1600000, 30, 1),
-(N'Razer Huntsman', N'Switch quang học', 4000000, 15, 1),
-(N'Corsair K70', N'Fullsize cao cấp', 3500000, 20, 1),
-(N'Leopold FC750R', N'Độ bền cực cao', 3200000, 10, 1);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(1, N'Keychron K2', N'Bàn phím không dây', 1800000, 50, 1),
+(2, N'Akko 3068B', N'Layout 65% nhỏ gọn', 1600000, 30, 1),
+(3, N'Razer Huntsman', N'Switch quang học', 4000000, 15, 1),
+(4, N'Corsair K70', N'Fullsize cao cấp', 3500000, 20, 1),
+(5, N'Leopold FC750R', N'Độ bền cực cao', 3200000, 10, 1);
 
 -- Category 2: Chuột
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'Logitech G Pro X', N'Siêu nhẹ 63g', 3100000, 40, 2),
-(N'Razer DeathAdder V3', N'Cảm biến 30K', 3500000, 25, 2),
-(N'SteelSeries Rival 3', N'Giá rẻ hiệu năng cao', 800000, 100, 2),
-(N'Zowie EC2', N'Chuột FPS huyền thoại', 1900000, 30, 2),
-(N'Glorious Model O', N'Vỏ tổ ong', 1400000, 50, 2);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(6, N'Logitech G Pro X', N'Siêu nhẹ 63g', 3100000, 40, 2),
+(7, N'Razer DeathAdder V3', N'Cảm biến 30K', 3500000, 25, 2),
+(8, N'SteelSeries Rival 3', N'Giá rẻ hiệu năng cao', 800000, 100, 2),
+(9, N'Zowie EC2', N'Chuột FPS huyền thoại', 1900000, 30, 2),
+(10, N'Glorious Model O', N'Vỏ tổ ong', 1400000, 50, 2);
 
 -- Category 3: Tai nghe
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'HyperX Cloud II', N'Âm thanh 7.1', 2500000, 60, 3),
-(N'Logitech G733', N'Không dây RGB', 2900000, 20, 3),
-(N'Razer BlackShark', N'Chống ồn cực tốt', 2200000, 45, 3),
-(N'SteelSeries Arctis 7', N'Lossless wireless', 4500000, 15, 3),
-(N'Corsair HS80', N'Dolby Atmos', 3800000, 25, 3);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(11, N'HyperX Cloud II', N'Âm thanh 7.1', 2500000, 60, 3),
+(12, N'Logitech G733', N'Không dây RGB', 2900000, 20, 3),
+(13, N'Razer BlackShark', N'Chống ồn cực tốt', 2200000, 45, 3),
+(14, N'SteelSeries Arctis 7', N'Lossless wireless', 4500000, 15, 3),
+(15, N'Corsair HS80', N'Dolby Atmos', 3800000, 25, 3);
 
 -- Category 4: Laptop
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'ROG Strix G16', N'RTX 4060, i7-13650H', 38000000, 10, 4),
-(N'MacBook M3', N'Mỏng nhẹ mạnh mẽ', 32000000, 15, 4),
-(N'MSI Katana 15', N'Giá rẻ hiệu năng cao', 24000000, 20, 4),
-(N'Acer Helios Neo', N'Tản nhiệt cực đỉnh', 31000000, 8, 4),
-(N'Dell XPS 15', N'Đẳng cấp văn phòng', 50000000, 5, 4);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(16, N'ROG Strix G16', N'RTX 4060, i7-13650H', 38000000, 10, 4),
+(17, N'MacBook M3', N'Mỏng nhẹ mạnh mẽ', 32000000, 15, 4),
+(18, N'MSI Katana 15', N'Giá rẻ hiệu năng cao', 24000000, 20, 4),
+(19, N'Acer Helios Neo', N'Tản nhiệt cực đỉnh', 31000000, 8, 4),
+(20, N'Dell XPS 15', N'Đẳng cấp văn phòng', 50000000, 5, 4);
 
 -- Category 5: Điện thoại
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'iPhone 15 Pro', N'Titan tự nhiên', 28000000, 20, 5),
-(N'Samsung S24 Ultra', N'Galaxy AI', 26000000, 25, 5),
-(N'ROG Phone 8', N'Chiến game đỉnh cao', 27000000, 10, 5),
-(N'iPad Pro M4', N'Màn hình OLED', 27500000, 15, 5),
-(N'Xiaomi 14', N'Camera Leica', 18000000, 30, 5);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(21, N'iPhone 15 Pro', N'Titan tự nhiên', 28000000, 20, 5),
+(22, N'Samsung S24 Ultra', N'Galaxy AI', 26000000, 25, 5),
+(23, N'ROG Phone 8', N'Chiến game đỉnh cao', 27000000, 10, 5),
+(24, N'iPad Pro M4', N'Màn hình OLED', 27500000, 15, 5),
+(25, N'Xiaomi 14', N'Camera Leica', 18000000, 30, 5);
 
 -- Category 6: Lót chuột
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'SteelSeries Qck+', N'Vải mịn Large', 450000, 100, 6),
-(N'Razer Gigantus', N'Chống trượt', 550000, 80, 6),
-(N'Logitech G640', N'Độ ma sát thấp', 600000, 50, 6),
-(N'Lót chuột Custom', N'In hình theo yêu cầu', 250000, 200, 6),
-(N'Asus ROG Scabbard', N'Cực đại 90x40', 1200000, 30, 6);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(26, N'SteelSeries Qck+', N'Vải mịn Large', 450000, 100, 6),
+(27, N'Razer Gigantus', N'Chống trượt', 550000, 80, 6),
+(28, N'Logitech G640', N'Độ ma sát thấp', 600000, 50, 6),
+(29, N'Lót chuột Custom', N'In hình theo yêu cầu', 250000, 200, 6),
+(30, N'Asus ROG Scabbard', N'Cực đại 90x40', 1200000, 30, 6);
 
 -- Category 7: Ghế Gaming
-INSERT INTO Products (Name, Description, Price, Stock, CategoryId) VALUES
-(N'Secretlab Titan', N'Ghế số 1 thế giới', 12000000, 5, 7),
-(N'Warrior Raider', N'Da PU cao cấp', 3500000, 15, 7),
-(N'E-Dra Midnight', N'Rẻ mà bền', 2200000, 20, 7),
-(N'Sihoo M57', N'Công thái học', 3800000, 25, 7),
-(N'Anda Seat Kaiser', N'Khung thép chắc chắn', 8500000, 10, 7);
+INSERT INTO Products (Id, Name, Description, Price, Stock, CategoryId) VALUES
+(31, N'Secretlab Titan', N'Ghế số 1 thế giới', 12000000, 5, 7),
+(32, N'Warrior Raider', N'Da PU cao cấp', 3500000, 15, 7),
+(33, N'E-Dra Midnight', N'Rẻ mà bền', 2200000, 20, 7),
+(34, N'Sihoo M57', N'Công thái học', 3800000, 25, 7),
+(35, N'Anda Seat Kaiser', N'Khung thép chắc chắn', 8500000, 10, 7);
 
--- Product images
+SET IDENTITY_INSERT Products OFF;
+
+-- ======================================================
+-- PRODUCT IMAGES
+-- ======================================================
 INSERT INTO ProductImages (ProductId, ImageUrl, IsPrimary) VALUES
 (1, 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500', 1),
 (2, 'https://images.unsplash.com/photo-1595225476474-87563907a212?w=500', 1),
@@ -117,7 +132,9 @@ INSERT INTO ProductImages (ProductId, ImageUrl, IsPrimary) VALUES
 (34, 'https://images.unsplash.com/photo-1505797149-43b007664a3d?w=500', 1),
 (35, 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=500', 1);
 
--- Product attributes
+-- ======================================================
+-- PRODUCT ATTRIBUTES
+-- ======================================================
 INSERT INTO ProductAttributes (ProductId, AttributeName, AttributeValue) VALUES
 (1, N'Kết nối', N'Bluetooth 5.1 / Wired'),
 (1, N'Switch', N'Gateron Mechanical'),
