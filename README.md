@@ -20,6 +20,7 @@ Dự án xây dựng một hệ thống website thương mại điện tử chuy
 * Bootstrap / TailwindCSS
 
 ## Cấu trúc hệ thống
+```
 backend/
 │
 ├── Controllers/ # Nhận request từ FE
@@ -84,7 +85,7 @@ frontend/
 │ ├── app.routes.ts
 │ ├── app.config.ts
 │ └── app.ts
-
+```
 ## Chức năng chính
 
 ### Người dùng
