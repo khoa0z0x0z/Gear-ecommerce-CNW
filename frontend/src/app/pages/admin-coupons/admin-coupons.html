@@ -1,0 +1,72 @@
+<section class="admin-dashboard-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      <h2>Quản lý Coupon</h2>
+
+      <form (ngSubmit)="submit()" class="coupon-form">
+        <div>
+          <label>Code</label>
+          <input [(ngModel)]="form.code" name="code" required />
+        </div>
+        <div>
+          <label>Mô tả</label>
+          <input [(ngModel)]="form.description" name="description" />
+        </div>
+        <div>
+          <label>Loại</label>
+          <select [(ngModel)]="form.isPercentage" name="isPercentage">
+            <option [ngValue]="false">Số tiền</option>
+            <option [ngValue]="true">Phần trăm</option>
+          </select>
+        </div>
+        <div>
+          <label>Giá trị</label>
+          <input type="number" [(ngModel)]="form.discountValue" name="discountValue" required />
+        </div>
+        <div>
+          <label>Giới hạn (tùy chọn)</label>
+          <input type="number" [(ngModel)]="form.maxDiscount" name="maxDiscount" />
+        </div>
+        <div>
+          <label>Bắt đầu</label>
+          <input type="datetime-local" [(ngModel)]="form.startAt" name="startAt" />
+        </div>
+        <div>
+          <label>Hết hạn</label>
+          <input type="datetime-local" [(ngModel)]="form.expiryAt" name="expiryAt" />
+        </div>
+        <div>
+          <label>Active</label>
+          <input type="checkbox" [(ngModel)]="form.isActive" name="isActive" />
+        </div>
+        <div class="form-actions">
+          <button type="submit">{{ editing ? 'Cập nhật' : 'Tạo' }}</button>
+          <button type="button" (click)="clear()">Hủy</button>
+        </div>
+      </form>
+
+      <hr />
+
+      <table class="admin-table">
+        <thead>
+          <tr><th>Code</th><th>Loại</th><th>Giá trị</th><th>Hết hạn</th><th>Active</th><th>Hành động</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of coupons()">
+            <td>{{ c.code }}</td>
+            <td>{{ c.isPercentage ? 'Phần trăm' : 'Số tiền' }}</td>
+            <td>{{ c.discountValue }}</td>
+            <td>{{ c.expiryAt | date:'short' }}</td>
+            <td>{{ c.isActive ? 'Yes' : 'No' }}</td>
+            <td>
+              <button (click)="edit(c)">Sửa</button>
+              <button (click)="remove(c.id)">Xóa</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</section>

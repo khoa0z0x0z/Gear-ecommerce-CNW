@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 
 import { OrderService } from '../../services/order.service';
+import { CouponService } from '../../services/coupon.service';
 
 @Component({
   selector: 'app-checkout-page',
@@ -18,11 +19,14 @@ export class CheckoutPage implements OnInit {
   private router = inject(Router);
   private cartService = inject(CartService);
   private orderService = inject(OrderService);
+  private couponService = inject(CouponService);
 
   // States
   cartItems = this.cartService.cartItems;
   totalPrice = this.cartService.totalPrice;
   checkoutForm!: FormGroup;
+  appliedDiscount: number = 0;
+  appliedCouponCode: string | null = null;
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -41,7 +45,29 @@ export class CheckoutPage implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]],
       emailAddress: ['', [Validators.required, Validators.email]],
       paymentMethod: ['cash', Validators.required],
+      couponCode: [''],
       saveInfo: [false]
+    });
+  }
+
+  applyCoupon() {
+    const code = this.checkoutForm.get('couponCode')?.value;
+    if (!code) {
+      alert('Vui lòng nhập mã coupon');
+      return;
+    }
+
+    const subtotal = this.totalPrice();
+    this.couponService.validate(code, subtotal).subscribe({
+      next: (res) => {
+        this.appliedDiscount = res.discount ?? 0;
+        this.appliedCouponCode = code;
+        alert('Coupon áp dụng: -' + this.appliedDiscount + ' VNĐ');
+      },
+      error: (err) => {
+        console.error('Coupon error', err);
+        alert('Coupon không hợp lệ hoặc đã hết hạn');
+      }
     });
   }
 
@@ -63,7 +89,8 @@ export class CheckoutPage implements OnInit {
       addressId: 0,
       note: form.companyName || '',
       city: form.townCity,
-      fullAddress: `${form.streetAddress}${form.apartment ? ', ' + form.apartment : ''}`
+      fullAddress: `${form.streetAddress}${form.apartment ? ', ' + form.apartment : ''}`,
+      couponCode: this.appliedCouponCode || form.couponCode || null
     };
 
     this.orderService.createOrder(orderBody).subscribe({

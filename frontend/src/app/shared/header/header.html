@@ -22,10 +22,26 @@
           {{ cartCount() }}
         </span>
       </a>
-      
+
+      <button class="icon-btn" (click)="toggleNotif()" style="position: relative; margin-left: 8px;">
+        🔔
+        <span *ngIf="notifCount > 0" style="position: absolute; top: -5px; right: -10px; background: #f59e0b; color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          {{ notifCount }}
+        </span>
+      </button>
+
+      <div class="notif-dropdown" *ngIf="showNotif" style="position: absolute; right: 80px; top: 56px; background: white; border: 1px solid #eee; box-shadow: 0 6px 18px rgba(0,0,0,0.06); width: 320px; z-index: 50;">
+        <div style="padding:8px 12px; font-weight:600;">Notifications</div>
+        <div *ngIf="notifications.length === 0" style="padding:12px; color:#6b7280;">No notifications</div>
+        <div *ngFor="let n of notifications" style="padding:8px 12px; border-top: 1px solid #f3f4f6;">
+          <div style="font-weight:600">{{ n.title }}</div>
+          <div style="font-size:13px; color:#6b7280">{{ n.message }}</div>
+        </div>
+      </div>
+
       <div class="avatar-container">
         <button class="icon-btn avatar-btn" (click)="toggleDropdown()">👤</button>
-        
+
         <div class="dropdown-menu" *ngIf="showDropdown">
           <a href="#">👤 Manage My Account</a>
           <a href="#">🛍️ My Order</a>

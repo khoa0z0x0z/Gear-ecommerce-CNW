@@ -16,6 +16,8 @@ import { AdminCustomers } from './pages/admin-customers/admin-customers';
 import { AdminSettings } from './pages/admin-settings/admin-settings';
 import { AdminOrders } from './pages/admin-orders/admin-orders';
 import { AdminStats } from './pages/admin-stats/admin-stats';
+import { AdminCoupons } from './pages/admin-coupons/admin-coupons';
+import { AdminNotifications } from './pages/admin-notifications/admin-notifications';
 
 export const routes: Routes = [
   { path: '', component: Homepage },
@@ -37,6 +39,8 @@ export const routes: Routes = [
   { path: 'admin/orders', component: AdminOrders },
   { path: 'admin/stats', component: AdminStats },
   { path: 'admin/settings', component: AdminSettings },
+  { path: 'admin/coupons', component: AdminCoupons },
+  { path: 'admin/notifications', component: AdminNotifications },
 
   { path: '**', component: NotFound }
 ];

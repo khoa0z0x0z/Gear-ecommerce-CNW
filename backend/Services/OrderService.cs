@@ -83,6 +83,39 @@ public class OrderService : IOrderService
             }
         }
 
+        var subtotal = cart.CartItems.Sum(i => i.Quantity * i.Product!.Price);
+
+        // compute discount from coupon if provided
+        decimal discountAmount = 0;
+        if (!string.IsNullOrWhiteSpace(orderDto.CouponCode))
+        {
+            var searchCode = orderDto.CouponCode.Trim();
+            var coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.IsActive && c.Code != null && EF.Functions.Like(c.Code, searchCode));
+            if (coupon == null)
+            {
+                coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.IsActive && c.Code != null && c.Code.ToUpper() == searchCode.ToUpper());
+            }
+            if (coupon != null)
+            {
+                var now = DateTime.Now;
+                if ((coupon.StartAt == null || coupon.StartAt <= now) && (coupon.ExpiryAt == null || coupon.ExpiryAt >= now))
+                {
+                    if (coupon.IsPercentage)
+                    {
+                        discountAmount = subtotal * (coupon.DiscountValue / 100m);
+                        if (coupon.MaxDiscount.HasValue && discountAmount > coupon.MaxDiscount.Value)
+                            discountAmount = coupon.MaxDiscount.Value;
+                    }
+                    else
+                    {
+                        discountAmount = coupon.DiscountValue;
+                    }
+
+                    if (discountAmount > subtotal) discountAmount = subtotal;
+                }
+            }
+        }
+
         var order = new Order
         {
             UserId = userId,
@@ -91,7 +124,7 @@ public class OrderService : IOrderService
             Status = "Pending",
             CreatedAt = DateTime.Now,
             ShippingFee = 0,
-            TotalAmount = cart.CartItems.Sum(i => i.Quantity * i.Product!.Price)
+            TotalAmount = subtotal - discountAmount
         };
 
         foreach (var item in cart.CartItems)

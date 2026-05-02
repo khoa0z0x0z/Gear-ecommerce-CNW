@@ -98,8 +98,27 @@
       </div>
 
       <div class="coupon-row">
-        <input type="text" placeholder="Coupon Code">
-        <button class="apply-btn" type="button">Apply Coupon</button>
+        <input type="text" placeholder="Coupon Code" formControlName="couponCode">
+        <button class="apply-btn" type="button" (click)="applyCoupon()">Apply Coupon</button>
+      </div>
+
+      <div class="summary-totals">
+        <div class="total-row">
+          <span>Subtotal:</span>
+          <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
+        </div>
+        <div class="total-row" *ngIf="appliedDiscount && appliedDiscount > 0">
+          <span>Discount:</span>
+          <span>- {{ appliedDiscount | number:'1.0-0' }} VNĐ</span>
+        </div>
+        <div class="total-row line">
+          <span>Shipping:</span>
+          <span>Free</span>
+        </div>
+        <div class="total-row final">
+          <span>Total:</span>
+          <span>{{ (totalPrice() - (appliedDiscount || 0)) | number:'1.0-0' }} VNĐ</span>
+        </div>
       </div>
 
       <button class="place-order-btn" (click)="placeOrder()">Place Order</button>

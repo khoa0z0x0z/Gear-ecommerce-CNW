@@ -1,0 +1,62 @@
+<section class="admin-dashboard-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      <h2>Quản lý Thông báo</h2>
+
+      <form (ngSubmit)="submit()" class="notification-form">
+        <div>
+          <label>Title</label>
+          <input [(ngModel)]="form.title" name="title" required />
+        </div>
+        <div>
+          <label>Message</label>
+          <textarea [(ngModel)]="form.message" name="message" required></textarea>
+        </div>
+        <div>
+          <label>Hiển thị với Roles (CSV)</label>
+          <input [(ngModel)]="form.visibleToRoles" name="visibleToRoles" />
+        </div>
+        <div>
+          <label>Hiển thị với User IDs (CSV)</label>
+          <input [(ngModel)]="form.visibleToUserIds" name="visibleToUserIds" />
+        </div>
+        <div>
+          <label>Expires At</label>
+          <input type="datetime-local" [(ngModel)]="form.expiresAt" name="expiresAt" />
+        </div>
+        <div>
+          <label>Active</label>
+          <input type="checkbox" [(ngModel)]="form.isActive" name="isActive" />
+        </div>
+        <div class="form-actions">
+          <button type="submit">{{ editing ? 'Cập nhật' : 'Tạo' }}</button>
+          <button type="button" (click)="clear()">Hủy</button>
+        </div>
+      </form>
+
+      <hr />
+
+      <table class="admin-table">
+        <thead>
+          <tr><th>Title</th><th>Message</th><th>Roles</th><th>Users</th><th>Expires</th><th>Active</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let n of notifications()">
+            <td>{{ n.title }}</td>
+            <td>{{ n.message }}</td>
+            <td>{{ n.visibleToRoles }}</td>
+            <td>{{ n.visibleToUserIds }}</td>
+            <td>{{ n.expiresAt | date:'short' }}</td>
+            <td>{{ n.isActive ? 'Yes' : 'No' }}</td>
+            <td>
+              <button (click)="edit(n)">Sửa</button>
+              <button (click)="remove(n.id)">Xóa</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</section>
