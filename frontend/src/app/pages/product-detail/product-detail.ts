@@ -1,14 +1,15 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -17,6 +18,7 @@ export class ProductDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private cartService = inject(CartService);
   private productService = inject(ProductService);
+  private wishlistService = inject(WishlistService);
 
   // State
   product = signal<Product | null>(null);
@@ -104,5 +106,21 @@ export class ProductDetail implements OnInit {
   buyNow() {
     this.addToCart();
     this.router.navigate(['/cart']);
+  }
+
+  toggleWishlist(prod?: Product | any) {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to use wishlist');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const p = prod || this.product();
+    if (p) {
+      this.wishlistService.addToWishlist(p.id).subscribe({
+        next: () => alert(`Added ${p.name} to wishlist!`),
+        error: (err) => alert('Failed to add to wishlist')
+      });
+    }
   }
 }

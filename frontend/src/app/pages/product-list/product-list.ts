@@ -4,7 +4,9 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CategoryService } from '../../services/category.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -17,7 +19,9 @@ export class ProductList implements OnInit {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private categoryService = inject(CategoryService);
+  private wishlistService = inject(WishlistService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   // State signals
   allProducts = signal<Product[]>([]);
@@ -106,5 +110,18 @@ export class ProductList implements OnInit {
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     alert(`Added ${product.name} to cart!`);
+  }
+
+  toggleWishlist(product: Product) {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to use wishlist');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.wishlistService.addToWishlist(product.id).subscribe({
+      next: () => alert(`Added ${product.name} to wishlist!`),
+      error: (err) => alert('Failed to add to wishlist')
+    });
   }
 }

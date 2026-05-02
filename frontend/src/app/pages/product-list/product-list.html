@@ -54,7 +54,7 @@
         >
           <div class="product-image-box">
             <div class="product-actions">
-              <span>♡</span>
+              <span (click)="toggleWishlist(product); $event.stopPropagation()" style="cursor: pointer;">♡</span>
               <span [routerLink]="['/products', product.id]">👁</span>
             </div>
 
