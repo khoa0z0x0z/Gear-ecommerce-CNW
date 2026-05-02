@@ -102,7 +102,8 @@ public class OrderService : IOrderService
                 {
                     if (coupon.IsPercentage)
                     {
-                        discountAmount = subtotal * (coupon.DiscountValue / 100m);
+                        var rate = coupon.DiscountValue <= 1 ? coupon.DiscountValue : coupon.DiscountValue / 100m;
+                        discountAmount = subtotal * rate;
                         if (coupon.MaxDiscount.HasValue && discountAmount > coupon.MaxDiscount.Value)
                             discountAmount = coupon.MaxDiscount.Value;
                     }
@@ -112,6 +113,9 @@ public class OrderService : IOrderService
                     }
 
                     if (discountAmount > subtotal) discountAmount = subtotal;
+
+                    // Round down to integer VNĐ
+                    discountAmount = Math.Floor(discountAmount);
                 }
             }
         }

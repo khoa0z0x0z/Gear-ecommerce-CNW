@@ -96,7 +96,9 @@ public class CouponsController : ControllerBase
         decimal discount = 0;
         if (coupon.IsPercentage)
         {
-            discount = subtotal * (coupon.DiscountValue / 100m);
+            // Support both fraction (0.1) and percentage (10) inputs.
+            var rate = coupon.DiscountValue <= 1 ? coupon.DiscountValue : coupon.DiscountValue / 100m;
+            discount = subtotal * rate;
             if (coupon.MaxDiscount.HasValue && discount > coupon.MaxDiscount.Value) discount = coupon.MaxDiscount.Value;
         }
         else
@@ -105,6 +107,9 @@ public class CouponsController : ControllerBase
         }
 
         if (discount > subtotal) discount = subtotal;
+
+        // Round to integer (VNĐ) for frontend display
+        discount = Math.Floor(discount);
 
         return Ok(new { valid = true, discount, coupon });
     }
