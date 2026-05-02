@@ -94,10 +94,12 @@ public class CouponsController : ControllerBase
         if (coupon.ExpiryAt.HasValue && coupon.ExpiryAt < now) return BadRequest("Coupon expired");
 
         decimal discount = 0;
+        decimal rate = 0;
+        var rawValue = coupon.DiscountValue;
         if (coupon.IsPercentage)
         {
             // Support both fraction (0.1) and percentage (10) inputs.
-            var rate = coupon.DiscountValue <= 1 ? coupon.DiscountValue : coupon.DiscountValue / 100m;
+            rate = coupon.DiscountValue <= 1 ? coupon.DiscountValue : coupon.DiscountValue / 100m;
             discount = subtotal * rate;
             if (coupon.MaxDiscount.HasValue && discount > coupon.MaxDiscount.Value) discount = coupon.MaxDiscount.Value;
         }
@@ -111,6 +113,7 @@ public class CouponsController : ControllerBase
         // Round to integer (VNĐ) for frontend display
         discount = Math.Floor(discount);
 
-        return Ok(new { valid = true, discount, coupon });
+        // Include debug info for developers to inspect computation
+        return Ok(new { valid = true, discount, coupon, debug = new { rawValue, rate, subtotal } });
     }
 }
