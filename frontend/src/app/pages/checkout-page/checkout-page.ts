@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,8 +25,8 @@ export class CheckoutPage implements OnInit {
   cartItems = this.cartService.cartItems;
   totalPrice = this.cartService.totalPrice;
   checkoutForm!: FormGroup;
-  appliedDiscount: number = 0;
-  appliedCouponCode: string | null = null;
+  appliedDiscount = signal<number>(0);
+  appliedCouponCode = signal<string | null>(null);
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -60,9 +60,10 @@ export class CheckoutPage implements OnInit {
     const subtotal = this.totalPrice();
     this.couponService.validate(code, subtotal).subscribe({
       next: (res) => {
-        this.appliedDiscount = res.discount ?? 0;
-        this.appliedCouponCode = code;
-        alert('Coupon áp dụng: -' + this.appliedDiscount + ' VNĐ');
+        const d = res.discount ?? 0;
+        this.appliedDiscount.set(d);
+        this.appliedCouponCode.set(code);
+        alert('Coupon áp dụng: -' + d + ' VNĐ');
       },
       error: (err) => {
         console.error('Coupon error', err);
@@ -90,7 +91,7 @@ export class CheckoutPage implements OnInit {
       note: form.companyName || '',
       city: form.townCity,
       fullAddress: `${form.streetAddress}${form.apartment ? ', ' + form.apartment : ''}`,
-      couponCode: this.appliedCouponCode || form.couponCode || null
+      couponCode: this.appliedCouponCode() || form.couponCode || null
     };
 
     this.orderService.createOrder(orderBody).subscribe({

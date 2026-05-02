@@ -67,20 +67,7 @@
         </div>
       </div>
 
-      <div class="summary-totals">
-        <div class="total-row">
-          <span>Subtotal:</span>
-          <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
-        </div>
-        <div class="total-row line">
-          <span>Shipping:</span>
-          <span>Free</span>
-        </div>
-        <div class="total-row final">
-          <span>Total:</span>
-          <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
-        </div>
-      </div>
+      <!-- totals shown below (after coupon) -->
 
       <div class="payment-methods">
         <div class="radio-group">
@@ -107,9 +94,9 @@
           <span>Subtotal:</span>
           <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
         </div>
-        <div class="total-row" *ngIf="appliedDiscount && appliedDiscount > 0">
+        <div class="total-row" *ngIf="appliedDiscount() > 0">
           <span>Discount:</span>
-          <span>- {{ appliedDiscount | number:'1.0-0' }} VNĐ</span>
+          <span>- {{ appliedDiscount() | number:'1.0-0' }} VNĐ</span>
         </div>
         <div class="total-row line">
           <span>Shipping:</span>
@@ -117,7 +104,7 @@
         </div>
         <div class="total-row final">
           <span>Total:</span>
-          <span>{{ (totalPrice() - (appliedDiscount || 0)) | number:'1.0-0' }} VNĐ</span>
+          <span>{{ (totalPrice() - (appliedDiscount() || 0)) | number:'1.0-0' }} VNĐ</span>
         </div>
       </div>
 
