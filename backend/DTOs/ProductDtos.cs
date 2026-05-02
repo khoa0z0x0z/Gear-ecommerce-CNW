@@ -11,6 +11,7 @@ public class ProductReadDto
     public string? CategoryName { get; set; }
     public List<string> ImageUrls { get; set; } = new();
     public int Sold { get; set; }
+    public bool IsFavorited { get; set; }
 }
 
 public class ProductUpsertDto

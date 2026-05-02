@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace backend.DTOs;
 
 public class UserRegisterDto
@@ -27,4 +29,18 @@ public class LoginResponseDto
 {
     public string Token { get; set; } = string.Empty;
     public UserDto User { get; set; } = new();
+}
+
+public class UserProfileUpdateDto
+{
+    [Required]
+    [StringLength(255)]
+    public string FullName { get; set; } = string.Empty;
+
+    [Phone]
+    [StringLength(20)]
+    public string? Phone { get; set; }
+
+    public string? CurrentPassword { get; set; }
+    public string? NewPassword { get; set; }
 }

@@ -1,0 +1,108 @@
+.profile-container {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.breadcrumb {
+  margin-bottom: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.breadcrumb-item a {
+  color: #7d879c;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-item.active {
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.account-frame {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 13px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid #f5f5f5;
+}
+
+.sidebar-padding {
+  padding: 40px 20px;
+}
+
+.content-padding {
+  padding: 40px 60px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #db4444;
+  margin-bottom: 35px;
+}
+
+.form-floating > .form-control {
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+}
+
+.form-floating > .form-control:focus {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(219, 68, 68, 0.1);
+  border: 1px solid #db4444;
+}
+
+.password-divider {
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+.password-divider span {
+  background: #fff;
+  padding-right: 15px;
+  color: #000;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.btn-cancel {
+  padding: 12px 30px;
+  color: #000;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #f8f9fa;
+}
+
+.btn-save {
+  background-color: #db4444;
+  color: #fff;
+  padding: 12px 35px;
+  font-weight: 500;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-save:hover {
+  background-color: #c43c3c;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(219, 68, 68, 0.2);
+}
+
+.custom-alert {
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}

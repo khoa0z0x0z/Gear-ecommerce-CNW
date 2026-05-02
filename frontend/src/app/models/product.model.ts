@@ -11,6 +11,7 @@ export interface Product {
     rating?: string;
     isNew?: boolean;
     sold?: number;
+    isFavorited?: boolean;
 }
 
 export interface CartItem extends Product {

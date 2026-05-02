@@ -15,16 +15,25 @@ public class ProductsController : ControllerBase
         _productService = productService;
     }
 
+    private int? UserId
+    {
+        get
+        {
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            return userIdClaim != null ? int.Parse(userIdClaim.Value) : null;
+        }
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        return Ok(await _productService.GetAllProductsAsync());
+        return Ok(await _productService.GetAllProductsAsync(UserId));
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var product = await _productService.GetProductByIdAsync(id);
+        var product = await _productService.GetProductByIdAsync(id, UserId);
         if (product == null) return NotFound();
         return Ok(product);
     }

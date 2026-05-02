@@ -54,7 +54,9 @@
         >
           <div class="product-image-box">
             <div class="product-actions">
-              <span>♡</span>
+              <span (click)="toggleWishlist(product); $event.stopPropagation()" [class.favorited]="product.isFavorited">
+                {{ product.isFavorited ? '❤️' : '♡' }}
+              </span>
               <span [routerLink]="['/products', product.id]">👁</span>
             </div>
 

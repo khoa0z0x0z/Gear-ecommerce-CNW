@@ -88,4 +88,45 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<UserDto?> GetProfileAsync(int userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null) return null;
+
+        return new UserDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            FullName = user.FullName,
+            Phone = user.Phone,
+            Role = user.Role
+        };
+    }
+
+    public async Task<bool> UpdateProfileAsync(int userId, UserProfileUpdateDto profileDto)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null) return false;
+
+        // Update basic info
+        user.FullName = profileDto.FullName;
+        user.Phone = profileDto.Phone;
+
+        // Handle password update if requested
+        if (!string.IsNullOrEmpty(profileDto.NewPassword))
+        {
+            // Must provide current password to change to a new one
+            if (string.IsNullOrEmpty(profileDto.CurrentPassword) || 
+                !BCrypt.Net.BCrypt.Verify(profileDto.CurrentPassword, user.PasswordHash))
+            {
+                throw new Exception("Invalid current password");
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(profileDto.NewPassword);
+        }
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }

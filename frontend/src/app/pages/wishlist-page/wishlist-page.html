@@ -1,0 +1,68 @@
+<div class="container wishlist-container">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-5">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+    </ol>
+  </nav>
+
+  <div class="account-frame">
+    <div class="row g-0">
+      <!-- Sidebar Column -->
+      <div class="col-md-3 border-end">
+        <div class="sidebar-padding">
+          <app-user-sidebar></app-user-sidebar>
+        </div>
+      </div>
+      
+      <!-- Content Column -->
+      <div class="col-md-9">
+        <div class="content-padding">
+          <div class="wishlist-header d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title">My Wishlist ({{ wishlistItems().length }})</h2>
+            <button class="btn btn-outline-dark" routerLink="/products">Move All To Bag</button>
+          </div>
+
+          <div *ngIf="isLoading()" class="text-center py-5">
+            <div class="spinner-border text-danger" role="status"></div>
+          </div>
+
+          <div *ngIf="!isLoading() && wishlistItems().length === 0" class="empty-wishlist text-center py-5">
+            <div class="empty-icon-wrapper mb-4">
+              <i class="bi bi-heart text-muted"></i>
+            </div>
+            <h3>Your wishlist is empty</h3>
+            <p class="text-muted mb-4">Save items that you like in your wishlist to review them later.</p>
+            <button routerLink="/products" class="btn btn-danger px-5 py-3">Continue Shopping</button>
+          </div>
+
+          <div class="wishlist-grid row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" *ngIf="!isLoading()">
+            <div class="col" *ngFor="let item of wishlistItems()">
+              <div class="product-card">
+                <div class="image-container">
+                  <img [src]="item.imageUrl || 'https://via.placeholder.com/300'" [alt]="item.productName">
+                  
+                  <button class="remove-btn" (click)="removeItem(item.productId)" title="Remove from wishlist">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  
+                  <div class="cart-overlay" (click)="addToCart(item)">
+                    <i class="bi bi-cart-plus me-2"></i> Add To Cart
+                  </div>
+                </div>
+                
+                <div class="product-info p-3">
+                  <h3 class="product-name" [routerLink]="['/products', item.productId]">{{ item.productName }}</h3>
+                  <div class="price-box">
+                    <span class="current-price">{{ item.price | currency:'VND':'symbol':'1.0-0' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

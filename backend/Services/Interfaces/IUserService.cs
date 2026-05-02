@@ -8,4 +8,6 @@ public interface IUserService
     Task<CustomerDetailDto?> GetCustomerDetailsAsync(int id);
     Task<bool> ToggleUserStatusAsync(int id);
     Task<bool> ResetPasswordAsync(int id, string newPassword);
+    Task<UserDto?> GetProfileAsync(int userId);
+    Task<bool> UpdateProfileAsync(int userId, UserProfileUpdateDto profileDto);
 }

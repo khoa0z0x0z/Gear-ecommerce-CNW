@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { WishlistService } from '../../services/wishlist.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header',
@@ -14,9 +16,11 @@ import { AuthService } from '../../services/auth.service';
 export class Header {
   private cartService = inject(CartService);
   private authService = inject(AuthService);
+  private wishlistService = inject(WishlistService);
 
   isLoggedIn = this.authService.isLoggedIn;
   cartCount = this.cartService.totalCount;
+  wishlistCount = toSignal(this.wishlistService.wishlistCount$, { initialValue: 0 });
   
   showDropdown = false;
 

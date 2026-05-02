@@ -1,0 +1,126 @@
+.orders-container {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.breadcrumb {
+  margin-bottom: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.breadcrumb-item a {
+  color: #7d879c;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-item.active {
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.account-frame {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 13px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid #f5f5f5;
+}
+
+.sidebar-padding {
+  padding: 40px 20px;
+}
+
+.content-padding {
+  padding: 40px 60px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.order-table-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.custom-table {
+  margin-bottom: 0;
+}
+
+.custom-table thead th {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #7d879c;
+  text-transform: uppercase;
+  border-bottom: 1px solid #eee;
+}
+
+.custom-table tbody td {
+  padding: 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 0.95rem;
+}
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.pending {
+  background: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+.status-badge.shipped {
+  background: rgba(13, 202, 240, 0.1);
+  color: #0dcaf0;
+}
+
+.status-badge.delivered {
+  background: rgba(25, 135, 84, 0.1);
+  color: #198754;
+}
+
+.status-badge.cancelled {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3569;
+}
+
+.total-cell {
+  font-weight: 600;
+  color: #db4444;
+}
+
+.btn-view {
+  background: transparent;
+  border: 1px solid #eee;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-view:hover {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.empty-orders .empty-icon-wrapper {
+  font-size: 5rem;
+}

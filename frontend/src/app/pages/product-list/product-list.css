@@ -235,6 +235,15 @@
   transition: 0.2s;
 }
 
+.pagination button.active, .product-actions span:hover {
+  background: #db4444;
+  color: #fff;
+}
+
+.product-actions span.favorited {
+  color: #db4444;
+}
+
 .pagination button.active, .pagination button:hover {
   background: #2f95f5;
   color: #fff;

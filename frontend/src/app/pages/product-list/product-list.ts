@@ -4,6 +4,7 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CategoryService } from '../../services/category.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -17,6 +18,7 @@ export class ProductList implements OnInit {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private categoryService = inject(CategoryService);
+  private wishlistService = inject(WishlistService);
   private route = inject(ActivatedRoute);
 
   // State signals
@@ -106,5 +108,17 @@ export class ProductList implements OnInit {
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     alert(`Added ${product.name} to cart!`);
+  }
+
+  toggleWishlist(product: Product) {
+    if (product.isFavorited) {
+      this.wishlistService.removeFromWishlist(product.id).subscribe({
+        next: () => product.isFavorited = false
+      });
+    } else {
+      this.wishlistService.addToWishlist(product.id).subscribe({
+        next: () => product.isFavorited = true
+      });
+    }
   }
 }

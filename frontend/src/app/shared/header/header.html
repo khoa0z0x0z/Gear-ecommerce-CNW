@@ -16,7 +16,14 @@
     </div>
 
     <div class="user-area" *ngIf="isLoggedIn()">
-      <a routerLink="/cart" class="icon-btn" style="position: relative;">
+      <a routerLink="/wishlist" class="icon-btn" style="position: relative; margin-right: 15px;">
+        ❤️
+        <span *ngIf="wishlistCount() > 0" style="position: absolute; top: -5px; right: -10px; background: #db4444; color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          {{ wishlistCount() }}
+        </span>
+      </a>
+
+      <a routerLink="/cart" class="icon-btn" style="position: relative; margin-right: 15px;">
         🛒
         <span *ngIf="cartCount() > 0" style="position: absolute; top: -5px; right: -10px; background: #db4444; color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
           {{ cartCount() }}
@@ -27,9 +34,8 @@
         <button class="icon-btn avatar-btn" (click)="toggleDropdown()">👤</button>
         
         <div class="dropdown-menu" *ngIf="showDropdown">
-          <a href="#">👤 Manage My Account</a>
-          <a href="#">🛍️ My Order</a>
-          <a href="#">❌ My Cancellations</a>
+          <a routerLink="/profile" (click)="toggleDropdown()">👤 Manage My Account</a>
+          <a routerLink="/order-history" (click)="toggleDropdown()">🛍️ My Order</a>
           <a (click)="logout()">🚪 Logout</a>
         </div>
       </div>

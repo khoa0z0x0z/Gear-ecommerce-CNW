@@ -1,0 +1,144 @@
+.wishlist-container {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.breadcrumb {
+  margin-bottom: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.breadcrumb-item a {
+  color: #7d879c;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-item.active {
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.account-frame {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 13px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid #f5f5f5;
+}
+
+.sidebar-padding {
+  padding: 40px 20px;
+}
+
+.content-padding {
+  padding: 40px 60px;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.product-card {
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.image-container {
+  position: relative;
+  aspect-ratio: 1;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .image-container img {
+  transform: scale(1.1);
+}
+
+.remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.remove-btn:hover {
+  background: #db4444;
+  color: #fff;
+}
+
+.cart-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .cart-overlay {
+  transform: translateY(0);
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-name:hover {
+  color: #db4444;
+}
+
+.current-price {
+  color: #db4444;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.empty-wishlist .empty-icon-wrapper {
+  font-size: 5rem;
+}

@@ -18,22 +18,49 @@ public class ProductService : IProductService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ProductReadDto>> GetAllProductsAsync()
+    public async Task<IEnumerable<ProductReadDto>> GetAllProductsAsync(int? userId = null)
     {
         var products = await _context.Products
             .Include(p => p.Category)
             .Include(p => p.ProductImages)
             .ToListAsync();
-        return _mapper.Map<IEnumerable<ProductReadDto>>(products);
+        
+        var dtos = _mapper.Map<IEnumerable<ProductReadDto>>(products);
+
+        if (userId.HasValue)
+        {
+            var wishlistProductIds = await _context.WishlistItems
+                .Where(i => i.Wishlist!.UserId == userId.Value)
+                .Select(i => i.ProductId)
+                .ToListAsync();
+
+            foreach (var dto in dtos)
+            {
+                dto.IsFavorited = wishlistProductIds.Contains(dto.Id);
+            }
+        }
+
+        return dtos;
     }
 
-    public async Task<ProductReadDto?> GetProductByIdAsync(int id)
+    public async Task<ProductReadDto?> GetProductByIdAsync(int id, int? userId = null)
     {
         var product = await _context.Products
             .Include(p => p.Category)
             .Include(p => p.ProductImages)
             .FirstOrDefaultAsync(p => p.Id == id);
-        return _mapper.Map<ProductReadDto>(product);
+        
+        if (product == null) return null;
+
+        var dto = _mapper.Map<ProductReadDto>(product);
+
+        if (userId.HasValue)
+        {
+            dto.IsFavorited = await _context.WishlistItems
+                .AnyAsync(i => i.Wishlist!.UserId == userId.Value && i.ProductId == id);
+        }
+
+        return dto;
     }
 
     public async Task<ProductReadDto> CreateProductAsync(ProductUpsertDto productDto)

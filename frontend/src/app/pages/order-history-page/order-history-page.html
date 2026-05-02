@@ -1,0 +1,74 @@
+<div class="container orders-container">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-5">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">My Orders</li>
+    </ol>
+  </nav>
+
+  <div class="account-frame">
+    <div class="row g-0">
+      <!-- Sidebar Column -->
+      <div class="col-md-3 border-end">
+        <div class="sidebar-padding">
+          <app-user-sidebar></app-user-sidebar>
+        </div>
+      </div>
+      
+      <!-- Content Column -->
+      <div class="col-md-9">
+        <div class="content-padding">
+          <div class="orders-header mb-4">
+            <h2 class="section-title">Order History</h2>
+            <p class="text-muted">Manage and track your recent orders.</p>
+          </div>
+
+          <div *ngIf="isLoading()" class="text-center py-5">
+            <div class="spinner-border text-danger" role="status"></div>
+          </div>
+
+          <div *ngIf="!isLoading() && orders().length === 0" class="empty-orders text-center py-5">
+            <div class="empty-icon-wrapper mb-4">
+              <i class="bi bi-bag-x text-muted"></i>
+            </div>
+            <h3>No orders found</h3>
+            <p class="text-muted mb-4">You haven't placed any orders yet. Start exploring our gear!</p>
+            <button routerLink="/products" class="btn btn-danger px-5 py-3">Start Shopping</button>
+          </div>
+
+          <div class="order-table-wrapper" *ngIf="!isLoading() && orders().length > 0">
+            <table class="table custom-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of orders()">
+                  <td class="fw-bold">#{{ order.id }}</td>
+                  <td>{{ order.createdAt | date:'mediumDate' }}</td>
+                  <td>
+                    <span [class]="'status-badge ' + order.status.toLowerCase()">
+                      {{ order.status }}
+                    </span>
+                  </td>
+                  <td class="total-cell">{{ order.totalAmount | currency:'VND':'symbol':'1.0-0' }}</td>
+                  <td>
+                    <button class="btn-view" [routerLink]="['/orders', order.id]">
+                      <i class="bi bi-eye"></i> View Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
