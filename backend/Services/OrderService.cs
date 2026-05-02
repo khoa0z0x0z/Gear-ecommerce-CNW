@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.DTOs;
@@ -12,12 +13,14 @@ public class OrderService : IOrderService
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
     private readonly ICartService _cartService;
+    private readonly ILogger<OrderService> _logger;
 
-    public OrderService(AppDbContext context, IMapper mapper, ICartService cartService)
+    public OrderService(AppDbContext context, IMapper mapper, ICartService cartService, ILogger<OrderService> logger)
     {
         _context = context;
         _mapper = mapper;
         _cartService = cartService;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<OrderReadDto>> GetUserOrdersAsync(int userId)
@@ -106,6 +109,8 @@ public class OrderService : IOrderService
                         discountAmount = subtotal * rate;
                         if (coupon.MaxDiscount.HasValue && discountAmount > coupon.MaxDiscount.Value)
                             discountAmount = coupon.MaxDiscount.Value;
+                        // Log intermediate values for debugging coupon issues
+                        _logger.LogInformation("Coupon compute: code={Code} rawValue={Raw} rate={Rate} subtotal={Subtotal} rawDiscount={RawDiscount}", coupon.Code, coupon.DiscountValue, rate, subtotal, discountAmount);
                     }
                     else
                     {
@@ -114,8 +119,12 @@ public class OrderService : IOrderService
 
                     if (discountAmount > subtotal) discountAmount = subtotal;
 
+                    // Prevent negative discount
+                    if (discountAmount < 0) discountAmount = 0;
+
                     // Round down to integer VNĐ
                     discountAmount = Math.Floor(discountAmount);
+                    _logger.LogInformation("Coupon final: code={Code} discount={Discount}", coupon.Code, discountAmount);
                 }
             }
         }
