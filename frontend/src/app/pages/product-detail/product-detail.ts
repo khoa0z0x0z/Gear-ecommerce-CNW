@@ -84,6 +84,13 @@ export class ProductDetail implements OnInit {
     });
   }
 
+  getAvatarForReview(r: Review) {
+    const currentUserId = Number(localStorage.getItem('userId')) || 0;
+    const localAvatar = localStorage.getItem('avatarUrl');
+    if (r.userId === currentUserId && localAvatar) return localAvatar;
+    return r.userAvatarUrl || 'https://via.placeholder.com/40';
+  }
+
   canManageReview(review: Review) {
     const role = localStorage.getItem('role') || '';
     const userId = Number(localStorage.getItem('userId')) || 0;

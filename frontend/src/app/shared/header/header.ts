@@ -26,6 +26,11 @@ export class Header {
 
   constructor() {
     this.wishlistService.loadInitialCount();
+    // Listen for avatar changes from profile page
+    window.addEventListener('avatarChanged', (e: Event) => {
+      const ev = e as CustomEvent<string>;
+      this.avatarUrl = ev.detail || localStorage.getItem('avatarUrl');
+    });
   }
 
   toggleDropdown() {

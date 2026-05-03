@@ -48,14 +48,15 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>Avatar URL</label>
-            <input type="text" [(ngModel)]="editData.avatarUrl" name="avatarUrl" placeholder="https://...">
+              <label>Avatar (upload or URL)</label>
+              <input type="file" accept="image/*" (change)="onAvatarSelected($any($event.target).files)">
+              <input type="text" [(ngModel)]="editData.avatarUrl" name="avatarUrl" placeholder="https://...">
           </div>
           <div class="form-group">
             <label>Preview</label>
-            <div *ngIf="editData.avatarUrl">
-              <img [src]="editData.avatarUrl" alt="avatar" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
-            </div>
+              <div *ngIf="editData.avatarUrl">
+                <img [src]="editData.avatarUrl" alt="avatar" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+              </div>
           </div>
         </div>
 

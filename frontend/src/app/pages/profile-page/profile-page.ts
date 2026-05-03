@@ -45,6 +45,8 @@ export class ProfilePage implements OnInit {
         this.editData.lastName = names.slice(1).join(' ') || '';
         this.editData.email = data.email || '';
         this.editData.phone = data.phone || '';
+        // load local avatar if present
+        this.editData.avatarUrl = localStorage.getItem('avatarUrl') || '';
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -52,6 +54,21 @@ export class ProfilePage implements OnInit {
         this.isLoading.set(false);
       }
     });
+  }
+
+  onAvatarSelected(files: FileList | null) {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      this.editData.avatarUrl = result;
+      // persist client-side
+      localStorage.setItem('avatarUrl', result);
+      // notify other components
+      window.dispatchEvent(new CustomEvent('avatarChanged', { detail: result }));
+    };
+    reader.readAsDataURL(file);
   }
 
   saveChanges() {
@@ -86,6 +103,7 @@ export class ProfilePage implements OnInit {
         // Avatar is stored client-side only
         if (this.editData.avatarUrl) {
           localStorage.setItem('avatarUrl', this.editData.avatarUrl);
+          window.dispatchEvent(new CustomEvent('avatarChanged', { detail: this.editData.avatarUrl }));
         }
       },
       error: (err) => {
