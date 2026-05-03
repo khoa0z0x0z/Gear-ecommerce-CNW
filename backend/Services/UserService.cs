@@ -108,8 +108,7 @@ public class UserService : IUserService
         if (!string.IsNullOrWhiteSpace(updateDto.Phone))
             user.Phone = updateDto.Phone.Trim();
 
-        if (!string.IsNullOrWhiteSpace(updateDto.AvatarUrl))
-            user.AvatarUrl = updateDto.AvatarUrl.Trim();
+        // Avatar handling is client-side only; do not persist avatar URL in database
 
         if (!string.IsNullOrWhiteSpace(updateDto.NewPassword))
         {

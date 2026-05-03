@@ -34,18 +34,32 @@ public class ReviewsController : ControllerBase
         }
 
         var list = await query.OrderByDescending(r => r.CreatedAt)
-            .Select(r => new ReviewReadDto
+            .Select(r => new
             {
-                Id = r.Id,
-                UserId = r.UserId,
+                r.Id,
+                r.UserId,
                 UserName = r.User != null ? (r.User.FullName ?? r.User.Email) : "",
-                UserAvatarUrl = r.User != null ? r.User.AvatarUrl : null,
-                ProductId = r.ProductId,
-                Rating = r.Rating,
-                Comment = r.Comment,
-                IsApproved = r.IsApproved,
-                CreatedAt = r.CreatedAt
-            }).ToListAsync();
+                UserEmail = r.User != null ? r.User.Email : null,
+                r.ProductId,
+                r.Rating,
+                r.Comment,
+                r.IsApproved,
+                r.CreatedAt
+            })
+            .AsEnumerable()
+            .Select(x => new ReviewReadDto
+            {
+                Id = x.Id,
+                UserId = x.UserId,
+                UserName = x.UserName,
+                UserAvatarUrl = x.UserEmail != null ?
+                    $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(x.UserName)}&size=64&background=ffffff&color=000" : null,
+                ProductId = x.ProductId,
+                Rating = x.Rating,
+                Comment = x.Comment,
+                IsApproved = x.IsApproved,
+                CreatedAt = x.CreatedAt
+            }).ToList();
 
         return Ok(list);
     }

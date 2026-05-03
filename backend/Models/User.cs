@@ -29,8 +29,7 @@ public class User
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     
-    [MaxLength(500)]
-    public string? AvatarUrl { get; set; }
+    // AvatarUrl removed: avatars are handled on the client (localStorage) or generated server-side from user name/email
 
     // Navigation Properties
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();

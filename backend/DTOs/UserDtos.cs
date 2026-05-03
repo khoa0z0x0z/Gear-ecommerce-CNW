@@ -20,7 +20,6 @@ public class UserDto
     public string Email { get; set; } = string.Empty;
     public string? FullName { get; set; }
     public string? Phone { get; set; }
-    public string? AvatarUrl { get; set; }
     public string Role { get; set; } = "Customer";
 }
 
@@ -35,7 +34,6 @@ public class UserUpdateDto
     public string? FullName { get; set; }
     public string? Email { get; set; }
     public string? Phone { get; set; }
-    public string? AvatarUrl { get; set; }
     public string? CurrentPassword { get; set; }
     public string? NewPassword { get; set; }
 }

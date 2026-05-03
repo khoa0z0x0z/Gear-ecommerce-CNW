@@ -9,8 +9,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         // User Mappings
-        CreateMap<User, UserDto>()
-            .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl));
+        CreateMap<User, UserDto>();
         CreateMap<UserRegisterDto, User>()
             .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName));
 

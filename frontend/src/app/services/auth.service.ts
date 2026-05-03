@@ -20,7 +20,6 @@ export class AuthService {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.user.role);
         localStorage.setItem('userId', res.user.id);
-        if (res.user.avatarUrl) localStorage.setItem('avatarUrl', res.user.avatarUrl);
         localStorage.setItem('isLoggedIn', 'true');
         this.isLoggedIn.set(true);
       })

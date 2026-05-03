@@ -45,7 +45,6 @@ export class ProfilePage implements OnInit {
         this.editData.lastName = names.slice(1).join(' ') || '';
         this.editData.email = data.email || '';
         this.editData.phone = data.phone || '';
-        this.editData.avatarUrl = data.avatarUrl || '';
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -65,7 +64,6 @@ export class ProfilePage implements OnInit {
       fullName: `${this.editData.firstName} ${this.editData.lastName}`.trim(),
       email: this.editData.email,
       phone: this.editData.phone,
-      avatarUrl: this.editData.avatarUrl,
       currentPassword: this.editData.currentPassword,
       newPassword: this.editData.newPassword
     };
@@ -83,11 +81,11 @@ export class ProfilePage implements OnInit {
           ...p,
           fullName: payload.fullName,
           phone: payload.phone,
-          email: payload.email,
-          avatarUrl: payload.avatarUrl
+          email: payload.email
         }));
-        if (payload.avatarUrl) {
-          localStorage.setItem('avatarUrl', payload.avatarUrl);
+        // Avatar is stored client-side only
+        if (this.editData.avatarUrl) {
+          localStorage.setItem('avatarUrl', this.editData.avatarUrl);
         }
       },
       error: (err) => {
