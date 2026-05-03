@@ -1,0 +1,43 @@
+<div class="admin-page">
+  <app-admin-sidebar></app-admin-sidebar>
+  <div class="admin-content">
+    <div class="audit-header">
+      <h2>Audit Logs</h2>
+      <div class="controls">
+        <input type="text" placeholder="Search email/action/resource/id" (input)="onQuery($any($event.target).value)" />
+        <select (change)="onSetAction($any($event.target).value)">
+          <option value="all">All actions</option>
+          <option value="ToggleUserStatus">ToggleUserStatus</option>
+          <option value="ResetPassword">ResetPassword</option>
+        </select>
+        <button (click)="load()">Refresh</button>
+      </div>
+    </div>
+
+    <div *ngIf="filtered.length === 0">No logs yet.</div>
+    <table *ngIf="filtered.length > 0" class="audit-table">
+      <thead>
+        <tr>
+          <th>Time (UTC)</th>
+          <th>Admin</th>
+          <th>Action</th>
+          <th>Resource</th>
+          <th>ResourceId</th>
+          <th>Before</th>
+          <th>After</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of filtered">
+          <td>{{e.TimestampUtc}}</td>
+          <td>{{e.AdminEmail}} ({{e.AdminId}})</td>
+          <td>{{e.Action}}</td>
+          <td>{{e.Resource}}</td>
+          <td>{{e.ResourceId}}</td>
+          <td><pre>{{e.Before | json}}</pre></td>
+          <td><pre>{{e.After | json}}</pre></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

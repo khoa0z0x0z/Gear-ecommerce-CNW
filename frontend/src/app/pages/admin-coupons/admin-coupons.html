@@ -1,0 +1,78 @@
+<section class="admin-dashboard-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      <h2>Quản lý Coupon</h2>
+
+      <div class="card">
+        <form (ngSubmit)="submit()" class="coupon-form">
+          <div>
+            <label>Code</label>
+            <input class="code-input" [(ngModel)]="form.code" name="code" required />
+            <small class="muted">Mã duy nhất, không chứa khoảng trắng ở đầu/cuối.</small>
+          </div>
+          <div>
+            <label>Mô tả</label>
+            <input [(ngModel)]="form.description" name="description" />
+          </div>
+          <div>
+            <label>Loại</label>
+            <select [(ngModel)]="form.isPercentage" name="isPercentage">
+              <option [ngValue]="false">Số tiền</option>
+              <option [ngValue]="true">Phần trăm</option>
+            </select>
+          </div>
+          <div>
+            <label>Giá trị</label>
+            <input type="number" [(ngModel)]="form.discountValue" name="discountValue" required />
+          </div>
+          <div>
+            <label>Giới hạn (tùy chọn)</label>
+            <input type="number" [(ngModel)]="form.maxDiscount" name="maxDiscount" />
+          </div>
+          <div>
+            <label>Bắt đầu</label>
+            <input type="datetime-local" [(ngModel)]="form.startAt" name="startAt" />
+          </div>
+          <div>
+            <label>Hết hạn</label>
+            <input type="datetime-local" [(ngModel)]="form.expiryAt" name="expiryAt" />
+          </div>
+          <div>
+            <label>Active</label>
+            <input type="checkbox" [(ngModel)]="form.isActive" name="isActive" />
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">{{ editing ? 'Cập nhật' : 'Tạo' }}</button>
+            <button class="btn-ghost" type="button" (click)="clear()">Hủy</button>
+          </div>
+        </form>
+      </div>
+
+      <hr />
+
+      <div class="card" style="margin-top:18px;">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Code</th><th>Loại</th><th>Giá trị</th><th>Hết hạn</th><th>Đã tạo</th><th>Active</th><th>Hành động</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of coupons()">
+              <td><code style="font-weight:600">{{ c.code }}</code></td>
+              <td>{{ c.isPercentage ? 'Phần trăm' : 'Số tiền' }}</td>
+              <td>{{ c.discountValue | number:'1.0-0' }}</td>
+              <td>{{ c.expiryAt | date:'short' }}</td>
+              <td>{{ c.createdAt | date:'short' }}</td>
+              <td><span class="badge" [style.background]="c.isActive ? '#10b981' : '#9ca3af'">{{ c.isActive ? 'Active' : 'Inactive' }}</span></td>
+              <td class="actions">
+                <button class="edit-btn" (click)="edit(c)">Sửa</button>
+                <button class="delete-btn" (click)="remove(c.id)">Xóa</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</section>
