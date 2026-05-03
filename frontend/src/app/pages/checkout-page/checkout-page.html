@@ -67,10 +67,39 @@
         </div>
       </div>
 
+      <!-- totals shown below (after coupon) -->
+
+      <div class="payment-methods">
+        <div class="radio-group">
+          <input type="radio" id="vnpay" value="vnpay" formControlName="paymentMethod">
+          <label for="vnpay" class="method-label">
+            <span class="method-icon">🏦</span>
+            <span>Thanh toán VNPay</span>
+            <span class="method-badge vnpay-badge">VNPay</span>
+          </label>
+        </div>
+        <div class="radio-group">
+          <input type="radio" id="cash" value="cash" formControlName="paymentMethod">
+          <label for="cash" class="method-label">
+            <span class="method-icon">💵</span>
+            <span>Thanh toán khi nhận hàng (COD)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="coupon-row">
+        <input type="text" placeholder="Coupon Code" formControlName="couponCode">
+        <button class="apply-btn" type="button" (click)="applyCoupon()">Apply Coupon</button>
+      </div>
+
       <div class="summary-totals">
         <div class="total-row">
           <span>Subtotal:</span>
           <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
+        </div>
+        <div class="total-row" *ngIf="appliedDiscount() > 0">
+          <span>Discount:</span>
+          <span>- {{ appliedDiscount() | number:'1.0-0' }} VNĐ</span>
         </div>
         <div class="total-row line">
           <span>Shipping:</span>
@@ -78,28 +107,8 @@
         </div>
         <div class="total-row final">
           <span>Total:</span>
-          <span>{{ totalPrice() | number:'1.0-0' }} VNĐ</span>
+          <span>{{ (totalPrice() - (appliedDiscount() || 0)) | number:'1.0-0' }} VNĐ</span>
         </div>
-      </div>
-
-      <div class="payment-methods">
-        <div class="radio-group">
-          <input type="radio" id="bank" value="bank" formControlName="paymentMethod">
-          <label for="bank">Bank</label>
-          <div class="bank-icons" *ngIf="checkoutForm.get('paymentMethod')?.value === 'bank'">
-             <span class="fake-card">💳</span>
-             <span class="fake-card">🏦</span>
-          </div>
-        </div>
-        <div class="radio-group">
-          <input type="radio" id="cash" value="cash" formControlName="paymentMethod">
-          <label for="cash">Cash on delivery</label>
-        </div>
-      </div>
-
-      <div class="coupon-row">
-        <input type="text" placeholder="Coupon Code">
-        <button class="apply-btn" type="button">Apply Coupon</button>
       </div>
 
       <button class="place-order-btn" (click)="placeOrder()">Place Order</button>

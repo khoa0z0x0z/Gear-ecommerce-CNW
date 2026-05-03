@@ -64,6 +64,8 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
+// Audit logging (file-based)
+builder.Services.AddSingleton<backend.Services.Interfaces.IAuditService, backend.Services.AuditService>();
 
 var app = builder.Build();
 

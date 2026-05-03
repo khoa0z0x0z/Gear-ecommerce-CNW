@@ -30,3 +30,7 @@ src/environments/environment.prod.ts
 *.log
 .env
 build_errors.txt
+
+# Ignore backend build artifacts explicitly
+backend/bin/
+backend/obj/

@@ -12,98 +12,103 @@ export class CartService {
   private authService = inject(AuthService);
   private apiUrl = `${environment.apiUrl}/carts`;
 
-  // Main signal for cart items
-  private cartItemsSignal = signal<CartItem[]>(this.loadCartFromStorage());
+  private readonly STORAGE_KEY = 'kat_guest_cart'; // renamed to make role clear
 
-  // Computed signals for convenience
+  // Main signal — initialized to [] when logged in, from storage when guest
+  private cartItemsSignal = signal<CartItem[]>(this.initCart());
+
   cartItems = computed(() => this.cartItemsSignal());
-
-  totalCount = computed(() =>
-    this.cartItemsSignal().reduce((acc, item) => acc + item.quantity, 0)
-  );
-
-  totalPrice = computed(() =>
-    this.cartItemsSignal().reduce((acc, item) => acc + (item.price * item.quantity), 0)
-  );
+  totalCount = computed(() => this.cartItemsSignal().reduce((s, i) => s + i.quantity, 0));
+  totalPrice = computed(() => this.cartItemsSignal().reduce((s, i) => s + i.price * i.quantity, 0));
 
   constructor() {
-    // Automatically save to localStorage whenever the signal changes
+    // Persist to localStorage ONLY when guest (not logged in)
     effect(() => {
-      localStorage.setItem('kat_cart', JSON.stringify(this.cartItemsSignal()));
+      if (!this.authService.isLoggedIn()) {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItemsSignal()));
+      }
     });
 
-    // Check login status and sync
+    // React to login/logout transitions
     effect(() => {
       const loggedIn = this.authService.isLoggedIn();
       if (loggedIn) {
-        const localItems = this.loadCartFromStorage();
-        if (localItems.length > 0) {
-          this.syncLocalCartWithBackend(localItems);
+        // Check if there's a guest cart to merge, then load from backend
+        const guestItems = this.getGuestCart();
+        if (guestItems.length > 0) {
+          this.syncGuestCartThenLoad(guestItems);
         } else {
           this.loadCartFromBackend();
         }
+      } else {
+        // Logged out — restore guest cart from storage
+        this.cartItemsSignal.set(this.getGuestCart());
       }
     }, { allowSignalWrites: true });
   }
 
-  private syncLocalCartWithBackend(items: CartItem[]) {
-    const syncData = items.map(item => ({
-      productId: item.id,
-      quantity: item.quantity
-    }));
+  // ─── Private helpers ──────────────────────────────────────────────────────
 
-    this.http.post<any>(`${this.apiUrl}/sync`, syncData).subscribe({
-      next: (cart) => {
-        // Clear local storage to prevent resyncing same data
-        localStorage.removeItem('kat_cart');
-        this.loadCartFromBackend();
-      },
-      error: (err) => {
-        console.error('Cart Sync Error:', err);
-        this.loadCartFromBackend();
-      }
+  /** On service init, if already logged in start with [] (backend will load later).
+   *  If guest, start from localStorage. */
+  private initCart(): CartItem[] {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    return isLoggedIn ? [] : this.getGuestCart();
+  }
+
+  private getGuestCart(): CartItem[] {
+    try {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private clearGuestCart() {
+    localStorage.removeItem(this.STORAGE_KEY);
+    // Also clear old key from previous implementation
+    localStorage.removeItem('kat_cart');
+  }
+
+  private syncGuestCartThenLoad(items: CartItem[]) {
+    const payload = items.map(i => ({ productId: i.id, quantity: i.quantity }));
+    this.http.post<any>(`${this.apiUrl}/sync`, payload).subscribe({
+      next: () => { this.clearGuestCart(); this.loadCartFromBackend(); },
+      error: () => { this.clearGuestCart(); this.loadCartFromBackend(); }
     });
   }
 
-  private loadCartFromStorage(): CartItem[] {
-    const savedCart = localStorage.getItem('kat_cart');
-    return savedCart ? JSON.parse(savedCart) : [];
-  }
+  // ─── Public API ───────────────────────────────────────────────────────────
 
   loadCartFromBackend() {
     this.http.get<any>(this.apiUrl).subscribe({
       next: (cart) => {
-        if (cart && cart.items) {
-          const items: CartItem[] = cart.items.map((item: any) => ({
-            id: item.productId,
-            name: item.productName,
-            price: item.price,
-            quantity: item.quantity,
-            image: item.imageUrl || 'https://via.placeholder.com/150',
+        if (cart?.items) {
+          this.cartItemsSignal.set(cart.items.map((i: any): CartItem => ({
+            id: i.productId,
+            name: i.productName,
+            price: i.price,
+            quantity: i.quantity,
+            image: i.imageUrl || '',
             description: ''
-          }));
-          this.cartItemsSignal.set(items);
+          })));
         }
       }
     });
   }
 
-  addToCart(product: Product, quantity: number = 1) {
+  addToCart(product: Product, quantity = 1) {
     if (this.authService.isLoggedIn()) {
-      this.http.post(`${this.apiUrl}/items`, { productId: product.id, quantity }).subscribe({
-        next: () => this.loadCartFromBackend()
-      });
+      this.http.post(`${this.apiUrl}/items`, { productId: product.id, quantity })
+        .subscribe({ next: () => this.loadCartFromBackend() });
       return;
     }
-
+    // Guest
     this.cartItemsSignal.update(items => {
-      const existingItem = items.find(item => item.id === product.id);
-      if (existingItem) {
-        return items.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+      const existing = items.find(i => i.id === product.id);
+      if (existing) {
+        return items.map(i => i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i);
       }
       return [...items, { ...product, quantity }];
     });
@@ -111,39 +116,29 @@ export class CartService {
 
   removeFromCart(id: number) {
     if (this.authService.isLoggedIn()) {
-      this.http.delete(`${this.apiUrl}/items/${id}`).subscribe({
-        next: () => this.loadCartFromBackend()
-      });
+      this.http.delete(`${this.apiUrl}/items/${id}`)
+        .subscribe({ next: () => this.loadCartFromBackend() });
       return;
     }
-    this.cartItemsSignal.update(items => items.filter(item => item.id !== id));
+    this.cartItemsSignal.update(items => items.filter(i => i.id !== id));
   }
 
   updateQuantity(id: number, quantity: number) {
-    if (quantity <= 0) {
-      this.removeFromCart(id);
-      return;
-    }
-
+    if (quantity <= 0) { this.removeFromCart(id); return; }
     if (this.authService.isLoggedIn()) {
-      this.http.post(`${this.apiUrl}/items`, { productId: id, quantity }).subscribe({
-        next: () => this.loadCartFromBackend()
-      });
+      this.http.put(`${this.apiUrl}/items`, { productId: id, quantity })
+        .subscribe({ next: () => this.loadCartFromBackend() });
       return;
     }
-
     this.cartItemsSignal.update(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      items.map(i => i.id === id ? { ...i, quantity } : i)
     );
   }
 
   clearCart() {
     if (this.authService.isLoggedIn()) {
-      this.http.delete(this.apiUrl).subscribe({
-        next: () => this.cartItemsSignal.set([])
-      });
+      this.http.delete(this.apiUrl)
+        .subscribe({ next: () => this.cartItemsSignal.set([]) });
       return;
     }
     this.cartItemsSignal.set([]);

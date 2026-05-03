@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.DTOs;
@@ -12,12 +13,14 @@ public class OrderService : IOrderService
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
     private readonly ICartService _cartService;
+    private readonly ILogger<OrderService> _logger;
 
-    public OrderService(AppDbContext context, IMapper mapper, ICartService cartService)
+    public OrderService(AppDbContext context, IMapper mapper, ICartService cartService, ILogger<OrderService> logger)
     {
         _context = context;
         _mapper = mapper;
         _cartService = cartService;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<OrderReadDto>> GetUserOrdersAsync(int userId)
@@ -83,6 +86,49 @@ public class OrderService : IOrderService
             }
         }
 
+        var subtotal = cart.CartItems.Sum(i => i.Quantity * i.Product!.Price);
+
+        // compute discount from coupon if provided
+        decimal discountAmount = 0;
+        if (!string.IsNullOrWhiteSpace(orderDto.CouponCode))
+        {
+            var searchCode = orderDto.CouponCode.Trim();
+            var coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.IsActive && c.Code != null && EF.Functions.Like(c.Code, searchCode));
+            if (coupon == null)
+            {
+                coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.IsActive && c.Code != null && c.Code.ToUpper() == searchCode.ToUpper());
+            }
+            if (coupon != null)
+            {
+                var now = DateTime.Now;
+                if ((coupon.StartAt == null || coupon.StartAt <= now) && (coupon.ExpiryAt == null || coupon.ExpiryAt >= now))
+                {
+                    if (coupon.IsPercentage)
+                    {
+                        var rate = coupon.DiscountValue <= 1 ? coupon.DiscountValue : coupon.DiscountValue / 100m;
+                        discountAmount = subtotal * rate;
+                        if (coupon.MaxDiscount.HasValue && discountAmount > coupon.MaxDiscount.Value)
+                            discountAmount = coupon.MaxDiscount.Value;
+                        // Log intermediate values for debugging coupon issues
+                        _logger.LogInformation("Coupon compute: code={Code} rawValue={Raw} rate={Rate} subtotal={Subtotal} rawDiscount={RawDiscount}", coupon.Code, coupon.DiscountValue, rate, subtotal, discountAmount);
+                    }
+                    else
+                    {
+                        discountAmount = coupon.DiscountValue;
+                    }
+
+                    if (discountAmount > subtotal) discountAmount = subtotal;
+
+                    // Prevent negative discount
+                    if (discountAmount < 0) discountAmount = 0;
+
+                    // Round down to integer VNĐ
+                    discountAmount = Math.Floor(discountAmount);
+                    _logger.LogInformation("Coupon final: code={Code} discount={Discount}", coupon.Code, discountAmount);
+                }
+            }
+        }
+
         var order = new Order
         {
             UserId = userId,
@@ -91,7 +137,7 @@ public class OrderService : IOrderService
             Status = "Pending",
             CreatedAt = DateTime.Now,
             ShippingFee = 0,
-            TotalAmount = cart.CartItems.Sum(i => i.Quantity * i.Product!.Price)
+            TotalAmount = subtotal - discountAmount
         };
 
         foreach (var item in cart.CartItems)

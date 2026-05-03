@@ -1,0 +1,66 @@
+<section class="admin-dashboard-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <section class="admin-content">
+      <h2>Quản lý Thông báo</h2>
+
+      <div class="card">
+        <form (ngSubmit)="submit()" class="notification-form">
+          <div>
+            <label>Title</label>
+            <input [(ngModel)]="form.title" name="title" required />
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <label>Message</label>
+            <textarea [(ngModel)]="form.message" name="message" required></textarea>
+          </div>
+          <div>
+            <label>Hiển thị với Roles (CSV)</label>
+            <input [(ngModel)]="form.visibleToRoles" name="visibleToRoles" />
+          </div>
+          <div>
+            <label>Hiển thị với User IDs (CSV)</label>
+            <input [(ngModel)]="form.visibleToUserIds" name="visibleToUserIds" />
+          </div>
+          <div>
+            <label>Expires At</label>
+            <input type="datetime-local" [(ngModel)]="form.expiresAt" name="expiresAt" />
+          </div>
+          <div>
+            <label>Active</label>
+            <input type="checkbox" [(ngModel)]="form.isActive" name="isActive" />
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">{{ editing ? 'Cập nhật' : 'Tạo' }}</button>
+            <button class="btn-ghost" type="button" (click)="clear()">Hủy</button>
+          </div>
+        </form>
+      </div>
+
+      <hr />
+
+      <div class="card" style="margin-top:18px;">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Title</th><th>Message</th><th>Roles</th><th>Users</th><th>Expires</th><th>Active</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let n of notifications()">
+              <td style="font-weight:600">{{ n.title }}</td>
+              <td><div style="max-width:480px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ n.message }}</div></td>
+              <td>{{ n.visibleToRoles || '-' }}</td>
+              <td>{{ n.visibleToUserIds || '-' }}</td>
+              <td>{{ n.expiresAt | date:'short' }}</td>
+              <td><span class="badge" [style.background]="n.isActive ? '#10b981' : '#9ca3af'">{{ n.isActive ? 'Active' : 'Inactive' }}</span></td>
+              <td class="actions">
+                <button class="edit-btn" (click)="edit(n)">Sửa</button>
+                <button class="delete-btn" (click)="remove(n.id)">Xóa</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</section>

@@ -29,4 +29,6 @@ public class OrderCreateDto
     // Optional address fields for auto-creation
     public string? City { get; set; }
     public string? FullAddress { get; set; }
+    // Optional coupon code to apply during checkout
+    public string? CouponCode { get; set; }
 }
