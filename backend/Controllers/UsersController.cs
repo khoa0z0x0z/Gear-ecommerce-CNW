@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
+using backend.DTOs;
 
 namespace backend.Controllers;
 
@@ -44,5 +45,18 @@ public class UsersController : ControllerBase
         var success = await _userService.ResetPasswordAsync(id, newPassword);
         if (!success) return NotFound();
         return Ok(new { message = "Password reset successfully" });
+    }
+
+    [HttpPut("profile")]
+    public async Task<IActionResult> UpdateProfile(UserUpdateDto updateDto)
+    {
+        var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+        if (userIdClaim == null) return Unauthorized();
+        
+        var userId = int.Parse(userIdClaim.Value);
+        var success = await _userService.UpdateProfileAsync(userId, updateDto);
+        if (!success) return BadRequest(new { message = "Update failed. Check your password or if email is taken." });
+        
+        return Ok(new { message = "Profile updated successfully" });
     }
 }

@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-homepage',
@@ -16,6 +17,7 @@ export class Homepage implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private categoryService = inject(CategoryService);
+  private wishlistService = inject(WishlistService);
   private router = inject(Router);
 
   bestSellingProducts = signal<any[]>([]);
@@ -50,6 +52,22 @@ export class Homepage implements OnInit, OnDestroy {
   addToCart(product: any) {
     this.cartService.addToCart(product);
     alert(`Added ${product.name} to cart!`);
+  }
+
+  toggleWishlist(product: any) {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to use wishlist');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.wishlistService.addToWishlist(product.id).subscribe({
+      next: () => alert(`Added ${product.name} to wishlist!`),
+      error: (err) => {
+        console.error('Wishlist error:', err);
+        alert('Failed to add to wishlist: ' + (err.error?.message || 'Please try again later'));
+      }
+    });
   }
 
   currentSlideIndex = 0;

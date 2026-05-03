@@ -9,6 +9,10 @@ import { ContactPage } from './pages/contact-page/contact-page';
 import { CheckoutPage } from './pages/checkout-page/checkout-page';
 import { NotFound } from './pages/not-found/not-found';
 import { AboutPage } from './pages/about-page/about-page';
+import { ProfilePage } from './pages/profile-page/profile-page';
+import { WishlistPage } from './pages/wishlist-page/wishlist-page';
+import { OrderHistoryPage } from './pages/order-history-page/order-history-page';
+import { OrderDetailPage } from './pages/order-detail-page/order-detail-page';
 
 import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { AdminAddProduct } from './pages/admin-add-product/admin-add-product';
@@ -19,6 +23,13 @@ import { AdminStats } from './pages/admin-stats/admin-stats';
 
 export const routes: Routes = [
   { path: '', component: Homepage },
+  { 
+    path: 'orders', 
+    children: [
+      { path: '', component: OrderHistoryPage, pathMatch: 'full' },
+      { path: ':id', component: OrderDetailPage }
+    ]
+  },
   { path: 'products', component: ProductList },
   { path: 'products/:id', component: ProductDetail },
   { path: 'cart', component: CartPage },
@@ -27,6 +38,8 @@ export const routes: Routes = [
   { path: 'contact', component: ContactPage },
   { path: 'checkout', component: CheckoutPage },
   { path: 'about', component: AboutPage },
+  { path: 'profile', component: ProfilePage },
+  { path: 'wishlist', component: WishlistPage },
 
   // ADMIN
   { path: 'admin', component: AdminDashboard },

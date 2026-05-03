@@ -1,0 +1,87 @@
+<div class="order-detail-container">
+  <div class="breadcrumb">
+    <a routerLink="/">Home</a> / <a routerLink="/orders">My Account</a> / <span>Order Detail</span>
+  </div>
+
+  <div class="detail-card" *ngIf="!isLoading() && order()">
+    <div class="detail-header">
+      <div class="header-left">
+        <h2>Order #{{ order().id }}</h2>
+        <p class="order-date">Placed on {{ order().createdAt | date:'mediumDate' }}</p>
+      </div>
+      <div class="header-right">
+        <span class="status-badge" [ngClass]="getStatusClass(order().status)">
+          {{ order().status }}
+        </span>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <!-- Items Table -->
+      <div class="items-section">
+        <h3>Items Ordered</h3>
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order().orderDetails">
+              <td>
+                <div class="product-cell">
+                  <img [src]="item.imageUrl || 'https://via.placeholder.com/50'" [alt]="item.productName">
+                  <span>{{ item.productName }}</span>
+                </div>
+              </td>
+              <td>{{ item.price | number:'1.0-0' }} VNĐ</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ (item.price * item.quantity) | number:'1.0-0' }} VNĐ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Order Summary & Shipping -->
+      <div class="summary-section">
+        <div class="info-block">
+          <h3>Shipping Address</h3>
+          <p>{{ order().address?.fullAddress }}</p>
+          <p>{{ order().address?.city }}</p>
+        </div>
+
+        <div class="info-block">
+          <h3>Payment Method</h3>
+          <p>Cash on Delivery</p>
+        </div>
+
+        <div class="summary-card">
+          <h3>Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>{{ order().totalAmount | number:'1.0-0' }} VNĐ</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>0 VNĐ</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span>{{ order().totalAmount | number:'1.0-0' }} VNĐ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-actions">
+      <button class="btn-back" routerLink="/orders">Back to My Orders</button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading()" class="loading">
+    <p>Loading order details...</p>
+  </div>
+</div>

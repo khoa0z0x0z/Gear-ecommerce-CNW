@@ -62,7 +62,7 @@
         <!-- Added logic for Add to Cart -->
         <button class="buy-btn" type="button" (click)="addToCart()" style="background: #111; margin-left: -10px;">Add to Cart</button>
 
-        <button class="wishlist-btn" type="button">♡</button>
+        <button class="wishlist-btn" type="button" (click)="toggleWishlist()">❤️</button>
       </div>
 
       <div class="delivery-box">
@@ -95,8 +95,8 @@
       <div class="related-card" *ngFor="let rel of relatedProducts()">
         <div class="related-image-box">
           <div class="card-actions">
-            <span>♡</span>
-            <span>👁</span>
+            <span (click)="toggleWishlist(rel); $event.stopPropagation()" style="cursor: pointer;">❤️</span>
+            <span [routerLink]="['/products', rel.id]">👁</span>
           </div>
 
           <div class="related-icon">

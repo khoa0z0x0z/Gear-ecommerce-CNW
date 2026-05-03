@@ -88,4 +88,33 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<bool> UpdateProfileAsync(int id, UserUpdateDto updateDto)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null) return false;
+
+        if (updateDto.Email != null && updateDto.Email != user.Email)
+        {
+            if (await _context.Users.AnyAsync(u => u.Email == updateDto.Email))
+                return false;
+            user.Email = updateDto.Email;
+        }
+
+        user.FullName = updateDto.FullName ?? user.FullName;
+        user.Phone = updateDto.Phone ?? user.Phone;
+
+        if (!string.IsNullOrEmpty(updateDto.NewPassword))
+        {
+            if (string.IsNullOrEmpty(updateDto.CurrentPassword) ||
+                !BCrypt.Net.BCrypt.Verify(updateDto.CurrentPassword, user.PasswordHash))
+            {
+                return false;
+            }
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(updateDto.NewPassword);
+        }
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }
