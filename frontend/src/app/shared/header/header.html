@@ -31,7 +31,10 @@
       </a>
       
       <div class="avatar-container">
-        <button class="icon-btn avatar-btn" (click)="toggleDropdown()">👤</button>
+        <button class="icon-btn avatar-btn" (click)="toggleDropdown()">
+          <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar-img" alt="avatar">
+          <span *ngIf="!avatarUrl">👤</span>
+        </button>
         
         <div class="dropdown-menu" *ngIf="showDropdown">
           <a routerLink="/profile" (click)="toggleDropdown()">👤 Manage My Account</a>

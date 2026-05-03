@@ -22,6 +22,7 @@ export class Header {
   wishlistCount = this.wishlistService.wishlistCount;
   
   showDropdown = false;
+  avatarUrl: string | null = localStorage.getItem('avatarUrl');
 
   constructor() {
     this.wishlistService.loadInitialCount();

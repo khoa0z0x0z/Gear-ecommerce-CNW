@@ -28,6 +28,9 @@ public class User
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    
+    [MaxLength(500)]
+    public string? AvatarUrl { get; set; }
 
     // Navigation Properties
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();

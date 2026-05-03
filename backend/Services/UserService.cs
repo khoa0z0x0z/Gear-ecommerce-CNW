@@ -108,6 +108,9 @@ public class UserService : IUserService
         if (!string.IsNullOrWhiteSpace(updateDto.Phone))
             user.Phone = updateDto.Phone.Trim();
 
+        if (!string.IsNullOrWhiteSpace(updateDto.AvatarUrl))
+            user.AvatarUrl = updateDto.AvatarUrl.Trim();
+
         if (!string.IsNullOrWhiteSpace(updateDto.NewPassword))
         {
             if (string.IsNullOrWhiteSpace(updateDto.CurrentPassword) ||

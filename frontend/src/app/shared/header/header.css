@@ -107,6 +107,13 @@
   font-size: 16px;
 }
 
+.avatar-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 /* Menu đen lơ lửng */
 .dropdown-menu {
   position: absolute;

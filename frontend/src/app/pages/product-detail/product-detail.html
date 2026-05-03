@@ -111,7 +111,8 @@
     <div class="reviews-list">
       <div class="review-item" *ngFor="let r of reviews()">
         <div class="review-meta">
-          <strong>{{ r.userName || 'User' }}</strong>
+              <img class="review-avatar" [src]="r.userAvatarUrl || 'https://via.placeholder.com/40'" alt="avatar">
+              <strong>{{ r.userName || 'User' }}</strong>
           <span class="rating">{{ r.rating }} / 5</span>
           <span class="created"> - {{ r.createdAt | date:'short' }}</span>
           <span *ngIf="!r.isApproved" class="hidden-badge">(ẩn)</span>

@@ -39,6 +39,7 @@ public class ReviewsController : ControllerBase
                 Id = r.Id,
                 UserId = r.UserId,
                 UserName = r.User != null ? (r.User.FullName ?? r.User.Email) : "",
+                UserAvatarUrl = r.User != null ? r.User.AvatarUrl : null,
                 ProductId = r.ProductId,
                 Rating = r.Rating,
                 Comment = r.Comment,

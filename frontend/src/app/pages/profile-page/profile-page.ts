@@ -44,6 +44,7 @@ export class ProfilePage implements OnInit {
         this.editData.lastName = names.slice(1).join(' ') || '';
         this.editData.email = data.email || '';
         this.editData.phone = data.phone || '';
+        this.editData.avatarUrl = data.avatarUrl || '';
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -63,6 +64,7 @@ export class ProfilePage implements OnInit {
       fullName: `${this.editData.firstName} ${this.editData.lastName}`.trim(),
       email: this.editData.email,
       phone: this.editData.phone,
+      avatarUrl: this.editData.avatarUrl,
       currentPassword: this.editData.currentPassword,
       newPassword: this.editData.newPassword
     };
@@ -82,6 +84,9 @@ export class ProfilePage implements OnInit {
           phone: payload.phone,
           email: payload.email
         }));
+        if (payload.avatarUrl) {
+          localStorage.setItem('avatarUrl', payload.avatarUrl);
+        }
       },
       error: (err) => {
         alert(err.error?.message || 'Update failed. Please check your current password.');

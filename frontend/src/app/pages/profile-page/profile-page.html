@@ -46,6 +46,19 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label>Avatar URL</label>
+            <input type="text" [(ngModel)]="editData.avatarUrl" name="avatarUrl" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label>Preview</label>
+            <div *ngIf="editData.avatarUrl">
+              <img [src]="editData.avatarUrl" alt="avatar" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+            </div>
+          </div>
+        </div>
+
         <h3 class="password-title">Password Changes</h3>
         <div class="form-group">
           <input type="password" [(ngModel)]="editData.currentPassword" name="currentPassword" placeholder="Current Password">
