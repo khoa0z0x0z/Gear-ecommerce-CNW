@@ -23,6 +23,7 @@ export class ProfilePage implements OnInit {
     lastName: '',
     email: '',
     phone: '',
+    avatarUrl: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
@@ -82,7 +83,8 @@ export class ProfilePage implements OnInit {
           ...p,
           fullName: payload.fullName,
           phone: payload.phone,
-          email: payload.email
+          email: payload.email,
+          avatarUrl: payload.avatarUrl
         }));
         if (payload.avatarUrl) {
           localStorage.setItem('avatarUrl', payload.avatarUrl);
