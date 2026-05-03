@@ -513,9 +513,7 @@
   padding: 8px;
 }
 
-.buy-btn {
-  /* ensure review buttons match existing buy style when reused */
-}
+/* use existing .buy-btn definition above for button styles */
 
 @media (max-width: 1100px) {
   .detail-main {
