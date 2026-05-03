@@ -1,0 +1,96 @@
+<section class="orders-page">
+  <div class="orders-container">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div>
+        <h1>Đơn hàng của tôi</h1>
+        <p>Theo dõi trạng thái và lịch sử mua hàng</p>
+      </div>
+      <a routerLink="/products" class="continue-btn">🛍️ Tiếp tục mua sắm</a>
+    </div>
+
+    <!-- VNPay result banner -->
+    <div class="vnpay-banner success" *ngIf="vnpayStatus() === 'success'">
+      🎉 Thanh toán VNPay thành công! Đơn hàng của bạn đang được xử lý.
+    </div>
+    <div class="vnpay-banner failed" *ngIf="vnpayStatus() === 'failed'">
+      ❌ Thanh toán VNPay thất bại hoặc bị hủy. Đơn hàng đã bị hủy.
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading()" class="loading-state">
+      <div class="spinner"></div>
+      <p>Đang tải đơn hàng...</p>
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!isLoading() && orders().length === 0" class="empty-state">
+      <div class="empty-icon">📦</div>
+      <h3>Chưa có đơn hàng nào</h3>
+      <p>Hãy khám phá các sản phẩm và đặt hàng đầu tiên của bạn!</p>
+      <a routerLink="/products" class="shop-now-btn">Mua sắm ngay</a>
+    </div>
+
+    <!-- Orders List -->
+    <div *ngIf="!isLoading() && orders().length > 0" class="orders-list">
+      <div class="order-card" *ngFor="let order of orders()">
+
+        <!-- Order Header (always visible) -->
+        <div class="order-header" (click)="toggleOrder(order.id)">
+          <div class="order-meta">
+            <span class="order-id">#{{ order.id }}</span>
+            <span class="order-date">{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="order-right">
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+              {{ getStatusLabel(order.status) }}
+            </span>
+            <span class="order-total">{{ order.totalAmount | number:'1.0-0' }} VNĐ</span>
+            <span class="expand-icon">{{ expandedOrderId() === order.id ? '▲' : '▼' }}</span>
+          </div>
+        </div>
+
+        <!-- Order Details (expandable) -->
+        <div class="order-details" *ngIf="expandedOrderId() === order.id">
+          <div class="details-inner">
+
+            <!-- Product list -->
+            <table class="products-table">
+              <thead>
+                <tr>
+                  <th>Sản phẩm</th>
+                  <th>Đơn giá</th>
+                  <th>Số lượng</th>
+                  <th>Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of order.orderDetails">
+                  <td class="product-name">{{ item.productName }}</td>
+                  <td>{{ item.price | number:'1.0-0' }} VNĐ</td>
+                  <td>x{{ item.quantity }}</td>
+                  <td class="subtotal">{{ (item.price * item.quantity) | number:'1.0-0' }} VNĐ</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Summary -->
+            <div class="order-summary">
+              <div class="summary-row">
+                <span>Phí vận chuyển</span>
+                <span>{{ order.shippingFee > 0 ? (order.shippingFee | number:'1.0-0') + ' VNĐ' : 'Miễn phí' }}</span>
+              </div>
+              <div class="summary-row total">
+                <span>Tổng cộng</span>
+                <span>{{ order.totalAmount | number:'1.0-0' }} VNĐ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

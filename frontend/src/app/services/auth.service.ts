@@ -30,9 +30,13 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/register`, userData);
   }
 
-  logout() {
+  logout(redirectTo: string = '/login') {
     localStorage.removeItem('token');
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     this.isLoggedIn.set(false);
+    // Hard redirect so Header re-mounts and signal re-reads from clean localStorage
+    window.location.href = redirectTo;
   }
 }

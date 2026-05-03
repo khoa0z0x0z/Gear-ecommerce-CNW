@@ -71,16 +71,19 @@
 
       <div class="payment-methods">
         <div class="radio-group">
-          <input type="radio" id="bank" value="bank" formControlName="paymentMethod">
-          <label for="bank">Bank</label>
-          <div class="bank-icons" *ngIf="checkoutForm.get('paymentMethod')?.value === 'bank'">
-             <span class="fake-card">💳</span>
-             <span class="fake-card">🏦</span>
-          </div>
+          <input type="radio" id="vnpay" value="vnpay" formControlName="paymentMethod">
+          <label for="vnpay" class="method-label">
+            <span class="method-icon">🏦</span>
+            <span>Thanh toán VNPay</span>
+            <span class="method-badge vnpay-badge">VNPay</span>
+          </label>
         </div>
         <div class="radio-group">
           <input type="radio" id="cash" value="cash" formControlName="paymentMethod">
-          <label for="cash">Cash on delivery</label>
+          <label for="cash" class="method-label">
+            <span class="method-icon">💵</span>
+            <span>Thanh toán khi nhận hàng (COD)</span>
+          </label>
         </div>
       </div>
 

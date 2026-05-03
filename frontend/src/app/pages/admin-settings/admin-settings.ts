@@ -70,7 +70,6 @@ export class AdminSettings implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authService.logout(); // hard-redirects to /login automatically
   }
 }

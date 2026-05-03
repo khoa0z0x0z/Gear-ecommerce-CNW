@@ -9,6 +9,7 @@ import { ContactPage } from './pages/contact-page/contact-page';
 import { CheckoutPage } from './pages/checkout-page/checkout-page';
 import { NotFound } from './pages/not-found/not-found';
 import { AboutPage } from './pages/about-page/about-page';
+import { OrdersPage } from './pages/orders-page/orders-page';
 
 import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { AdminAddProduct } from './pages/admin-add-product/admin-add-product';
@@ -29,6 +30,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterPage },
   { path: 'contact', component: ContactPage },
   { path: 'checkout', component: CheckoutPage },
+  { path: 'orders', component: OrdersPage },
   { path: 'about', component: AboutPage },
 
   // ADMIN

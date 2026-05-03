@@ -43,10 +43,8 @@
         <button class="icon-btn avatar-btn" (click)="toggleDropdown()">👤</button>
 
         <div class="dropdown-menu" *ngIf="showDropdown">
-          <a href="#">👤 Manage My Account</a>
-          <a href="#">🛍️ My Order</a>
-          <a href="#">❌ My Cancellations</a>
-          <a (click)="logout()">🚪 Logout</a>
+          <a routerLink="/orders" (click)="showDropdown=false">🛍️ Đơn hàng của tôi</a>
+          <a (click)="logout()">🚪 Đăng xuất</a>
         </div>
       </div>
     </div>
