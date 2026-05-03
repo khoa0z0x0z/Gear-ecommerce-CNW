@@ -25,6 +25,8 @@ public class AppDbContext : DbContext
     public DbSet<Payment> Payments { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Settings> Settings { get; set; }
+    public DbSet<Coupon> Coupons { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -118,6 +120,22 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Contact>(entity =>
         {
             entity.Property(c => c.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+        });
+
+        // Coupons
+        modelBuilder.Entity<Coupon>(entity =>
+        {
+            entity.Property(c => c.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(c => c.IsActive).HasDefaultValue(true);
+            entity.Property(c => c.DiscountValue).HasPrecision(18, 2);
+            entity.Property(c => c.MaxDiscount).HasPrecision(18, 2);
+        });
+
+        // Notifications
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.Property(n => n.CreatedAt).HasDefaultValueSql("SYSDATETIME()");
+            entity.Property(n => n.IsActive).HasDefaultValue(true);
         });
     }
 }

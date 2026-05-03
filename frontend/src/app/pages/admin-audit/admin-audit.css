@@ -1,0 +1,11 @@
+.admin-page { display: flex; }
+.admin-content { padding: 16px; flex: 1; }
+.audit-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.audit-table th, .audit-table td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+.audit-table pre { max-height: 120px; overflow: auto; margin: 0; font-size: 12px; }
+
+.audit-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.audit-header .controls { display:flex; gap:8px; align-items:center; }
+.audit-header input { padding:6px 8px; border-radius:4px; border:1px solid #ccc; }
+.audit-header select { padding:6px 8px; border-radius:4px; border:1px solid #ccc; }
+.logs-btn { margin-left:8px; padding:6px 10px; }

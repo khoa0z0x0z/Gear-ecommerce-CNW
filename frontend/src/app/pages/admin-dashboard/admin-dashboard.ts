@@ -117,6 +117,10 @@ export class AdminDashboard implements OnInit {
     this.router.navigate(['/admin/add-product']);
   }
 
+  goToLogs() {
+    this.router.navigate(['/admin/logs']);
+  }
+
   editProduct(id: number) {
     this.router.navigate(['/admin/edit-product', id]);
   }
