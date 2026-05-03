@@ -9,6 +9,14 @@ obj/
 .vs/
 .vscode/
 
+# Ignore backend build outputs explicitly (untrack already committed files)
+/backend/bin/
+/backend/obj/
+/backend/*.exe
+/backend/*.dll
+/backend/*.pdb
+/backend/*.sourcelink.json
+
 # Angular
 node_modules/
 dist/
