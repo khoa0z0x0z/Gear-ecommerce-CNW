@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj": {}
+    "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj": {}
   },
   "projects": {
-    "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj": {
+    "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
+        "projectUniqueName": "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
+        "projectPath": "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\obj\\",
+        "outputPath": "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "D:\\Visual Studio Code 2022\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -114,7 +114,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

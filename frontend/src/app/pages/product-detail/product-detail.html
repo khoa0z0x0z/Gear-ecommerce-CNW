@@ -31,7 +31,9 @@
 
       <div class="rating-stock-row">
         <span class="stars">★★★★★</span>
-        <span class="review-text">{{ p.rating }}</span>
+        <span class="review-text">{{ p.averageRating | number:'1.1-1' }} / 5</span>
+        <span class="divider">|</span>
+        <span class="review-count">{{ p.ratingCount }} reviews</span>
         <span class="divider">|</span>
         <span class="stock-text">In Stock</span>
       </div>
@@ -84,6 +86,63 @@
       </div>
     </div>
   </div>
+
+  <section class="reviews-section" *ngIf="product() as p">
+    <h3>Đánh giá & Bình luận</h3>
+
+    <div class="add-review" *ngIf="!userReview()">
+      <div class="rating-select">
+        <span>Rating:</span>
+        <button type="button" (click)="newRating.set(1)">1</button>
+        <button type="button" (click)="newRating.set(2)">2</button>
+        <button type="button" (click)="newRating.set(3)">3</button>
+        <button type="button" (click)="newRating.set(4)">4</button>
+        <button type="button" (click)="newRating.set(5)">5</button>
+        <span class="sel">{{ newRating() }} / 5</span>
+      </div>
+
+      <textarea placeholder="Viết bình luận..." [value]="newComment()" (input)="newComment.set($any($event.target).value)"></textarea>
+      <button class="buy-btn" type="button" (click)="addReview()">Gửi bình luận</button>
+    </div>
+    <div *ngIf="userReview()" class="already-reviewed">
+      <p>Bạn đã đánh giá sản phẩm này. Bạn có thể sửa hoặc xóa đánh giá của bạn bên dưới.</p>
+    </div>
+
+    <div class="reviews-list">
+      <div class="review-item" *ngFor="let r of reviews()">
+        <div class="review-meta">
+          <strong>{{ r.userName || 'User' }}</strong>
+          <span class="rating">{{ r.rating }} / 5</span>
+          <span class="created"> - {{ r.createdAt | date:'short' }}</span>
+          <span *ngIf="!r.isApproved" class="hidden-badge">(ẩn)</span>
+        </div>
+
+        <div *ngIf="editingId() !== r.id">
+          <p class="comment">{{ r.comment }}</p>
+        </div>
+
+        <div *ngIf="editingId() === r.id">
+          <div class="rating-select">
+            <button type="button" (click)="editRating.set(1)">1</button>
+            <button type="button" (click)="editRating.set(2)">2</button>
+            <button type="button" (click)="editRating.set(3)">3</button>
+            <button type="button" (click)="editRating.set(4)">4</button>
+            <button type="button" (click)="editRating.set(5)">5</button>
+            <span class="sel">{{ editRating() }} / 5</span>
+          </div>
+          <textarea [value]="editComment()" (input)="editComment.set($any($event.target).value)"></textarea>
+          <button class="buy-btn" type="button" (click)="saveEdit(r)">Lưu</button>
+          <button type="button" (click)="editingId.set(null)">Hủy</button>
+        </div>
+
+        <div class="review-actions" *ngIf="canManageReview(r)">
+          <button type="button" (click)="startEdit(r)">Sửa</button>
+          <button type="button" (click)="deleteReview(r)">Xóa</button>
+          <button type="button" (click)="toggleHide(r)">{{ r.isApproved ? 'Ẩn' : 'Hiện' }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="related-section">
     <div class="section-kicker">

@@ -16,10 +16,23 @@ public class MappingProfile : Profile
         // Category Mappings
         CreateMap<Category, CategoryDto>().ReverseMap();
 
-        // Product Mappings
+#warning Product mapping includes rating aggregates
+#if NET7_0_OR_GREATER
         CreateMap<Product, ProductReadDto>()
             .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
-            .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ProductImages.Select(i => i.ImageUrl)));
+            .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ProductImages.Select(i => i.ImageUrl)))
+            .ForMember(dest => dest.RatingCount, opt => opt.MapFrom(src => src.Reviews != null ? src.Reviews.Where(r => r.IsApproved).Count() : 0))
+            .ForMember(dest => dest.TotalStars, opt => opt.MapFrom(src => src.Reviews != null ? src.Reviews.Where(r => r.IsApproved).Sum(r => r.Rating) : 0))
+            .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => (src.Reviews != null && src.Reviews.Where(r => r.IsApproved).Any()) ? src.Reviews.Where(r => r.IsApproved).Average(r => r.Rating) : 0.0));
+#else
+        // Fallback mapping if runtime doesn't support complex expressions in mapper
+        CreateMap<Product, ProductReadDto>()
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
+            .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ProductImages.Select(i => i.ImageUrl)))
+            .ForMember(dest => dest.RatingCount, opt => opt.Ignore())
+            .ForMember(dest => dest.TotalStars, opt => opt.Ignore())
+            .ForMember(dest => dest.AverageRating, opt => opt.Ignore());
+#endif
         CreateMap<ProductUpsertDto, Product>()
             .ForMember(dest => dest.ProductImages, opt => opt.Ignore());
 

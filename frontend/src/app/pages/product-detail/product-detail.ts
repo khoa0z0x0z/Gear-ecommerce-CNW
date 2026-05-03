@@ -5,6 +5,7 @@ import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product.model';
+import { Review, ReviewUpsert } from '../../models/review.model';
 
 @Component({
   selector: 'app-product-detail',
@@ -28,6 +29,13 @@ export class ProductDetail implements OnInit {
   selectedImage = signal<{ image: string }>({ image: '' });
 
   relatedProducts = signal<any[]>([]);
+  reviews = signal<Review[]>([]);
+  userReview = signal<Review | null>(null);
+  newRating = signal(5);
+  newComment = signal('');
+  editingId = signal<number | null>(null);
+  editRating = signal(5);
+  editComment = signal('');
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -56,10 +64,91 @@ export class ProductDetail implements OnInit {
 
         // Mock related for now, or fetch by category
         this.loadRelatedProducts(p.categoryName || '');
+        this.loadReviews(id);
       },
       error: (err) => {
         console.error('Error loading product:', err);
       }
+    });
+  }
+
+  loadReviews(productId: number) {
+    this.productService.getReviews(productId).subscribe({
+      next: (r) => {
+        this.reviews.set(r);
+        const uid = Number(localStorage.getItem('userId')) || 0;
+        const found = r.find(x => x.userId === uid);
+        this.userReview.set(found ?? null);
+      },
+      error: (err) => console.error('Failed to load reviews', err)
+    });
+  }
+
+  canManageReview(review: Review) {
+    const role = localStorage.getItem('role') || '';
+    const userId = Number(localStorage.getItem('userId')) || 0;
+    return role === 'Admin' || review.userId === userId;
+  }
+
+  addReview() {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to comment');
+      return;
+    }
+    const prod = this.product();
+    if (!prod) return;
+    if (this.userReview()) {
+      alert('Bạn chỉ được đánh giá 1 lần cho sản phẩm này.');
+      return;
+    }
+    const dto: ReviewUpsert = { productId: prod.id, rating: this.newRating(), comment: this.newComment() };
+    this.productService.addReview(dto).subscribe({
+      next: (r) => {
+        this.reviews.update(list => [r, ...list]);
+        this.newComment.set('');
+        this.newRating.set(5);
+        this.userReview.set(r);
+      },
+      error: (err) => {
+        if (err?.status === 409) {
+          alert(err.error?.message || 'Bạn đã đánh giá sản phẩm này trước đó.');
+        } else {
+          console.error('Add review failed', err);
+        }
+      }
+    });
+  }
+
+  startEdit(review: Review) {
+    this.editingId.set(review.id);
+    this.editRating.set(review.rating);
+    this.editComment.set(review.comment || '');
+  }
+
+  saveEdit(review: Review) {
+    const dto: ReviewUpsert = { productId: review.productId, rating: this.editRating(), comment: this.editComment() };
+    this.productService.updateReview(review.id, dto).subscribe({
+      next: () => {
+        this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, rating: dto.rating, comment: dto.comment } : r));
+        this.editingId.set(null);
+      },
+      error: (err) => console.error('Update review failed', err)
+    });
+  }
+
+  deleteReview(review: Review) {
+    if (!confirm('Delete this review?')) return;
+    this.productService.deleteReview(review.id).subscribe({
+      next: () => this.reviews.update(list => list.filter(r => r.id !== review.id)),
+      error: (err) => console.error('Delete failed', err)
+    });
+  }
+
+  toggleHide(review: Review) {
+    const newVal = !review.isApproved;
+    this.productService.setReviewApproval(review.id, newVal).subscribe({
+      next: () => this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, isApproved: newVal } : r)),
+      error: (err) => console.error('Toggle hide failed', err)
     });
   }
 

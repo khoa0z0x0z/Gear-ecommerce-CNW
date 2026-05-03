@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1i3S5OgkKVI=",
+  "dgSpecHash": "fFWLm+sDoGE=",
   "success": true,
-  "projectFilePath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
+  "projectFilePath": "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
@@ -67,9 +67,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
+      "projectPath": "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\hcmue\\III\\II\\CNW\\Gear-ecommerce-CNW\\backend\\backend.csproj",
+      "filePath": "D:\\Workspace\\Lab2\\kat-store\\Gear-ecommerce-CNW\\backend\\backend.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
