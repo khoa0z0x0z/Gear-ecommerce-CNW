@@ -94,19 +94,23 @@ public class UserService : IUserService
         var user = await _context.Users.FindAsync(id);
         if (user == null) return false;
 
-        if (updateDto.Email != null && updateDto.Email != user.Email)
+        if (!string.IsNullOrWhiteSpace(updateDto.Email) && updateDto.Email.Trim() != user.Email)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == updateDto.Email))
+            var trimmedEmail = updateDto.Email.Trim();
+            if (await _context.Users.AnyAsync(u => u.Email == trimmedEmail))
                 return false;
-            user.Email = updateDto.Email;
+            user.Email = trimmedEmail;
         }
 
-        user.FullName = updateDto.FullName ?? user.FullName;
-        user.Phone = updateDto.Phone ?? user.Phone;
+        if (!string.IsNullOrWhiteSpace(updateDto.FullName))
+            user.FullName = updateDto.FullName.Trim();
 
-        if (!string.IsNullOrEmpty(updateDto.NewPassword))
+        if (!string.IsNullOrWhiteSpace(updateDto.Phone))
+            user.Phone = updateDto.Phone.Trim();
+
+        if (!string.IsNullOrWhiteSpace(updateDto.NewPassword))
         {
-            if (string.IsNullOrEmpty(updateDto.CurrentPassword) ||
+            if (string.IsNullOrWhiteSpace(updateDto.CurrentPassword) ||
                 !BCrypt.Net.BCrypt.Verify(updateDto.CurrentPassword, user.PasswordHash))
             {
                 return false;

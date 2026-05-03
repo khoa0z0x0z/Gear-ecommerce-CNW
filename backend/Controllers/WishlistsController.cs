@@ -18,7 +18,12 @@ public class WishlistsController : ControllerBase
         _wishlistService = wishlistService;
     }
 
-    private int UserId => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    private int UserId {
+        get {
+            var claim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            return claim != null && int.TryParse(claim.Value, out int id) ? id : 0;
+        }
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetWishlist()

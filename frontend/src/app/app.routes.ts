@@ -13,6 +13,7 @@ import { ProfilePage } from './pages/profile-page/profile-page';
 import { WishlistPage } from './pages/wishlist-page/wishlist-page';
 import { OrderHistoryPage } from './pages/order-history-page/order-history-page';
 import { OrderDetailPage } from './pages/order-detail-page/order-detail-page';
+import { authGuard } from './auth.guard';
 
 import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { AdminAddProduct } from './pages/admin-add-product/admin-add-product';
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: '', component: Homepage },
   { 
     path: 'orders', 
+    canActivate: [authGuard],
     children: [
       { path: '', component: OrderHistoryPage, pathMatch: 'full' },
       { path: ':id', component: OrderDetailPage }
@@ -38,8 +40,8 @@ export const routes: Routes = [
   { path: 'contact', component: ContactPage },
   { path: 'checkout', component: CheckoutPage },
   { path: 'about', component: AboutPage },
-  { path: 'profile', component: ProfilePage },
-  { path: 'wishlist', component: WishlistPage },
+  { path: 'profile', component: ProfilePage, canActivate: [authGuard] },
+  { path: 'wishlist', component: WishlistPage, canActivate: [authGuard] },
 
   // ADMIN
   { path: 'admin', component: AdminDashboard },

@@ -51,9 +51,9 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> UpdateProfile(UserUpdateDto updateDto)
     {
         var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-        if (userIdClaim == null) return Unauthorized();
+        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId)) 
+            return Unauthorized();
         
-        var userId = int.Parse(userIdClaim.Value);
         var success = await _userService.UpdateProfileAsync(userId, updateDto);
         if (!success) return BadRequest(new { message = "Update failed. Check your password or if email is taken." });
         

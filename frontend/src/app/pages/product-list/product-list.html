@@ -54,8 +54,8 @@
         >
           <div class="product-image-box">
             <div class="product-actions">
-              <span (click)="toggleWishlist(product); $event.stopPropagation()" style="cursor: pointer;">❤️</span>
-              <span [routerLink]="['/products', product.id]">👁</span>
+              <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">❤️</button>
+              <button class="action-btn" [routerLink]="['/products', product.id]" title="View Product">👁</button>
             </div>
 
             <div class="sale-badge" *ngIf="product.oldPrice">

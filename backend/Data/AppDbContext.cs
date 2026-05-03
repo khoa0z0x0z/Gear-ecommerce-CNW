@@ -73,6 +73,11 @@ public class AppDbContext : DbContext
             .HasIndex(w => w.UserId)
             .IsUnique();
 
+        // Configure WishlistItem uniqueness (composite key)
+        modelBuilder.Entity<WishlistItem>()
+            .HasIndex(wi => new { wi.WishlistId, wi.ProductId })
+            .IsUnique();
+
         // Configure Default Values
         modelBuilder.Entity<User>(entity =>
         {

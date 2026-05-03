@@ -174,3 +174,18 @@
   color: #db4444;
   font-weight: 500;
 }
+
+@media (max-width: 1024px) {
+  .add-to-cart-btn {
+    opacity: 1;
+    transform: translateY(0);
+    position: static;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  
+  .image-box {
+    height: auto;
+    padding: 20px;
+  }
+}

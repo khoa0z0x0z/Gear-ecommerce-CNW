@@ -52,4 +52,24 @@ export class WishlistPage implements OnInit {
     alert('Added to cart!');
     this.removeFromWishlist(item.productId);
   }
+
+  moveAllToCart() {
+    const items = this.wishlistItems();
+    if (items.length === 0) return;
+
+    items.forEach(item => {
+      const productForCart: any = {
+        id: item.productId,
+        name: item.productName,
+        price: item.productPrice,
+        image: item.productImage,
+        description: ''
+      };
+      this.cartService.addToCart(productForCart);
+      this.wishlistService.removeFromWishlist(item.productId).subscribe();
+    });
+
+    this.wishlistItems.set([]);
+    alert('All items moved to cart!');
+  }
 }

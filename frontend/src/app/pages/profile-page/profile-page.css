@@ -134,3 +134,31 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .profile-layout {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-save {
+    width: 100%;
+  }
+}

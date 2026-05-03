@@ -27,7 +27,7 @@
     <main class="content">
       <div class="wishlist-header">
         <h2>Wishlist ({{ wishlistItems().length }})</h2>
-        <button class="btn-move-all">Move All To Bag</button>
+        <button class="btn-move-all" (click)="moveAllToCart()">Move All To Bag</button>
       </div>
 
       <div class="product-grid" *ngIf="wishlistItems().length > 0">

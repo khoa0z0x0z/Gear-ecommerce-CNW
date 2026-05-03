@@ -95,8 +95,8 @@
       <div class="related-card" *ngFor="let rel of relatedProducts()">
         <div class="related-image-box">
           <div class="card-actions">
-            <span (click)="toggleWishlist(rel); $event.stopPropagation()" style="cursor: pointer;">❤️</span>
-            <span [routerLink]="['/products', rel.id]">👁</span>
+            <button class="action-btn" (click)="toggleWishlist(rel); $event.stopPropagation()" title="Toggle Wishlist">❤️</button>
+            <button class="action-btn" [routerLink]="['/products', rel.id]" title="View Product">👁</button>
           </div>
 
           <div class="related-icon">
