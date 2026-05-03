@@ -33,7 +33,7 @@ public class ReviewsController : ControllerBase
             query = query.Where(r => r.IsApproved || r.UserId == currentUserId);
         }
 
-        var list = await query.OrderByDescending(r => r.CreatedAt)
+        var anonList = await query.OrderByDescending(r => r.CreatedAt)
             .Select(r => new
             {
                 r.Id,
@@ -45,21 +45,21 @@ public class ReviewsController : ControllerBase
                 r.Comment,
                 r.IsApproved,
                 r.CreatedAt
-            })
-            .AsEnumerable()
-            .Select(x => new ReviewReadDto
-            {
-                Id = x.Id,
-                UserId = x.UserId,
-                UserName = x.UserName,
-                UserAvatarUrl = x.UserEmail != null ?
-                    $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(x.UserName)}&size=64&background=ffffff&color=000" : null,
-                ProductId = x.ProductId,
-                Rating = x.Rating,
-                Comment = x.Comment,
-                IsApproved = x.IsApproved,
-                CreatedAt = x.CreatedAt
-            }).ToList();
+            }).ToListAsync();
+
+        var list = anonList.Select(x => new ReviewReadDto
+        {
+            Id = x.Id,
+            UserId = x.UserId,
+            UserName = x.UserName,
+            UserAvatarUrl = x.UserEmail != null ?
+                $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(x.UserName)}&size=64&background=ffffff&color=000" : null,
+            ProductId = x.ProductId,
+            Rating = x.Rating,
+            Comment = x.Comment,
+            IsApproved = x.IsApproved,
+            CreatedAt = x.CreatedAt
+        }).ToList();
 
         return Ok(list);
     }
