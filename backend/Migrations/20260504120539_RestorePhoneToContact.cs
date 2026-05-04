@@ -10,22 +10,37 @@ namespace backend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_WishlistItems_WishlistId",
-                table: "WishlistItems");
+            // Index may not exist on all environments, skip if missing
+            migrationBuilder.Sql(@"
+                IF EXISTS (
+                    SELECT 1 FROM sys.indexes
+                    WHERE name = 'IX_WishlistItems_WishlistId'
+                    AND object_id = OBJECT_ID('WishlistItems')
+                )
+                DROP INDEX [IX_WishlistItems_WishlistId] ON [WishlistItems];
+            ");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Phone",
-                table: "Contacts",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: true);
+            // Column Phone may already exist
+            migrationBuilder.Sql(@"
+                IF NOT EXISTS (
+                    SELECT * FROM sys.columns 
+                    WHERE Name = N'Phone' AND Object_ID = Object_ID(N'Contacts')
+                )
+                BEGIN
+                    ALTER TABLE Contacts ADD Phone nvarchar(50) NULL;
+                END
+            ");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_WishlistItems_WishlistId_ProductId",
-                table: "WishlistItems",
-                columns: new[] { "WishlistId", "ProductId" },
-                unique: true);
+            // Create new index conditionally
+            migrationBuilder.Sql(@"
+                IF NOT EXISTS (
+                    SELECT * FROM sys.indexes 
+                    WHERE name = 'IX_WishlistItems_WishlistId_ProductId' AND object_id = OBJECT_ID('WishlistItems')
+                )
+                BEGIN
+                    CREATE UNIQUE INDEX [IX_WishlistItems_WishlistId_ProductId] ON [WishlistItems] ([WishlistId], [ProductId]);
+                END
+            ");
         }
 
         /// <inheritdoc />
