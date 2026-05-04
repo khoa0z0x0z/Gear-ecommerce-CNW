@@ -37,6 +37,12 @@ public class CouponsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Coupon coupon)
     {
+        if (string.IsNullOrWhiteSpace(coupon.Code)) return BadRequest("Coupon code is required.");
+        
+        coupon.Code = coupon.Code.Trim();
+        var exists = await _context.Coupons.AnyAsync(c => c.Code.ToLower() == coupon.Code.ToLower());
+        if (exists) return BadRequest("A coupon with this code already exists.");
+
         coupon.CreatedAt = DateTime.Now;
         _context.Coupons.Add(coupon);
         await _context.SaveChangesAsync();
@@ -116,5 +122,20 @@ public class CouponsController : ControllerBase
 
         // Include debug info for developers to inspect computation
         return Ok(new { valid = true, discount, coupon, debug = new { rawValue, rate, subtotal } });
+    }
+
+    [HttpGet("active")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetActive()
+    {
+        var now = DateTime.Now;
+        var coupons = await _context.Coupons
+            .Where(c => c.IsActive 
+                        && (c.StartAt == null || c.StartAt <= now) 
+                        && (c.ExpiryAt == null || c.ExpiryAt >= now)
+                        && (c.UsageLimit == 0 || c.UsedCount < c.UsageLimit))
+            .OrderByDescending(c => c.CreatedAt)
+            .ToListAsync();
+        return Ok(coupons);
     }
 }

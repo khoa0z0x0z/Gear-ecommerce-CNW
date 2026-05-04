@@ -1,142 +1,250 @@
 .checkout-page {
-  max-width: 1220px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 40px 20px 90px;
-  font-family: Arial, sans-serif;
+  padding: 40px 30px 90px;
+  background: #fbfbfb;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, sans-serif;
 }
 
-.breadcrumb { margin-bottom: 40px; color: #888; font-size: 14px; }
-.breadcrumb .active { color: #111; font-weight: 500; }
+.breadcrumb {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-h2 { font-size: 36px; margin: 0 0 30px; font-weight: 500; }
+.breadcrumb a { color: #999; text-decoration: none; }
+.breadcrumb .active { color: #111; font-weight: 700; }
+
+h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; color: #111; }
 
 .checkout-container {
   display: grid;
-  grid-template-columns: 1fr 450px;
-  gap: 80px;
+  grid-template-columns: 1fr 480px;
+  gap: 60px;
 }
 
-/* =========================================
-   CỘT TRÁI - FORM ĐIỀN THÔNG TIN (ĐÃ SỬA ĐẸP HƠN) 
-   ========================================= */
 .billing-form {
   display: flex;
   flex-direction: column;
-  gap: 24px; /* Tăng khoảng cách giữa các ô cho thoáng */
+  gap: 30px;
+  background: #fff;
+  padding: 45px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.02);
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  color: #333; /* Chữ đậm màu hơn cho dễ đọc */
-  font-size: 15px;
-  font-weight: 500; /* Thêm độ dày cho chữ */
+  margin-bottom: 12px;
+  color: #111;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.form-group .required { color: #ff4d4f; margin-left: 4px; }
+.form-group .required { color: #3b82f6; margin-left: 4px; }
 
 .form-group input {
   width: 100%;
-  background: #fff; /* Nền trắng bóc */
-  border: 1px solid #c2c2c2; /* Có viền xám rõ ràng */
-  border-radius: 6px; /* Bo góc tròn xíu cho hiện đại */
-  padding: 16px 18px; /* Tăng padding cho ô bự ra */
-  font-size: 16px;
+  background: #f9f9f9;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 15px;
   outline: none;
   box-sizing: border-box;
-  transition: all 0.3s ease; /* Hiệu ứng mượt mà */
+  transition: all 0.3s ease;
 }
 
-/* Hiệu ứng phát sáng màu xanh khi click chuột vào ô nhập liệu */
 .form-group input:focus {
-  border-color: #2f95f5;
-  box-shadow: 0 0 0 3px rgba(47, 149, 245, 0.15);
+  background: #fff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.08);
 }
 
 .checkbox-group {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 10px;
+  gap: 14px;
+  margin-top: 15px;
 }
 
-.checkbox-group input { width: 18px; height: 18px; accent-color: #2f95f5; cursor: pointer; }
-.checkbox-group label { color: #111; font-size: 15px; cursor: pointer; }
+.checkbox-group input { width: 20px; height: 20px; accent-color: #3b82f6; cursor: pointer; }
+.checkbox-group label { color: #444; font-size: 15px; cursor: pointer; font-weight: 500; }
 
-/* =========================================
-   CỘT PHẢI - CHỐT ĐƠN 
-   ========================================= */
 .order-summary-card {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 35px;
+  background: #fff;
+  padding: 45px;
+  border-radius: 12px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.06);
+  height: fit-content;
+  position: sticky;
+  top: 40px;
+  border: 1px solid rgba(0,0,0,0.02);
 }
 
-.order-items { display: flex; flex-direction: column; gap: 20px; }
-.item-row { display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
-.item-name { display: flex; align-items: center; gap: 15px; }
-.item-icon { font-size: 30px; background: #f5f5f5; padding: 4px 8px; border-radius: 4px; }
+.item-icon { 
+  width: 60px;
+  height: 60px;
+  background: #fcfcfc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f0f0f0;
+}
 
 .summary-totals {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 10px;
+  gap: 20px;
+  padding: 30px 0;
+  border-top: 1px solid #f5f5f5;
+  border-bottom: 1px solid #f5f5f5;
 }
-.total-row { display: flex; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #e0e0e0; font-size: 16px; }
-.total-row.line { border-bottom: none; }
-.total-row.final { border-top: 1px solid #e0e0e0; padding-top: 16px; font-weight: bold; border-bottom: none;}
 
-/* PAYMENT RADIO BUTTONS */
-.payment-methods { display: flex; flex-direction: column; gap: 16px; margin-bottom: 10px;}
-.radio-group { display: flex; align-items: center; gap: 12px; font-size: 16px; cursor: pointer; position: relative;}
-.radio-group input[type="radio"] { width: 18px; height: 18px; accent-color: #111; cursor: pointer;}
-.radio-group label { cursor: pointer; }
+.total-row.final { 
+  padding-top: 10px;
+  font-size: 28px;
+  color: #111;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
 
-.bank-icons { position: absolute; right: 0; display: flex; gap: 8px;}
-.fake-card { font-size: 24px; }
+.payment-methods { display: flex; flex-direction: column; gap: 15px; }
+.radio-group { 
+  display: flex; 
+  align-items: center; 
+  gap: 15px; 
+  font-size: 15px; 
+  cursor: pointer;
+  padding: 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background: #fcfcfc;
+}
+.radio-group:has(input:checked) {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+.radio-group input[type="radio"] { width: 22px; height: 22px; accent-color: #3b82f6; cursor: pointer;}
+.method-label { display: flex; align-items: center; gap: 12px; width: 100%; font-weight: 700; color: #111; }
+.method-icon { font-size: 20px; }
 
-/* MÃ GIẢM GIÁ & NÚT PLACE ORDER */
+/* COUPON DROPDOWN */
 .coupon-row {
   display: flex;
-  gap: 15px;
+  gap: 12px;
+  position: relative;
 }
-.coupon-row input {
+.coupon-input-wrapper {
   flex: 1;
-  padding: 14px 20px;
-  border: 1px solid #111;
-  border-radius: 4px;
-  outline: none;
+  position: relative;
 }
-.apply-btn {
-  background: #2f95f5;
-  color: white;
-  border: none;
-  padding: 0 30px;
-  border-radius: 4px;
+.coupon-input-wrapper input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  font-weight: 600;
+  background: #f9f9f9;
+  transition: all 0.3s ease;
+}
+.coupon-input-wrapper input:focus {
+  border-color: #3b82f6;
+  background: #fff;
+}
+
+.coupon-dropdown {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  z-index: 100;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+}
+
+.coupon-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f5f5f5;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.coupon-item:hover {
+  background: #fff5f5;
+}
+
+.coupon-item .c-code {
+  font-weight: 800;
+  color: #3b82f6;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.coupon-item .c-desc {
+  font-size: 13px;
+  color: #777;
   font-weight: 500;
 }
+
+.apply-btn {
+  background: #111;
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.apply-btn:hover { background: #333; }
 
 .place-order-btn {
-  background: #2f95f5;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
   color: white;
   border: none;
-  width: auto;
-  align-self: flex-start;
-  padding: 16px 45px;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 500;
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 10px;
-  transition: 0.3s;
+  margin-top: 12px;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
 }
 .place-order-btn:hover {
-  background: #1c7ad6;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
   .checkout-container { grid-template-columns: 1fr; gap: 40px; }
-  .order-summary-card { max-width: 500px; }
+  .order-summary-card { max-width: none; position: static; }
 }

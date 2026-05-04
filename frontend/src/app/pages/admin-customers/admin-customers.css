@@ -1,151 +1,175 @@
-/* admin-customers.css */
 .admin-dashboard-page {
   display: flex;
   min-height: 100vh;
-  background-color: #f8fafc;
+  background-color: #f8f9fa;
 }
 
 .admin-main {
   flex: 1;
+  padding: 40px;
   margin-left: 260px;
-  padding: 2rem;
-}
-
-.admin-content {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: calc(100% - 260px);
+  background: #fbfbfb;
+  box-sizing: border-box;
 }
 
 .content-header {
-  margin-bottom: 2rem;
+  margin-bottom: 40px;
 }
 
 .content-header h2 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+  color: #111;
+  letter-spacing: -0.5px;
 }
 
 .content-header p {
-  color: #64748b;
+  color: #999;
+  margin: 10px 0 0;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .search-container {
-  margin-bottom: 1.5rem;
+  margin-bottom: 25px;
 }
 
 .search-input {
   width: 100%;
-  max-width: 400px;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
+  max-width: 450px;
+  padding: 14px 20px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
 }
 
 .search-input:focus {
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.08);
 }
 
 .table-card {
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.02);
 }
 
 .customers-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
 }
 
 .customers-table th {
-  padding: 1rem 1.5rem;
-  background: #f1f5f9;
-  font-weight: 600;
-  color: #475569;
-  font-size: 0.875rem;
+  text-align: left;
+  padding: 16px 20px;
+  background: #fdfdfd;
+  border-bottom: 2px solid #f9f9f9;
+  font-size: 11px;
+  color: #bbb;
   text-transform: uppercase;
-  letter-spacing: 0.025em;
+  letter-spacing: 2px;
+  font-weight: 800;
 }
 
 .customers-table td {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f1f5f9;
-  color: #1e293b;
+  padding: 22px 20px;
+  border-bottom: 1px solid #fcfcfc;
+  font-size: 14px;
+  color: #555;
+}
+
+tr:last-child td {
+  border-bottom: none;
 }
 
 .font-medium {
-  font-weight: 500;
+  font-weight: 600;
+  color: #111;
 }
 
 .font-bold {
-  font-weight: 700;
-  color: #3b82f6;
+  font-weight: 800;
+  color: #111;
 }
 
 .status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .is-active {
-  background: #dcfce7;
-  color: #166534;
+  background: #f0fdf4;
+  color: #22c55e;
 }
 
 .is-inactive {
-  background: #fee2e2;
-  color: #991b1b;
+  background: #fef2f2;
+  color: #ef4444;
 }
 
 .toggle-btn {
-  background: none;
-  border: none;
+  background: #fff;
+  border: 1px solid #eee;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-left: 0.5rem;
-  font-size: 1.1rem;
-  opacity: 0.7;
-  transition: opacity 0.2s;
+  margin-left: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .toggle-btn:hover {
-  opacity: 1;
+  border-color: #3b82f6;
+  color: #3b82f6;
 }
 
 .actions-cell {
   display: flex;
-  gap: 0.5rem;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 .action-btn {
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.375rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
-  border: none;
-  transition: transform 0.1s;
-}
-
-.action-btn:active {
-  transform: scale(0.95);
+  border: 1.5px solid #eee;
+  background: #fff;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .action-btn.view {
-  background: #eff6ff;
-  color: #2563eb;
+  color: #3b82f6;
 }
 
 .action-btn.reset {
-  background: #fef2f2;
-  color: #dc2626;
+  color: #ef4444;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-color: currentColor;
 }
 
 /* Modal Styles */

@@ -1,88 +1,98 @@
 .profile-container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 30px;
+  background: #fbfbfb;
+  min-height: 100vh;
 }
 
 .breadcrumb {
-  font-size: 14px;
-  color: #666;
+  font-size: 13px;
+  color: #999;
   margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .breadcrumb a {
-  color: #666;
+  color: #999;
   text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumb a:hover {
+  color: #3b82f6;
 }
 
 .breadcrumb span {
-  color: #000;
+  color: #444;
 }
 
 .profile-layout {
   display: flex;
-  gap: 60px;
+  gap: 50px;
 }
 
 .sidebar {
   width: 250px;
 }
 
-.sidebar h3 {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 15px;
-  margin-top: 25px;
-}
-
-.sidebar h3:first-child {
-  margin-top: 0;
-}
-
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 0 15px;
+  margin: 0;
 }
 
 .sidebar li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #666;
   cursor: pointer;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s;
+  border-left: 3px solid transparent;
+}
+
+.sidebar li:hover {
+  background: rgba(59, 130, 246, 0.05);
+  color: #3b82f6;
 }
 
 .sidebar li.active {
-  color: #db4444;
-}
-
-.sidebar a {
-  text-decoration: none;
-  color: inherit;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.08);
+  border-left-color: #3b82f6;
+  font-weight: 600;
 }
 
 .content {
   flex: 1;
   background: white;
-  padding: 40px;
-  border-radius: 4px;
-  box-shadow: 0 1px 13px rgba(0,0,0,0.05);
+  padding: 45px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.02);
 }
 
 .text-danger {
-  color: #db4444;
+  color: #3b82f6;
   margin-top: 0;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
 .form-row {
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
 .form-group {
@@ -92,47 +102,103 @@
 }
 
 .form-group label {
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-group input {
-  padding: 12px 15px;
-  background: #f5f5f5;
-  border: none;
-  border-radius: 4px;
+  padding: 14px 18px;
+  background: #f9f9f9;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
   font-size: 14px;
   outline: none;
+  transition: all 0.3s;
+  color: #333;
+}
+
+.form-group input:focus {
+  background: #fff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.08);
+}
+
+.avatar-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.file-input {
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+}
+
+.avatar-preview-group {
+  max-width: 120px;
+}
+
+.avatar-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  background: #f9f9f9;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .password-title {
-  margin-top: 20px;
-  margin-bottom: 0;
   font-size: 16px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 20px;
+  font-weight: 700;
   margin-top: 20px;
-}
-
-.btn-cancel {
-  background: none;
-  border: none;
-  color: #000;
-  cursor: pointer;
-  padding: 10px 20px;
+  margin-bottom: 5px;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .btn-save {
-  background: #db4444;
+  background: #3b82f6;
   color: white;
   border: none;
-  padding: 12px 40px;
-  border-radius: 4px;
+  padding: 14px 50px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+}
+
+.btn-save:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(59, 130, 246, 0.3);
+}
+
+.btn-cancel {
+  background: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.btn-cancel:hover {
+  color: #333;
 }
 
 @media (max-width: 768px) {

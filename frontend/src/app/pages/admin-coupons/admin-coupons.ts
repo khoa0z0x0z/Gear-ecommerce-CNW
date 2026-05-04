@@ -52,12 +52,34 @@ export class AdminCoupons implements OnInit {
   }
 
   submit() {
-    // trim code to avoid accidental spaces
     const payload = { ...this.form, code: (this.form.code || '').trim() };
+    
     if (this.editing?.id) {
-      this.couponService.update(this.editing.id, payload).subscribe({ next: () => { alert('Cập nhật coupon'); this.load(); this.clear(); }, error: () => alert('Lỗi') });
+      this.couponService.update(this.editing.id, payload).subscribe({
+        next: () => {
+          alert('Cập nhật coupon thành công!');
+          this.load();
+          this.clear();
+        },
+        error: (err) => {
+          console.error('Update Coupon Error:', err);
+          const msg = err.error?.message || err.error || 'Lỗi không xác định';
+          alert('Lỗi cập nhật: ' + msg);
+        }
+      });
     } else {
-      this.couponService.create(payload).subscribe({ next: () => { alert('Tạo coupon'); this.load(); this.clear(); }, error: () => alert('Lỗi') });
+      this.couponService.create(payload).subscribe({
+        next: () => {
+          alert('Tạo coupon thành công!');
+          this.load();
+          this.clear();
+        },
+        error: (err) => {
+          console.error('Create Coupon Error:', err);
+          const msg = err.error?.message || err.error || 'Lỗi không xác định';
+          alert('Lỗi khi tạo: ' + msg);
+        }
+      });
     }
   }
 

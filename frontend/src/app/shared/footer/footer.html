@@ -2,13 +2,10 @@
   <div class="footer-content">
     <div class="footer-column">
       <h3>Support</h3>
-      <p>280 An Duong Vuong</p>
-      <p>Street, Ward 4, District</p>
-      <p>5, Ho Chi Minh City,</p>
-      <p>Vietnam.</p>
+      <p>{{ storeAddress() }}</p>
 
-      <p class="mt">kat@gmail.com</p>
-      <p>028 3835 2020</p>
+      <p class="mt">{{ storeEmail() }}</p>
+      <p>{{ storePhone() }}</p>
     </div>
 
     <div class="footer-column">
@@ -30,6 +27,6 @@
   </div>
 
   <div class="footer-bottom">
-    © Copyright KAT 2026. All right reserved
+    © Copyright {{ storeName() }} 2026. All right reserved
   </div>
 </footer>

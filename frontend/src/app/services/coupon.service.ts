@@ -14,6 +14,10 @@ export class CouponService {
     return this.http.get<Coupon[]>(this.apiUrl);
   }
 
+  getActive(): Observable<Coupon[]> {
+    return this.http.get<Coupon[]>(`${this.apiUrl}/active`);
+  }
+
   getById(id: number): Observable<Coupon> {
     return this.http.get<Coupon>(`${this.apiUrl}/${id}`);
   }

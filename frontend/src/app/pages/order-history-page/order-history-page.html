@@ -6,17 +6,11 @@
   <div class="profile-layout" *ngIf="!isLoading()">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <h3>Manage My Account</h3>
       <ul>
-        <li><a routerLink="/profile">My Profile</a></li>
+        <li routerLink="/profile">My Profile</li>
+        <li class="active" routerLink="/orders">My Orders</li>
+        <li routerLink="/wishlist">My Wishlist</li>
       </ul>
-
-      <h3>My Orders</h3>
-      <ul>
-        <li class="active">My Orders</li>
-      </ul>
-
-      <h3><a routerLink="/wishlist" style="text-decoration: none; color: inherit;">My Wishlist</a></h3>
     </aside>
 
     <!-- Main Content -->

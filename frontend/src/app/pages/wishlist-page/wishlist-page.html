@@ -6,17 +6,11 @@
   <div class="profile-layout">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <h3>Manage My Account</h3>
       <ul>
-        <li><a routerLink="/profile">My Profile</a></li>
+        <li routerLink="/profile">My Profile</li>
+        <li routerLink="/orders">My Orders</li>
+        <li class="active" routerLink="/wishlist">My Wishlist</li>
       </ul>
-
-      <h3>My Orders</h3>
-      <ul>
-        <li><a routerLink="/orders">My Orders</a></li>
-      </ul>
-
-      <h3 class="active"><a routerLink="/wishlist" style="text-decoration: none; color: inherit;">My Wishlist</a></h3>
     </aside>
 
     <!-- Main Content -->
@@ -50,7 +44,7 @@
 
       <div *ngIf="wishlistItems().length === 0" style="text-align: center; padding: 50px;">
         Your wishlist is empty. <br>
-        <a routerLink="/" style="color: #db4444; margin-top: 10px; display: inline-block;">Continue Shopping</a>
+        <a routerLink="/" style="color: #3b82f6; margin-top: 10px; display: inline-block;">Continue Shopping</a>
       </div>
     </main>
   </div>

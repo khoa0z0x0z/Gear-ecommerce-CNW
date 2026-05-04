@@ -53,4 +53,14 @@ public class SettingsController : ControllerBase
         if (setting == null) return NotFound();
         return Ok(setting);
     }
+
+    [HttpGet("public")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetPublic()
+    {
+        var settings = await _context.Settings
+            .Where(s => s.Group == "Store" || s.Group == "Shipping")
+            .ToListAsync();
+        return Ok(settings);
+    }
 }
