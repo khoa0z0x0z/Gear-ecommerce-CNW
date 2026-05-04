@@ -115,9 +115,9 @@ td strong {
 }
 
 .actions button:hover {
-  background: #f8f8f8;
-  border-color: #db4444;
-  color: #db4444;
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #3b82f6;
   transform: translateY(-2px);
 }
 
@@ -157,8 +157,8 @@ td strong {
 
 .form-group input:focus, .form-group textarea:focus {
   background: #fff;
-  border-color: #db4444;
-  box-shadow: 0 8px 20px rgba(219, 68, 68, 0.08);
+  border-color: #3b82f6;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.08);
 }
 
 .form-group textarea {
@@ -175,7 +175,7 @@ td strong {
 
 .btn-submit {
   width: 100%;
-  background: #db4444;
+  background: #3b82f6;
   color: white;
   border: none;
   padding: 16px;
@@ -184,13 +184,13 @@ td strong {
   font-size: 15px;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 8px 20px rgba(219, 68, 68, 0.2);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
 }
 
 .btn-submit:hover {
-  background: #c53a3a;
+  background: #2563eb;
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(219, 68, 68, 0.3);
+  box-shadow: 0 12px 25px rgba(59, 130, 246, 0.3);
 }
 
 .btn-cancel {

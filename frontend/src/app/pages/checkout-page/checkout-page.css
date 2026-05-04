@@ -47,7 +47,7 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
   letter-spacing: 0.5px;
 }
 
-.form-group .required { color: #db4444; margin-left: 4px; }
+.form-group .required { color: #3b82f6; margin-left: 4px; }
 
 .form-group input {
   width: 100%;
@@ -63,8 +63,8 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
 
 .form-group input:focus {
   background: #fff;
-  border-color: #db4444;
-  box-shadow: 0 4px 15px rgba(219, 68, 68, 0.08);
+  border-color: #3b82f6;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.08);
 }
 
 .checkbox-group {
@@ -74,7 +74,7 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
   margin-top: 15px;
 }
 
-.checkbox-group input { width: 20px; height: 20px; accent-color: #db4444; cursor: pointer; }
+.checkbox-group input { width: 20px; height: 20px; accent-color: #3b82f6; cursor: pointer; }
 .checkbox-group label { color: #444; font-size: 15px; cursor: pointer; font-weight: 500; }
 
 .order-summary-card {
@@ -133,10 +133,10 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
   background: #fcfcfc;
 }
 .radio-group:has(input:checked) {
-  border-color: #db4444;
-  background: #fff5f5;
+  border-color: #3b82f6;
+  background: #eff6ff;
 }
-.radio-group input[type="radio"] { width: 22px; height: 22px; accent-color: #db4444; cursor: pointer;}
+.radio-group input[type="radio"] { width: 22px; height: 22px; accent-color: #3b82f6; cursor: pointer;}
 .method-label { display: flex; align-items: center; gap: 12px; width: 100%; font-weight: 700; color: #111; }
 .method-icon { font-size: 20px; }
 
@@ -162,7 +162,7 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
   transition: all 0.3s ease;
 }
 .coupon-input-wrapper input:focus {
-  border-color: #db4444;
+  border-color: #3b82f6;
   background: #fff;
 }
 
@@ -193,7 +193,7 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
 
 .coupon-item .c-code {
   font-weight: 800;
-  color: #db4444;
+  color: #3b82f6;
   font-size: 14px;
   margin-bottom: 4px;
 }
@@ -226,7 +226,7 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
 .apply-btn:hover { background: #333; }
 
 .place-order-btn {
-  background: linear-gradient(135deg, #db4444, #a32e2e);
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
   color: white;
   border: none;
   width: 100%;
@@ -236,12 +236,12 @@ h2 { font-size: 36px; margin: 0 0 40px; font-weight: 800; letter-spacing: -1px; 
   font-weight: 700;
   cursor: pointer;
   margin-top: 12px;
-  box-shadow: 0 10px 25px rgba(219, 68, 68, 0.4);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
   transition: all 0.3s ease;
 }
 .place-order-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(219, 68, 68, 0.5);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
 }
 
 @media (max-width: 1100px) {

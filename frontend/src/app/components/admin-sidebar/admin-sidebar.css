@@ -54,17 +54,18 @@
 }
 
 .menu-item.active {
-    background: #db4444;
+    background: #3b82f6;
     color: #fff !important;
-    box-shadow: 0 4px 12px rgba(219, 68, 68, 0.2);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .menu-item:hover {
-    background: #e5e5e5;
+    background: #eff6ff;
+    color: #3b82f6;
 }
 
 .menu-item.active:hover {
-    background: #db4444;
+    background: #2563eb;
 }
 
 .menu-icon {

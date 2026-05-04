@@ -21,7 +21,7 @@
 }
 
 .breadcrumb a:hover {
-  color: #db4444;
+  color: #3b82f6;
 }
 
 .breadcrumb span {
@@ -55,14 +55,14 @@
 }
 
 .sidebar li:hover {
-  background: rgba(219, 68, 68, 0.05);
-  color: #db4444;
+  background: rgba(59, 130, 246, 0.05);
+  color: #3b82f6;
 }
 
 .sidebar li.active {
-  color: #db4444;
-  background: rgba(219, 68, 68, 0.08);
-  border-left-color: #db4444;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.08);
+  border-left-color: #3b82f6;
   font-weight: 600;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .content h2 {
-  color: #db4444;
+  color: #3b82f6;
   margin-top: 0;
   margin-bottom: 35px;
   font-size: 26px;
@@ -141,11 +141,11 @@
 }
 
 .btn-view:hover {
-  border-color: #db4444;
-  color: #db4444;
+  border-color: #3b82f6;
+  color: #3b82f6;
   background: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(219, 68, 68, 0.1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
 .empty-state {
@@ -156,7 +156,7 @@
 
 .btn-shop {
   display: inline-block;
-  background: #db4444;
+  background: #3b82f6;
   color: white;
   padding: 14px 40px;
   text-decoration: none;
@@ -165,13 +165,13 @@
   font-size: 15px;
   margin-top: 25px;
   transition: all 0.3s;
-  box-shadow: 0 8px 20px rgba(219, 68, 68, 0.2);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
 }
 
 .btn-shop:hover {
-  background: #c53a3a;
+  background: #2563eb;
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(219, 68, 68, 0.3);
+  box-shadow: 0 12px 25px rgba(59, 130, 246, 0.3);
 }
 
 @media (max-width: 992px) {
