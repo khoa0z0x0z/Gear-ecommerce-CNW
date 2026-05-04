@@ -34,7 +34,7 @@
         <input type="tel" placeholder="Your Phone *" class="input-field" [(ngModel)]="userPhone">
       </div>
       
-      <textarea placeholder="Your Message" class="textarea-field"></textarea>
+      <textarea placeholder="Your Message *" class="textarea-field" [(ngModel)]="userMessage"></textarea>
       
       <div class="submit-row">
         <button class="send-btn" (click)="sendMessage()">Send Message</button>

@@ -37,6 +37,7 @@ public class CouponsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Coupon coupon)
     {
+        coupon.CreatedAt = DateTime.Now;
         _context.Coupons.Add(coupon);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(Get), new { id = coupon.Id }, coupon);

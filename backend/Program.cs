@@ -87,6 +87,50 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    
+    try {
+        context.Database.ExecuteSqlRaw(@"
+IF OBJECT_ID(N'Coupons', N'U') IS NULL
+BEGIN
+    CREATE TABLE Coupons (
+        Id int NOT NULL IDENTITY,
+        Code nvarchar(max) NOT NULL,
+        Description nvarchar(max) NULL,
+        IsPercentage bit NOT NULL,
+        DiscountValue decimal(18,2) NOT NULL,
+        MaxDiscount decimal(18,2) NULL,
+        StartAt datetime2 NULL,
+        ExpiryAt datetime2 NULL,
+        IsActive bit NOT NULL DEFAULT CAST(1 AS bit),
+        CreatedAt datetime2 NOT NULL DEFAULT SYSDATETIME(),
+        CONSTRAINT PK_Coupons PRIMARY KEY (Id)
+    );
+END
+        ");
+        context.Database.ExecuteSqlRaw(@"
+IF OBJECT_ID(N'Notifications', N'U') IS NULL
+BEGIN
+    CREATE TABLE Notifications (
+        Id int NOT NULL IDENTITY,
+        Title nvarchar(max) NOT NULL,
+        Message nvarchar(max) NOT NULL,
+        VisibleToRoles nvarchar(max) NULL,
+        VisibleToUserIds nvarchar(max) NULL,
+        IsActive bit NOT NULL DEFAULT CAST(1 AS bit),
+        CreatedAt datetime2 NOT NULL DEFAULT SYSDATETIME(),
+        ExpiresAt datetime2 NULL,
+        CONSTRAINT PK_Notifications PRIMARY KEY (Id)
+    );
+END
+        ");
+        context.Database.ExecuteSqlRaw(@"
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'Phone' AND Object_ID = Object_ID(N'Contacts'))
+BEGIN
+    ALTER TABLE Contacts ADD Phone nvarchar(50) NULL;
+END
+        ");
+    } catch { }
+
     if (!context.Users.Any(u => u.Email == "admin@gmail.com"))
     {
         var admin = new backend.Models.User
