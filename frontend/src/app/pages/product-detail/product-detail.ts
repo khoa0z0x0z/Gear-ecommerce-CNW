@@ -1,14 +1,16 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product.model';
+import { Review, ReviewUpsert } from '../../models/review.model';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -17,6 +19,7 @@ export class ProductDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private cartService = inject(CartService);
   private productService = inject(ProductService);
+  private wishlistService = inject(WishlistService);
 
   // State
   product = signal<Product | null>(null);
@@ -26,6 +29,13 @@ export class ProductDetail implements OnInit {
   selectedImage = signal<{ image: string }>({ image: '' });
 
   relatedProducts = signal<any[]>([]);
+  reviews = signal<Review[]>([]);
+  userReview = signal<Review | null>(null);
+  newRating = signal(5);
+  newComment = signal('');
+  editingId = signal<number | null>(null);
+  editRating = signal(5);
+  editComment = signal('');
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -54,11 +64,121 @@ export class ProductDetail implements OnInit {
 
         // Mock related for now, or fetch by category
         this.loadRelatedProducts(p.categoryName || '');
+        this.loadReviews(id);
       },
       error: (err) => {
         console.error('Error loading product:', err);
       }
     });
+  }
+
+  loadReviews(productId: number) {
+    this.productService.getReviews(productId).subscribe({
+      next: (r) => {
+        this.reviews.set(r);
+        const uid = Number(localStorage.getItem('userId')) || 0;
+        const found = r.find(x => x.userId === uid);
+        this.userReview.set(found ?? null);
+        this.updateProductRating();
+      },
+      error: (err) => console.error('Failed to load reviews', err)
+    });
+  }
+
+  getAvatarForReview(r: Review) {
+    const currentUserId = Number(localStorage.getItem('userId')) || 0;
+    const localAvatar = localStorage.getItem('avatarUrl');
+    if (r.userId === currentUserId && localAvatar) return localAvatar;
+    return r.userAvatarUrl || 'https://via.placeholder.com/40';
+  }
+
+  canManageReview(review: Review) {
+    const role = localStorage.getItem('role') || '';
+    const userId = Number(localStorage.getItem('userId')) || 0;
+    return role === 'Admin' || review.userId === userId;
+  }
+
+  addReview() {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to comment');
+      return;
+    }
+    const prod = this.product();
+    if (!prod) return;
+    if (this.userReview()) {
+      alert('Bạn chỉ được đánh giá 1 lần cho sản phẩm này.');
+      return;
+    }
+    const dto: ReviewUpsert = { productId: prod.id, rating: this.newRating(), comment: this.newComment() };
+    this.productService.addReview(dto).subscribe({
+      next: (r) => {
+        this.reviews.update(list => [r, ...list]);
+        this.newComment.set('');
+        this.newRating.set(5);
+        this.userReview.set(r);
+        this.updateProductRating();
+      },
+      error: (err) => {
+        if (err?.status === 409) {
+          alert(err.error?.message || 'Bạn đã đánh giá sản phẩm này trước đó.');
+        } else {
+          console.error('Add review failed', err);
+        }
+      }
+    });
+  }
+
+  startEdit(review: Review) {
+    this.editingId.set(review.id);
+    this.editRating.set(review.rating);
+    this.editComment.set(review.comment || '');
+  }
+
+  saveEdit(review: Review) {
+    const dto: ReviewUpsert = { productId: review.productId, rating: this.editRating(), comment: this.editComment() };
+    this.productService.updateReview(review.id, dto).subscribe({
+      next: () => {
+        this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, rating: dto.rating, comment: dto.comment } : r));
+        this.editingId.set(null);
+        this.updateProductRating();
+      },
+      error: (err) => console.error('Update review failed', err)
+    });
+  }
+
+  deleteReview(review: Review) {
+    if (!confirm('Delete this review?')) return;
+    this.productService.deleteReview(review.id).subscribe({
+      next: () => {
+        this.reviews.update(list => list.filter(r => r.id !== review.id));
+        this.updateProductRating();
+      },
+      error: (err) => console.error('Delete failed', err)
+    });
+  }
+
+  toggleHide(review: Review) {
+    const newVal = !review.isApproved;
+    this.productService.setReviewApproval(review.id, newVal).subscribe({
+      next: () => {
+        this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, isApproved: newVal } : r));
+        this.updateProductRating();
+      },
+      error: (err) => console.error('Toggle hide failed', err)
+    });
+  }
+
+  // Recalculate product rating metrics from current reviews and update product signal
+  updateProductRating() {
+    const p = this.product();
+    if (!p) return;
+    const all = this.reviews() || [];
+    // Consider only approved reviews in the public rating count
+    const visible = all.filter(r => r.isApproved !== false);
+    const count = visible.length;
+    const total = visible.reduce((s, r) => s + (r.rating || 0), 0);
+    const avg = count > 0 ? total / count : 0;
+    this.product.update(curr => curr ? ({ ...curr, averageRating: avg, ratingCount: count, totalStars: total }) : curr);
   }
 
   loadRelatedProducts(category: string) {
@@ -104,5 +224,24 @@ export class ProductDetail implements OnInit {
   buyNow() {
     this.addToCart();
     this.router.navigate(['/cart']);
+  }
+
+  toggleWishlist(prod?: Product | any) {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to use wishlist');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const p = prod || this.product();
+    if (p) {
+      this.wishlistService.addToWishlist(p.id).subscribe({
+        next: () => alert(`Added ${p.name} to wishlist!`),
+        error: (err) => {
+          console.error('Wishlist error:', err);
+          alert('Failed to add to wishlist: ' + (err.error?.message || 'Please try again later'));
+        }
+      });
+    }
   }
 }

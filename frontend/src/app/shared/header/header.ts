@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { NotificationService } from '../../services/notification.service';
 import { OnInit } from '@angular/core';
 
@@ -16,15 +17,28 @@ import { OnInit } from '@angular/core';
 export class Header implements OnInit {
   private cartService = inject(CartService);
   private authService = inject(AuthService);
+  private wishlistService = inject(WishlistService);
   private notificationService = inject(NotificationService);
 
   isLoggedIn = this.authService.isLoggedIn;
   cartCount = this.cartService.totalCount;
-  
+  wishlistCount = this.wishlistService.wishlistCount;
+
   showDropdown = false;
+  avatarUrl: string | null = localStorage.getItem('avatarUrl');
+
   showNotif = false;
   notifications: any[] = [];
   notifCount = 0;
+
+  constructor() {
+    this.wishlistService.loadInitialCount();
+    // Listen for avatar changes from profile page
+    window.addEventListener('avatarChanged', (e: Event) => {
+      const ev = e as CustomEvent<string>;
+      this.avatarUrl = ev.detail || localStorage.getItem('avatarUrl');
+    });
+  }
 
   ngOnInit(): void {
     this.loadNotifications();

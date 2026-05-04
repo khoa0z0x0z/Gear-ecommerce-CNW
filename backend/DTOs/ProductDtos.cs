@@ -11,6 +11,9 @@ public class ProductReadDto
     public string? CategoryName { get; set; }
     public List<string> ImageUrls { get; set; } = new();
     public int Sold { get; set; }
+    public double AverageRating { get; set; }
+    public int RatingCount { get; set; }
+    public int TotalStars { get; set; }
 }
 
 public class ProductUpsertDto

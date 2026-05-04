@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-homepage',
@@ -16,6 +17,7 @@ export class Homepage implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private categoryService = inject(CategoryService);
+  private wishlistService = inject(WishlistService);
   private router = inject(Router);
 
   bestSellingProducts = signal<any[]>([]);
@@ -52,6 +54,22 @@ export class Homepage implements OnInit, OnDestroy {
     alert(`Added ${product.name} to cart!`);
   }
 
+  toggleWishlist(product: any) {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Please login to use wishlist');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.wishlistService.addToWishlist(product.id).subscribe({
+      next: () => alert(`Added ${product.name} to wishlist!`),
+      error: (err) => {
+        console.error('Wishlist error:', err);
+        alert('Failed to add to wishlist: ' + (err.error?.message || 'Please try again later'));
+      }
+    });
+  }
+
   currentSlideIndex = 0;
   autoPlayInterval: any;
 
@@ -69,11 +87,22 @@ export class Homepage implements OnInit, OnDestroy {
   loadProducts() {
     this.productService.getAll().subscribe({
       next: (products) => {
-        const mapped = products.map((p: any) => ({
-          ...p,
-          image: p.imageUrls && p.imageUrls.length > 0 ? p.imageUrls[0] : 'https://via.placeholder.com/300',
-          rating: '(65)' // Mock rating for now
-        }));
+        const mapped = products.map((p: any) => {
+          const image = p.imageUrls && p.imageUrls.length > 0 ? p.imageUrls[0] : 'https://via.placeholder.com/300';
+          // Prefer explicit averageRating/ratingCount from API. If missing, try to compute from totalStars/ratingCount.
+          const avgNum = p.averageRating != null
+            ? Number(p.averageRating)
+            : (p.totalStars && p.ratingCount ? Number(p.totalStars) / Number(p.ratingCount) : 0);
+          const avg = (Number.isFinite(avgNum) ? avgNum : 0).toFixed(1);
+          const count = p.ratingCount || 0;
+          const ratingDisplay = `${avg} / 5 (${count} reviews)`;
+
+          return {
+            ...p,
+            image,
+            rating: ratingDisplay
+          };
+        });
 
         // Pick best selling from specific categories for Hero
         const categoriesForHero = ['Laptop', 'Điện thoại', 'Bàn phím cơ'];
@@ -96,9 +125,37 @@ export class Homepage implements OnInit, OnDestroy {
         });
 
         this.heroProducts.set(heroItems);
-        this.bestSellingProducts.set(mapped.sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 4));
-        this.exploreProducts.set(mapped.slice(4, 12));
+        const best = mapped.sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 4);
+        const explore = mapped.slice(4, 12);
+        this.bestSellingProducts.set(best);
+        this.exploreProducts.set(explore);
+
+        // Now fetch per-product reviews to ensure rating/count reflect actual reviews
+        this.updateRatingsForProducts(this.bestSellingProducts);
+        this.updateRatingsForProducts(this.exploreProducts);
       }
+    });
+  }
+
+  // For each product in the provided signal list, fetch reviews and update rating/count
+  updateRatingsForProducts(listSignal: any) {
+    const list = listSignal() || [];
+    list.forEach((prod: any) => {
+      if (!prod || !prod.id) return;
+      this.productService.getReviews(prod.id).subscribe({
+        next: (reviews: any[]) => {
+          const visible = (reviews || []).filter(r => r.isApproved !== false);
+          const count = visible.length;
+          const total = visible.reduce((s, r) => s + (r.rating || 0), 0);
+          const avg = count > 0 ? total / count : 0;
+          const ratingDisplay = `${avg.toFixed(1)} / 5 (${count} reviews)`;
+
+          listSignal.update((arr: any[]) => arr.map(p => p.id === prod.id ? ({ ...p, averageRating: avg, ratingCount: count, rating: ratingDisplay }) : p));
+        },
+        error: (err) => {
+          // ignore per-product errors silently
+        }
+      });
     });
   }
 

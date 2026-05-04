@@ -1,0 +1,57 @@
+<div class="wishlist-container">
+  <div class="breadcrumb">
+    <a routerLink="/">Home</a> / <span>My Account</span> / <span>Wishlist</span>
+  </div>
+
+  <div class="profile-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Manage My Account</h3>
+      <ul>
+        <li><a routerLink="/profile">My Profile</a></li>
+      </ul>
+
+      <h3>My Orders</h3>
+      <ul>
+        <li><a routerLink="/orders">My Orders</a></li>
+      </ul>
+
+      <h3 class="active"><a routerLink="/wishlist" style="text-decoration: none; color: inherit;">My Wishlist</a></h3>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <div class="wishlist-header">
+        <h2>Wishlist ({{ wishlistItems().length }})</h2>
+        <button class="btn-move-all" (click)="moveAllToCart()">Move All To Bag</button>
+      </div>
+
+      <div class="product-grid" *ngIf="wishlistItems().length > 0">
+        <div class="product-card" *ngFor="let item of wishlistItems()">
+          <div class="image-box">
+            <!-- Delete Icon -->
+            <button class="btn-delete" (click)="removeFromWishlist(item.productId)">🗑️</button>
+            <img [src]="item.productImage || 'https://via.placeholder.com/200'" [alt]="item.productName">
+            
+            <!-- Add to cart overlay -->
+            <button class="add-to-cart-btn" (click)="addToCart(item)">
+              🛒 Add To Cart
+            </button>
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-title">{{ item.productName }}</h3>
+            <div class="product-price">
+              <span class="price-current">{{ item.productPrice | currency:'VND' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="wishlistItems().length === 0" style="text-align: center; padding: 50px;">
+        Your wishlist is empty. <br>
+        <a routerLink="/" style="color: #db4444; margin-top: 10px; display: inline-block;">Continue Shopping</a>
+      </div>
+    </main>
+  </div>
+</div>

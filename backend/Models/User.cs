@@ -28,6 +28,8 @@ public class User
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    
+    // AvatarUrl removed: avatars are handled on the client (localStorage) or generated server-side from user name/email
 
     // Navigation Properties
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();

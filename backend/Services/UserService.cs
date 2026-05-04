@@ -88,4 +88,39 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<bool> UpdateProfileAsync(int id, UserUpdateDto updateDto)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null) return false;
+
+        if (!string.IsNullOrWhiteSpace(updateDto.Email) && updateDto.Email.Trim() != user.Email)
+        {
+            var trimmedEmail = updateDto.Email.Trim();
+            if (await _context.Users.AnyAsync(u => u.Email == trimmedEmail))
+                return false;
+            user.Email = trimmedEmail;
+        }
+
+        if (!string.IsNullOrWhiteSpace(updateDto.FullName))
+            user.FullName = updateDto.FullName.Trim();
+
+        if (!string.IsNullOrWhiteSpace(updateDto.Phone))
+            user.Phone = updateDto.Phone.Trim();
+
+        // Avatar handling is client-side only; do not persist avatar URL in database
+
+        if (!string.IsNullOrWhiteSpace(updateDto.NewPassword))
+        {
+            if (string.IsNullOrWhiteSpace(updateDto.CurrentPassword) ||
+                !BCrypt.Net.BCrypt.Verify(updateDto.CurrentPassword, user.PasswordHash))
+            {
+                return false;
+            }
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(updateDto.NewPassword);
+        }
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }

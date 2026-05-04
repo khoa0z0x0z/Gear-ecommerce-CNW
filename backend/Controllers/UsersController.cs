@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using backend.Services.Interfaces;
+using backend.DTOs;
 using System.Security.Claims;
-
 // Note: this controller is instrumented to write admin audit logs for actions
 
 namespace backend.Controllers;
@@ -55,17 +55,29 @@ public class UsersController : ControllerBase
     [HttpPut("{id}/reset-password")]
     public async Task<IActionResult> ResetPassword(int id, [FromBody] string newPassword)
     {
-        var success = await _user_service_ResetAndLog(id, newPassword);
+        var success = await ResetPasswordAndLogAsync(id, newPassword);
         if (!success) return NotFound();
         return Ok(new { message = "Password reset successfully" });
     }
 
-    private async Task<bool> _user_service_ResetAndLog(int id, string newPassword)
+    [HttpPut("profile")]
+    public async Task<IActionResult> UpdateProfile(UserUpdateDto updateDto)
+    {
+        var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId)) 
+            return Unauthorized();
+        
+        var success = await _userService.UpdateProfileAsync(userId, updateDto);
+        if (!success) return BadRequest(new { message = "Update failed. Check your password or if email is taken." });
+        
+        return Ok(new { message = "Profile updated successfully" });
+    }
+
+    private async Task<bool> ResetPasswordAndLogAsync(int id, string newPassword)
     {
         var before = await _userService.GetCustomerDetailsAsync(id);
         var success = await _userService.ResetPasswordAsync(id, newPassword);
         if (!success) return false;
-        // no meaningful after snapshot for password, just record action
         int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var adminId);
         var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "";
         await _auditService.LogAsync(adminId, adminEmail, "ResetPassword", "User", id, before, null);

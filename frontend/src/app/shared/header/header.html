@@ -16,6 +16,13 @@
     </div>
 
     <div class="user-area" *ngIf="isLoggedIn()">
+      <a routerLink="/wishlist" class="icon-btn" style="position: relative;">
+        ❤️
+        <span *ngIf="wishlistCount() > 0" style="position: absolute; top: -5px; right: -10px; background: #db4444; color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          {{ wishlistCount() }}
+        </span>
+      </a>
+
       <a routerLink="/cart" class="icon-btn" style="position: relative;">
         🛒
         <span *ngIf="cartCount() > 0" style="position: absolute; top: -5px; right: -10px; background: #db4444; color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -40,11 +47,15 @@
       </div>
 
       <div class="avatar-container">
-        <button class="icon-btn avatar-btn" (click)="toggleDropdown()">👤</button>
+        <button class="icon-btn avatar-btn" (click)="toggleDropdown()">
+          <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar-img" alt="avatar">
+          <span *ngIf="!avatarUrl">👤</span>
+        </button>
 
         <div class="dropdown-menu" *ngIf="showDropdown">
-          <a routerLink="/orders" (click)="showDropdown=false">🛍️ Đơn hàng của tôi</a>
-          <a (click)="logout()">🚪 Đăng xuất</a>
+          <a routerLink="/profile" (click)="toggleDropdown()">👤 Manage My Account</a>
+          <a routerLink="/orders" (click)="toggleDropdown()">🛍️ My Orders</a>
+          <a (click)="logout()">🚪 Logout</a>
         </div>
       </div>
     </div>

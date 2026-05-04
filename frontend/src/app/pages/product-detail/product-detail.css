@@ -398,6 +398,131 @@
   margin-left: 8px;
 }
 
+/* Reviews styles */
+.reviews-section {
+  margin-top: 40px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  border: 1px solid #e6e6e6;
+}
+
+.reviews-section h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: #111;
+}
+
+.add-review {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.add-review textarea {
+  flex: 1 1 60%;
+  min-height: 78px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.rating-select {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.rating-select button {
+  background: #f3f4f6;
+  border: 1px solid #e1e1e1;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rating-select .sel {
+  margin-left: 8px;
+  color: #666;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review-item {
+  border: 1px solid #f0f0f0;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.review-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.review-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e6e6e6;
+}
+
+.review-meta .rating {
+  color: #f0a11b;
+  font-weight: 600;
+}
+
+.hidden-badge {
+  background: #ffd6d6;
+  color: #a83a3a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.comment {
+  color: #333;
+  margin: 6px 0 8px;
+  line-height: 1.5;
+}
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.review-actions button {
+  background: transparent;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.review-item textarea {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+/* use existing .buy-btn definition above for button styles */
+
 @media (max-width: 1100px) {
   .detail-main {
     grid-template-columns: 1fr;

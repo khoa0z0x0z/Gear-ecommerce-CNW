@@ -9,6 +9,14 @@ obj/
 .vs/
 .vscode/
 
+# Ignore backend build outputs explicitly (untrack already committed files)
+/backend/bin/
+/backend/obj/
+/backend/*.exe
+/backend/*.dll
+/backend/*.pdb
+/backend/*.sourcelink.json
+
 # Build artifacts
 backend/bin/
 backend/obj/
@@ -31,7 +39,8 @@ dist/
 .angular/
 frontend/dist/
 frontend/.angular/
-
+src/assets/i18n/*.json
+src/environments/environment.prod.ts
 # ===========================
 #  Misc
 # ===========================

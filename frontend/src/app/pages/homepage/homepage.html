@@ -77,8 +77,8 @@
       >
         <div class="product-image-box">
           <div class="product-actions">
-            <span>♡</span>
-            <span>👁</span>
+            <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">❤️</button>
+            <button class="action-btn" title="View Product">👁</button>
           </div>
 
           <div class="product-badge">
@@ -155,8 +155,8 @@
       >
         <div class="product-image-box">
           <div class="product-actions">
-            <span>♡</span>
-            <span>👁</span>
+            <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">❤️</button>
+            <button class="action-btn" title="View Product">👁</button>
           </div>
 
           <div class="sale-badge" *ngIf="product.name === 'Drone' || product.name === 'GP11 Shooter USB Gamepad'">

@@ -9,6 +9,9 @@ export interface Product {
     category?: string;
     categoryName?: string;
     rating?: string;
+    averageRating?: number;
+    ratingCount?: number;
+    totalStars?: number;
     isNew?: boolean;
     sold?: number;
 }
