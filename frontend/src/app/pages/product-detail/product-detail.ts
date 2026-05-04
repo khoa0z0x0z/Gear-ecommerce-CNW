@@ -79,6 +79,7 @@ export class ProductDetail implements OnInit {
         const uid = Number(localStorage.getItem('userId')) || 0;
         const found = r.find(x => x.userId === uid);
         this.userReview.set(found ?? null);
+        this.updateProductRating();
       },
       error: (err) => console.error('Failed to load reviews', err)
     });
@@ -115,6 +116,7 @@ export class ProductDetail implements OnInit {
         this.newComment.set('');
         this.newRating.set(5);
         this.userReview.set(r);
+        this.updateProductRating();
       },
       error: (err) => {
         if (err?.status === 409) {
@@ -138,6 +140,7 @@ export class ProductDetail implements OnInit {
       next: () => {
         this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, rating: dto.rating, comment: dto.comment } : r));
         this.editingId.set(null);
+        this.updateProductRating();
       },
       error: (err) => console.error('Update review failed', err)
     });
@@ -146,7 +149,10 @@ export class ProductDetail implements OnInit {
   deleteReview(review: Review) {
     if (!confirm('Delete this review?')) return;
     this.productService.deleteReview(review.id).subscribe({
-      next: () => this.reviews.update(list => list.filter(r => r.id !== review.id)),
+      next: () => {
+        this.reviews.update(list => list.filter(r => r.id !== review.id));
+        this.updateProductRating();
+      },
       error: (err) => console.error('Delete failed', err)
     });
   }
@@ -154,9 +160,25 @@ export class ProductDetail implements OnInit {
   toggleHide(review: Review) {
     const newVal = !review.isApproved;
     this.productService.setReviewApproval(review.id, newVal).subscribe({
-      next: () => this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, isApproved: newVal } : r)),
+      next: () => {
+        this.reviews.update(list => list.map(r => r.id === review.id ? { ...r, isApproved: newVal } : r));
+        this.updateProductRating();
+      },
       error: (err) => console.error('Toggle hide failed', err)
     });
+  }
+
+  // Recalculate product rating metrics from current reviews and update product signal
+  updateProductRating() {
+    const p = this.product();
+    if (!p) return;
+    const all = this.reviews() || [];
+    // Consider only approved reviews in the public rating count
+    const visible = all.filter(r => r.isApproved !== false);
+    const count = visible.length;
+    const total = visible.reduce((s, r) => s + (r.rating || 0), 0);
+    const avg = count > 0 ? total / count : 0;
+    this.product.update(curr => curr ? ({ ...curr, averageRating: avg, ratingCount: count, totalStars: total }) : curr);
   }
 
   loadRelatedProducts(category: string) {
