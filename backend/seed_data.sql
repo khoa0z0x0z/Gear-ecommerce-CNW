@@ -204,3 +204,16 @@ INSERT INTO Settings ([Key], [Value], [Group], [Description]) VALUES
 ('BankName', 'Vietcombank', 'Payment', N'Tên ngân hàng'),
 ('BankAccountName', N'NGUYEN VAN A', 'Payment', N'Tên chủ tài khoản'),
 ('BankAccountNumber', '1234567890', 'Payment', N'Số tài khoản ngân hàng');
+
+-- ======================================================
+-- COUPONS
+-- ======================================================
+DELETE FROM Coupons;
+
+-- Reset identity for Coupons
+DBCC CHECKIDENT ('Coupons', RESEED, 0);
+
+INSERT INTO Coupons (Code, Description, IsPercentage, DiscountValue, MaxDiscount, StartAt, ExpiryAt, IsActive) VALUES
+(N'WELCOME10', N'10% off for new customers', 1, 10.00, NULL, SYSDATETIME(), DATEADD(month,3,SYSDATETIME()), 1),
+(N'FLAT50000', N'Fixed 50,000 VND off orders over 1,000,000', 0, 50000.00, NULL, SYSDATETIME(), DATEADD(month,6,SYSDATETIME()), 1),
+(N'SUMMER25MAX200000', N'25% off up to 200,000 VND', 1, 25.00, 200000.00, SYSDATETIME(), DATEADD(month,2,SYSDATETIME()), 1);
