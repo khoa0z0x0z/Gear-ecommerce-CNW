@@ -22,12 +22,7 @@ export class CartService {
   totalPrice = computed(() => this.cartItemsSignal().reduce((s, i) => s + i.price * i.quantity, 0));
 
   constructor() {
-    // Persist to localStorage ONLY when guest (not logged in)
-    effect(() => {
-      if (!this.authService.isLoggedIn()) {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItemsSignal()));
-      }
-    });
+
 
     // React to login/logout transitions
     effect(() => {
@@ -79,6 +74,10 @@ export class CartService {
     });
   }
 
+  private saveGuestCart() {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItemsSignal()));
+  }
+
   // ─── Public API ───────────────────────────────────────────────────────────
 
   loadCartFromBackend() {
@@ -112,6 +111,7 @@ export class CartService {
       }
       return [...items, { ...product, quantity }];
     });
+    this.saveGuestCart();
   }
 
   removeFromCart(id: number) {
@@ -121,6 +121,7 @@ export class CartService {
       return;
     }
     this.cartItemsSignal.update(items => items.filter(i => i.id !== id));
+    this.saveGuestCart();
   }
 
   updateQuantity(id: number, quantity: number) {
@@ -133,6 +134,7 @@ export class CartService {
     this.cartItemsSignal.update(items =>
       items.map(i => i.id === id ? { ...i, quantity } : i)
     );
+    this.saveGuestCart();
   }
 
   clearCart() {
@@ -142,5 +144,6 @@ export class CartService {
       return;
     }
     this.cartItemsSignal.set([]);
+    this.saveGuestCart();
   }
 }

@@ -14,6 +14,9 @@ public class Contact
     [EmailAddress]
     public string? Email { get; set; }
 
+    [MaxLength(50)]
+    public string? Phone { get; set; }
+
     [MaxLength(1000)]
     public string? Message { get; set; }
 

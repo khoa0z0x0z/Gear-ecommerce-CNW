@@ -32,9 +32,11 @@ export class ProductList implements OnInit {
   categoriesList = signal<string[]>(['All']);
   brandsList = ['All', 'ASUS', 'MSI', 'Lenovo', 'Logitech', 'Razer', 'Keychron', 'Akko', 'HyperX'];
 
+  // Filtered and sorted products
   filteredProducts = computed(() => {
     let products = [...this.allProducts()];
 
+    // Filter by Category
     if (this.selectedCategory() !== 'All') {
       products = products.filter(p => p.categoryName === this.selectedCategory());
     }
