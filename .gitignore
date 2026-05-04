@@ -1,6 +1,6 @@
-# .gitignore for .NET and Angular
-
-# .NET
+# ===========================
+#  .NET / ASP.NET Core
+# ===========================
 bin/
 obj/
 *.user
@@ -9,20 +9,35 @@ obj/
 .vs/
 .vscode/
 
-# Angular
+# Build artifacts
+backend/bin/
+backend/obj/
+*.dll
+*.pdb
+*.exe
+*.cache
+*.sourcelink.json
+
+# Secrets & environment
+appsettings.Development.json
+*.env
+.env
+
+# ===========================
+#  Angular / Node
+# ===========================
 node_modules/
 dist/
 .angular/
-.editorconfig
-src/assets/i18n/*.json
-src/environments/environment.prod.ts
+frontend/dist/
+frontend/.angular/
 
-# Misc
+# ===========================
+#  Misc
+# ===========================
 .DS_Store
+Thumbs.db
 *.log
-.env
 build_errors.txt
-
-# Ignore backend build artifacts explicitly
-backend/bin/
-backend/obj/
+*.tmp
+*.bak
