@@ -77,53 +77,60 @@
       >
         <div class="product-image-box">
           <div class="product-actions">
-            <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">❤️</button>
-            <button class="action-btn" title="View Product">👁</button>
+            <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">
+              <span class="icon">❤️</span>
+            </button>
+            <button class="action-btn" title="View Product">
+              <span class="icon">👁</span>
+            </button>
           </div>
+
+          <div class="sale-badge" *ngIf="product.sold > 100">BEST SELLER</div>
 
           <div class="product-badge">
             <img [src]="product.image" [alt]="product.name">
           </div>
           
-          <!-- Thêm nút Add to Cart (đã bổ sung logic) -->
           <button (click)="addToCart(product); $event.stopPropagation()" 
-                  style="position: absolute; bottom: 0; left: 0; width: 100%; background: #000; color: #fff; border: none; padding: 10px; cursor: pointer; display: none;"
-                  class="add-to-cart-btn">
+                  class="add-to-cart-btn-premium">
             Add To Cart
           </button>
         </div>
 
         <h4>{{ product.name }}</h4>
 
-        <p class="price-row">
+        <div class="price-row">
           <span class="new-price">{{ product.price | number:'1.0-0' }} VNĐ</span>
           <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice | number:'1.0-0' }} VNĐ</span>
-        </p>
+        </div>
 
-        <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-text">{{ product.rating }}</span>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="promo-banner-section">
     <div class="promo-content">
-      <p class="promo-small">Music</p>
-      <h2>Party On The Go</h2>
+      <p class="promo-small">Limited Edition</p>
+      <h2>Elevate Your <br>Gaming Setup</h2>
 
       <div class="countdown-row">
         <div class="countdown-circle">05 <span>Days</span></div>
         <div class="countdown-circle">23 <span>Hours</span></div>
-        <div class="countdown-circle">59 <span>Minutes</span></div>
-        <div class="countdown-circle">35 <span>Seconds</span></div>
+        <div class="countdown-circle">59 <span>Min</span></div>
+        <div class="countdown-circle">35 <span>Sec</span></div>
       </div>
 
-      <button class="buy-now-btn">Buy Now!</button>
+      <button class="buy-now-btn" routerLink="/products">Shop Now</button>
     </div>
 
     <div class="promo-speaker-wrap">
       <div class="promo-speaker-shadow"></div>
       <div class="promo-speaker">
-        <div class="speaker-logo">JBL</div>
+        <div class="speaker-logo">PRO GEAR</div>
       </div>
     </div>
   </section>
@@ -142,8 +149,8 @@
       <h2>Explore Our Products</h2>
 
       <div class="round-arrows">
-        <button>←</button>
-        <button>→</button>
+        <button (click)="prevCategories()">←</button>
+        <button (click)="nextCategories()">→</button>
       </div>
     </div>
 
@@ -155,33 +162,36 @@
       >
         <div class="product-image-box">
           <div class="product-actions">
-            <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">❤️</button>
-            <button class="action-btn" title="View Product">👁</button>
+            <button class="action-btn" (click)="toggleWishlist(product); $event.stopPropagation()" title="Toggle Wishlist">
+              <span class="icon">❤️</span>
+            </button>
+            <button class="action-btn" title="View Product">
+              <span class="icon">👁</span>
+            </button>
           </div>
 
-          <div class="sale-badge" *ngIf="product.name === 'Drone' || product.name === 'GP11 Shooter USB Gamepad'">
-            NEW
-          </div>
+          <div class="sale-badge" *ngIf="i < 2">NEW</div>
 
           <div class="product-badge">
             <img [src]="product.image" [alt]="product.name">
           </div>
 
-          <!-- Thêm nút Add to Cart -->
           <button (click)="addToCart(product); $event.stopPropagation()" 
-                  style="position: absolute; bottom: 0; left: 0; width: 100%; background: #000; color: #fff; border: none; padding: 10px; cursor: pointer; display: none;"
-                  class="add-to-cart-btn">
+                  class="add-to-cart-btn-premium">
             Add To Cart
           </button>
         </div>
 
         <h4>{{ product.name }}</h4>
 
-        <p class="price-row">
+        <div class="price-row">
           <span class="new-price">{{ product.price | number:'1.0-0' }} VNĐ</span>
-        </p>
+        </div>
 
-        <p class="rating-row">★★★★★ <span>{{ product.rating }}</span></p>
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-text">{{ product.rating }}</span>
+        </div>
       </div>
     </div>
   </section>

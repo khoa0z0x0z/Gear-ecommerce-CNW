@@ -36,9 +36,31 @@ export class AdminNotifications implements OnInit {
   submit() {
     const payload = { ...this.form };
     if (this.editing?.id) {
-      this.svc.update(this.editing.id, payload).subscribe({ next: () => { alert('Cập nhật'); this.load(); this.clear(); }, error: () => alert('Lỗi') });
+      this.svc.update(this.editing.id, payload).subscribe({
+        next: () => {
+          alert('Cập nhật thông báo thành công!');
+          this.load();
+          this.clear();
+        },
+        error: (err) => {
+          console.error('Update Notification Error:', err);
+          const msg = err.error?.message || err.error || 'Lỗi không xác định';
+          alert('Lỗi cập nhật: ' + msg);
+        }
+      });
     } else {
-      this.svc.create(payload).subscribe({ next: () => { alert('Tạo'); this.load(); this.clear(); }, error: () => alert('Lỗi') });
+      this.svc.create(payload).subscribe({
+        next: () => {
+          alert('Tạo thông báo thành công!');
+          this.load();
+          this.clear();
+        },
+        error: (err) => {
+          console.error('Create Notification Error:', err);
+          const msg = err.error?.message || err.error || 'Lỗi không xác định';
+          alert('Lỗi khi tạo: ' + msg);
+        }
+      });
     }
   }
 

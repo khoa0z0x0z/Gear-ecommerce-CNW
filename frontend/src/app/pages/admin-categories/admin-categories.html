@@ -1,0 +1,57 @@
+<section class="admin-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <div class="content-header">
+      <h2>Category Management</h2>
+      <p>Manage product categories for your store</p>
+    </div>
+
+    <div class="admin-grid">
+      <!-- List Section -->
+      <div class="list-card">
+        <h3>Current Categories</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of categories()">
+                <td>#{{ c.id }}</td>
+                <td><strong>{{ c.name }}</strong></td>
+                <td>{{ c.description || 'No description' }}</td>
+                <td class="actions">
+                  <button class="btn-edit" (click)="edit(c)">✏️</button>
+                  <button class="btn-delete" (click)="remove(c.id)">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <div class="form-card">
+        <h3>{{ editing ? 'Edit Category' : 'Add New Category' }}</h3>
+        <div class="form-group">
+          <label>Category Name</label>
+          <input type="text" [(ngModel)]="form.name" placeholder="e.g. Gaming Mouse">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="form.description" placeholder="Short description..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn-cancel" (click)="clear()" *ngIf="editing">Cancel</button>
+          <button class="btn-submit" (click)="submit()">{{ editing ? 'Update' : 'Save' }}</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>

@@ -54,8 +54,9 @@
 }
 
 .menu-item.active {
-    background: #000b2e;
+    background: #db4444;
     color: #fff !important;
+    box-shadow: 0 4px 12px rgba(219, 68, 68, 0.2);
 }
 
 .menu-item:hover {
@@ -63,11 +64,11 @@
 }
 
 .menu-item.active:hover {
-    background: #000b2e;
+    background: #db4444;
 }
 
 .menu-icon {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .logout-btn {

@@ -8,12 +8,9 @@
 .admin-dashboard-page {
   display: flex;
   min-height: 100vh;
-  background: #fcfcfc;
+  background-color: #fcfcfc;
 }
 
-/* ============ SIDEBAR handled by components/admin-sidebar ============ */
-
-/* ============ MAIN CONTENT ============ */
 .admin-main {
   flex: 1;
   margin-left: 260px;

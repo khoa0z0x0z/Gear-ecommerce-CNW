@@ -26,6 +26,13 @@
 .edit-btn { background:#fff; border:1px solid #e5e7eb; padding:6px 10px; border-radius:8px; cursor:pointer; }
 .delete-btn { background:#fef2f2; color:#dc2626; border:1px solid #fee2e2; padding:6px 10px; border-radius:8px; cursor:pointer; }
 
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+}
+
 @media (max-width: 900px) {
 	.notification-form { grid-template-columns: 1fr; }
 	.admin-main { margin-left: 0; }

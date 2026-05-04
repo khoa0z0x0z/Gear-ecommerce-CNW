@@ -88,7 +88,15 @@
       </div>
 
       <div class="coupon-row">
-        <input type="text" placeholder="Coupon Code" formControlName="couponCode">
+        <div class="coupon-input-wrapper">
+          <input type="text" placeholder="Coupon Code" formControlName="couponCode" (click)="toggleCouponPicker()">
+          <div class="coupon-dropdown" *ngIf="showCouponPicker() && activeCoupons().length > 0">
+            <div class="coupon-item" *ngFor="let c of activeCoupons()" (click)="selectCoupon(c)">
+              <div class="c-code">{{ c.code }}</div>
+              <div class="c-desc">{{ c.description }}</div>
+            </div>
+          </div>
+        </div>
         <button class="apply-btn" type="button" (click)="applyCoupon()">Apply Coupon</button>
       </div>
 
@@ -103,11 +111,11 @@
         </div>
         <div class="total-row line">
           <span>Shipping:</span>
-          <span>Free</span>
+          <span>{{ calculatedShipping() === 0 ? 'Free' : (calculatedShipping() | number:'1.0-0') + ' VNĐ' }}</span>
         </div>
         <div class="total-row final">
           <span>Total:</span>
-          <span>{{ (totalPrice() - (appliedDiscount() || 0)) | number:'1.0-0' }} VNĐ</span>
+          <span>{{ finalTotal() | number:'1.0-0' }} VNĐ</span>
         </div>
       </div>
 

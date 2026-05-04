@@ -24,6 +24,7 @@ import { AdminStats } from './pages/admin-stats/admin-stats';
 import { AdminCoupons } from './pages/admin-coupons/admin-coupons';
 import { AdminNotifications } from './pages/admin-notifications/admin-notifications';
 import { AdminAudit } from './pages/admin-audit/admin-audit';
+import { AdminCategories } from './pages/admin-categories/admin-categories';
 
 export const routes: Routes = [
   { path: '', component: Homepage },
@@ -49,6 +50,7 @@ export const routes: Routes = [
   // ADMIN
   { path: 'admin', component: AdminDashboard },
   { path: 'admin/products', component: AdminDashboard },
+  { path: 'admin/categories', component: AdminCategories },
   { path: 'admin/add-product', component: AdminAddProduct },
   { path: 'admin/edit-product/:id', component: AdminAddProduct },
   { path: 'admin/customers', component: AdminCustomers },

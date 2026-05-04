@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { CartService } from '../../services/cart.service';
 import { OrderService } from '../../services/order.service';
 import { CouponService } from '../../services/coupon.service';
+import { SettingsService } from '../../services/settings.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -22,6 +23,7 @@ export class CheckoutPage implements OnInit {
   private cartService = inject(CartService);
   private orderService = inject(OrderService);
   private couponService = inject(CouponService);
+  private settingsService = inject(SettingsService);
   private apiBase = environment.apiUrl;
 
   // States
@@ -30,6 +32,21 @@ export class CheckoutPage implements OnInit {
   checkoutForm!: FormGroup;
   appliedDiscount = signal<number>(0);
   appliedCouponCode = signal<string | null>(null);
+
+  activeCoupons = signal<any[]>([]);
+  showCouponPicker = signal<boolean>(false);
+
+  // Shipping logic via signals
+  shippingFeeSetting = computed(() => Number(this.settingsService.getSetting('ShippingFee')) || 30000);
+  freeShippingThreshold = computed(() => Number(this.settingsService.getSetting('FreeShippingThreshold')) || 2000000);
+
+  calculatedShipping = computed(() => {
+    return this.totalPrice() >= this.freeShippingThreshold() ? 0 : this.shippingFeeSetting();
+  });
+
+  finalTotal = computed(() => {
+    return this.totalPrice() - this.appliedDiscount() + this.calculatedShipping();
+  });
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -51,6 +68,19 @@ export class CheckoutPage implements OnInit {
       couponCode: [''],
       saveInfo: [false]
     });
+
+    this.settingsService.fetchPublicSettings().subscribe();
+    this.couponService.getActive().subscribe(data => this.activeCoupons.set(data));
+  }
+
+  toggleCouponPicker() {
+    this.showCouponPicker.set(!this.showCouponPicker());
+  }
+
+  selectCoupon(coupon: any) {
+    this.checkoutForm.patchValue({ couponCode: coupon.code });
+    this.showCouponPicker.set(false);
+    this.applyCoupon();
   }
 
   applyCoupon() {
@@ -66,7 +96,7 @@ export class CheckoutPage implements OnInit {
         const d = res.discount ?? 0;
         this.appliedDiscount.set(d);
         this.appliedCouponCode.set(code);
-        alert('Coupon áp dụng: -' + d + ' VNĐ');
+        alert('Coupon áp dụng: -' + d.toLocaleString() + ' VNĐ');
       },
       error: (err) => {
         console.error('Coupon error', err);
