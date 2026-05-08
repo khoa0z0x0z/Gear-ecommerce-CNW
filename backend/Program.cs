@@ -80,6 +80,9 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAngular");
 
+// Serve static files (for uploaded images)
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
