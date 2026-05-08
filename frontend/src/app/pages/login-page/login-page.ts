@@ -52,7 +52,11 @@ export class LoginPage implements OnInit {
         }
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Email hoặc mật khẩu không đúng!';
+        const errorMsg = err.error?.message || 'Email hoặc mật khẩu không đúng!';
+        this.errorMessage = errorMsg;
+        if (errorMsg === 'Tài khoản của bạn đã bị khóa.') {
+          alert('🚫 ' + errorMsg);
+        }
       }
     });
   }

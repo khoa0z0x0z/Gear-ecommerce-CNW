@@ -11,8 +11,19 @@
 
   <div class="nav-actions">
     <div class="search-box">
-      <input type="text" placeholder="What are you looking for?">
+      <input type="text" placeholder="What are you looking for?" [(ngModel)]="searchQuery" (input)="onSearchInput()">
       <button class="search-icon">🔍</button>
+
+      <!-- Search Dropdown -->
+      <div class="search-dropdown" *ngIf="showSearchResults">
+        <a *ngFor="let p of searchResults" [routerLink]="['/products', p.id]" (click)="closeSearch()" class="search-item">
+          <img [src]="p.imageUrls && p.imageUrls.length > 0 ? p.imageUrls[0] : (p.image || 'assets/placeholder.jpg')" alt="{{ p.name }}">
+          <div class="search-item-info">
+            <div class="search-item-name">{{ p.name }}</div>
+            <div class="search-item-price">{{ p.price | number:'1.0-0' }} VNĐ</div>
+          </div>
+        </a>
+      </div>
     </div>
 
     <div class="user-area" *ngIf="isLoggedIn()">

@@ -1,16 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { NotificationService } from '../../services/notification.service';
-import { OnInit } from '@angular/core';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -19,6 +23,8 @@ export class Header implements OnInit {
   private authService = inject(AuthService);
   private wishlistService = inject(WishlistService);
   private notificationService = inject(NotificationService);
+  private productService = inject(ProductService);
+  private eRef = inject(ElementRef);
 
   isLoggedIn = this.authService.isLoggedIn;
   cartCount = this.cartService.totalCount;
@@ -31,6 +37,11 @@ export class Header implements OnInit {
   notifications: any[] = [];
   notifCount = 0;
 
+  searchQuery = '';
+  searchResults: Product[] = [];
+  showSearchResults = false;
+  private searchSubject = new Subject<string>();
+
   constructor() {
     this.wishlistService.loadInitialCount();
     // Listen for avatar changes from profile page
@@ -38,10 +49,46 @@ export class Header implements OnInit {
       const ev = e as CustomEvent<string>;
       this.avatarUrl = ev.detail || localStorage.getItem('avatarUrl');
     });
+
+    // Setup search debouncing
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(term => {
+      if (term.trim()) {
+        this.productService.search(term).subscribe({
+          next: (res) => {
+            this.searchResults = res;
+            this.showSearchResults = res.length > 0;
+          }
+        });
+      } else {
+        this.searchResults = [];
+        this.showSearchResults = false;
+      }
+    });
   }
 
   ngOnInit(): void {
     this.loadNotifications();
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: Event) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.showSearchResults = false;
+      this.showNotif = false;
+      this.showDropdown = false;
+    }
+  }
+
+  onSearchInput() {
+    this.searchSubject.next(this.searchQuery);
+  }
+
+  closeSearch() {
+    this.showSearchResults = false;
+    this.searchQuery = '';
   }
 
   loadNotifications() {

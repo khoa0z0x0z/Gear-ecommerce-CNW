@@ -26,6 +26,12 @@ public class ProductsController : ControllerBase
         return Ok(await _productService.GetAllProductsAsync());
     }
 
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string term)
+    {
+        return Ok(await _productService.SearchProductsAsync(term ?? string.Empty));
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
