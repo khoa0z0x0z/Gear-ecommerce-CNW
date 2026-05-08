@@ -132,8 +132,7 @@ public class CouponsController : ControllerBase
         var coupons = await _context.Coupons
             .Where(c => c.IsActive 
                         && (c.StartAt == null || c.StartAt <= now) 
-                        && (c.ExpiryAt == null || c.ExpiryAt >= now)
-                        && (c.UsageLimit == 0 || c.UsedCount < c.UsageLimit))
+                        && (c.ExpiryAt == null || c.ExpiryAt >= now))
             .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
         return Ok(coupons);

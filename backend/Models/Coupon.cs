@@ -14,7 +14,5 @@ public class Coupon
     public DateTime? StartAt { get; set; }
     public DateTime? ExpiryAt { get; set; }
     public bool IsActive { get; set; }
-    public int UsageLimit { get; set; } = 0; // 0 means unlimited
-    public int UsedCount { get; set; } = 0;
     public DateTime CreatedAt { get; set; }
 }
