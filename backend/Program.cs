@@ -29,6 +29,7 @@ builder.Services.AddCors(options =>
 // Register DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
 
 // Add Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -91,6 +92,11 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     
+    // Apply any pending EF Core migrations on startup
+    try {
+        context.Database.Migrate();
+    } catch { }
+
     try {
         context.Database.ExecuteSqlRaw(@"
 IF OBJECT_ID(N'Coupons', N'U') IS NULL
