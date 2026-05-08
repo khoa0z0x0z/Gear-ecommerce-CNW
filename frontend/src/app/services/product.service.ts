@@ -13,6 +13,12 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+  uploadImage(file: File) {
+    const form = new FormData();
+    form.append('file', file, file.name);
+    return this.http.post<{ url: string }>(`${this.apiUrl}/upload-image`, form);
+  }
+
   getAll(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
