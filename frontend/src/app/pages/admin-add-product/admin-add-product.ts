@@ -101,4 +101,17 @@ export class AdminAddProduct implements OnInit {
   cancel() {
     this.router.navigate(['/admin']);
   }
+
+  onFileSelected(event: any) {
+    const file: File = event?.target?.files?.[0];
+    if (!file) return;
+
+    // Upload file to backend and set returned URL as product.image
+    this.productService.uploadImage(file).subscribe({
+      next: (res: any) => {
+        this.product.image = res.url;
+      },
+      error: () => alert('Failed to upload image')
+    });
+  }
 }

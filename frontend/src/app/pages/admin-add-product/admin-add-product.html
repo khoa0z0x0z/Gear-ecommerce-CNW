@@ -54,6 +54,15 @@
           <label>Image URL</label>
           <input placeholder="Paste image URL..." [(ngModel)]="product.image">
         </div>
+        <div class="form-group" style="margin-top:12px;">
+          <label>Or Upload Image</label>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)">
+        </div>
+
+        <div *ngIf="product.image" class="form-group" style="margin-top:12px;">
+          <label>Preview</label>
+          <img [src]="product.image" alt="Preview" style="max-width:200px; display:block;">
+        </div>
       </div>
 
       <div class="btn-row">
