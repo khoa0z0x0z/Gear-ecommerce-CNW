@@ -11,8 +11,8 @@
 
   <div class="nav-actions">
     <div class="search-box">
-      <input type="text" placeholder="What are you looking for?">
-      <button class="search-icon">🔍</button>
+      <input #searchBox type="text" placeholder="What are you looking for?" (keyup.enter)="onSearch(searchBox.value)">
+      <button class="search-icon" (click)="onSearch(searchBox.value)">🔍</button>
     </div>
 
     <div class="user-area" *ngIf="isLoggedIn()">

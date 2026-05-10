@@ -26,7 +26,19 @@ public class UserDto
 public class LoginResponseDto
 {
     public string Token { get; set; } = string.Empty;
+    public string RefreshToken { get; set; } = string.Empty;
     public UserDto User { get; set; } = new();
+}
+
+public class RefreshTokenRequestDto
+{
+    public string Token { get; set; } = string.Empty;
+    public string RefreshToken { get; set; } = string.Empty;
+}
+
+public class LogoutRequestDto
+{
+    public string RefreshToken { get; set; } = string.Empty;
 }
 
 public class UserUpdateDto

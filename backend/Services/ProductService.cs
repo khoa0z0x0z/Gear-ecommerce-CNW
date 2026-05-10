@@ -27,6 +27,27 @@ public class ProductService : IProductService
         return _mapper.Map<IEnumerable<ProductReadDto>>(products);
     }
 
+    public async Task<IEnumerable<ProductReadDto>> SearchProductsAsync(string term)
+    {
+        var query = _context.Products
+            .Include(p => p.Category)
+            .Include(p => p.ProductImages)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(term))
+        {
+            var search = term.Trim().ToLower();
+            query = query.Where(p => 
+                p.Name.ToLower().Contains(search) || 
+                p.Category.Name.ToLower().Contains(search) ||
+                (p.Description != null && p.Description.ToLower().Contains(search))
+            );
+        }
+
+        var products = await query.ToListAsync();
+        return _mapper.Map<IEnumerable<ProductReadDto>>(products);
+    }
+
     public async Task<ProductReadDto?> GetProductByIdAsync(int id)
     {
         var product = await _context.Products
