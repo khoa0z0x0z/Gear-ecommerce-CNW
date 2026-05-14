@@ -37,4 +37,21 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "Tài khoản của bạn đã bị khóa." });
         }
     }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken(RefreshTokenRequestDto requestDto)
+    {
+        var response = await _authService.RefreshTokenAsync(requestDto);
+
+        if (response == null) return Unauthorized(new { message = "Invalid or expired refresh token" });
+        return Ok(response);
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout(LogoutRequestDto requestDto)
+    {
+        var result = await _authService.LogoutAsync(requestDto);
+        if (!result) return BadRequest(new { message = "Invalid refresh token" });
+        return Ok(new { message = "Logged out successfully" });
+    }
 }

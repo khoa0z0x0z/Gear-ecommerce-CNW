@@ -28,6 +28,7 @@ export class ProductList implements OnInit {
   selectedCategory = signal<string>('All');
   selectedBrand = signal<string>('All');
   sortBy = signal<string>('newest');
+  searchTerm = signal<string>('');
 
   categoriesList = signal<string[]>(['All']);
   brandsList = ['All', 'ASUS', 'MSI', 'Lenovo', 'Logitech', 'Razer', 'Keychron', 'Akko', 'HyperX'];
@@ -69,14 +70,21 @@ export class ProductList implements OnInit {
       if (params['category']) {
         this.selectedCategory.set(params['category']);
       }
+      if (params['q']) {
+        this.searchTerm.set(params['q']);
+      } else {
+        this.searchTerm.set('');
+      }
+      this.loadProducts(this.searchTerm());
     });
 
-    this.loadProducts();
     this.loadCategories();
   }
 
-  loadProducts() {
-    this.productService.getAll().subscribe({
+  loadProducts(term: string = '') {
+    const request = term.trim() ? this.productService.search(term) : this.productService.getAll();
+
+    request.subscribe({
       next: (products) => {
         const mappedProducts = products.map(p => ({
           ...p,

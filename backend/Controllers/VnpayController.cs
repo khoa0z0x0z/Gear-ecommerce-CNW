@@ -101,7 +101,7 @@ public class VnpayController : ControllerBase
 
         if (responseCode == "00")
         {
-            order.Status = "Confirmed";
+            order.Status = "Processing";
             await _context.SaveChangesAsync();
             return Redirect($"{frontendUrl}/orders?vnp_status=success&orderId={orderId}");
         }

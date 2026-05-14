@@ -10,6 +10,8 @@ import { WishlistService } from '../../services/wishlist.service';
 import { NotificationService } from '../../services/notification.service';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
+import { OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +25,10 @@ export class Header implements OnInit {
   private authService = inject(AuthService);
   private wishlistService = inject(WishlistService);
   private notificationService = inject(NotificationService);
+
   private productService = inject(ProductService);
   private eRef = inject(ElementRef);
+  private router = inject(Router);
 
   isLoggedIn = this.authService.isLoggedIn;
   cartCount = this.cartService.totalCount;
@@ -111,5 +115,11 @@ export class Header implements OnInit {
   logout() {
     this.authService.logout();
     this.showDropdown = false;
+  }
+
+  onSearch(term: string) {
+    if (term.trim()) {
+      this.router.navigate(['/products'], { queryParams: { q: term.trim() } });
+    }
   }
 }
