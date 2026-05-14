@@ -48,20 +48,40 @@
         </div>
       </div>
 
+      <!-- Multi-Image Manager -->
       <div class="form-card">
-        <h3>Product Image</h3>
-        <div class="form-group">
-          <label>Image URL</label>
-          <input placeholder="Paste image URL..." [(ngModel)]="product.image">
-        </div>
-        <div class="form-group" style="margin-top:12px;">
-          <label>Or Upload Image</label>
-          <input type="file" accept="image/*" (change)="onFileSelected($event)">
+        <h3>Product Images <span style="font-size:13px; color:#6b7280; font-weight:400;">({{ imageUrls().length }} ảnh — ảnh đầu tiên là ảnh chính)</span></h3>
+
+        <!-- Image Preview Grid -->
+        <div class="image-grid" *ngIf="imageUrls().length > 0">
+          <div class="image-item" *ngFor="let url of imageUrls(); let i = index">
+            <img [src]="url" alt="Image {{ i + 1 }}" class="thumb">
+            <div class="image-actions">
+              <span class="primary-badge" *ngIf="i === 0">Primary</span>
+              <button type="button" class="remove-img-btn" (click)="removeImage(i)" title="Remove">✕</button>
+            </div>
+          </div>
+          <!-- Uploading spinner placeholder -->
+          <div class="image-item uploading" *ngIf="uploadingIndex !== null">
+            <div class="upload-spinner">⏳</div>
+            <span>Uploading...</span>
+          </div>
         </div>
 
-        <div *ngIf="product.image" class="form-group" style="margin-top:12px;">
-          <label>Preview</label>
-          <img [src]="product.image" alt="Preview" style="max-width:200px; display:block;">
+        <!-- Add via URL -->
+        <div class="form-group" style="margin-top:16px;">
+          <label>➕ Add by URL</label>
+          <div style="display:flex; gap:8px;">
+            <input placeholder="Paste image URL here..." [(ngModel)]="newUrlInput" (keyup.enter)="addUrl()" style="flex:1;">
+            <button type="button" class="add-btn" (click)="addUrl()">Add URL</button>
+          </div>
+        </div>
+
+        <!-- Add via File Upload -->
+        <div class="form-group" style="margin-top:12px;">
+          <label>📁 Or Upload from Computer</label>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" [disabled]="uploadingIndex !== null">
+          <p style="font-size:12px; color:#9ca3af; margin-top:4px;">JPG, PNG, GIF, WebP · Max 5MB per file</p>
         </div>
       </div>
 
@@ -74,3 +94,67 @@
   </main>
 
 </section>
+
+<style>
+  .image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .image-item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+  }
+  .image-item.uploading {
+    flex-direction: column;
+    font-size: 12px;
+    color: #6b7280;
+    gap: 4px;
+  }
+  .upload-spinner { font-size: 24px; }
+  .image-item .thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .image-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 2px;
+  }
+  .remove-img-btn {
+    background: rgba(239,68,68,0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .primary-badge {
+    background: #3b82f6;
+    color: white;
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+</style>

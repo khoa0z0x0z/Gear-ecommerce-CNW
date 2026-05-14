@@ -30,8 +30,12 @@ export class AdminAddProduct implements OnInit {
     price: 0,
     stock: 10,
     description: '',
-    image: ''
   };
+
+  // Multi-image list
+  imageUrls = signal<string[]>([]);
+  newUrlInput = '';
+  uploadingIndex: number | null = null;
 
   ngOnInit() {
     const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
@@ -52,7 +56,6 @@ export class AdminAddProduct implements OnInit {
   loadProduct(id: number) {
     this.productService.getById(id).subscribe({
       next: (p: any) => {
-        // Map category name back to ID if necessary
         let catId = p.categoryId;
         if (!catId && p.categoryName) {
           const found = this.categories().find(c => c.name === p.categoryName);
@@ -66,8 +69,46 @@ export class AdminAddProduct implements OnInit {
           price: p.price,
           stock: 10,
           description: p.description,
-          image: (p.imageUrls && p.imageUrls[0]) || p.image || ''
         };
+
+        // Load existing image URLs
+        if (p.imageUrls && p.imageUrls.length > 0) {
+          this.imageUrls.set([...p.imageUrls]);
+        }
+      }
+    });
+  }
+
+  // Add URL manually
+  addUrl() {
+    const url = this.newUrlInput.trim();
+    if (!url) return;
+    this.imageUrls.update(list => [...list, url]);
+    this.newUrlInput = '';
+  }
+
+  // Remove image at index
+  removeImage(index: number) {
+    this.imageUrls.update(list => list.filter((_, i) => i !== index));
+  }
+
+  // Upload file from disk
+  onFileSelected(event: any) {
+    const file: File = event?.target?.files?.[0];
+    if (!file) return;
+
+    this.uploadingIndex = this.imageUrls().length;
+
+    this.productService.uploadImage(file).subscribe({
+      next: (res: any) => {
+        this.imageUrls.update(list => [...list, res.url]);
+        this.uploadingIndex = null;
+        // Reset file input so same file can be re-selected
+        event.target.value = '';
+      },
+      error: () => {
+        alert('Failed to upload image. Please try again.');
+        this.uploadingIndex = null;
       }
     });
   }
@@ -76,7 +117,7 @@ export class AdminAddProduct implements OnInit {
     const payload = {
       ...this.product,
       price: +this.product.price,
-      ImageUrls: this.product.image ? [this.product.image] : []
+      imageUrls: this.imageUrls()
     };
 
     if (this.productId) {
@@ -85,7 +126,7 @@ export class AdminAddProduct implements OnInit {
           alert('Cập nhật sản phẩm thành công!');
           this.router.navigate(['/admin']);
         },
-        error: (err) => alert('Lỗi khi cập nhật sản phẩm')
+        error: () => alert('Lỗi khi cập nhật sản phẩm')
       });
     } else {
       this.productService.create(payload).subscribe({
@@ -93,25 +134,12 @@ export class AdminAddProduct implements OnInit {
           alert('Thêm sản phẩm thành công!');
           this.router.navigate(['/admin']);
         },
-        error: (err) => alert('Lỗi khi thêm sản phẩm')
+        error: () => alert('Lỗi khi thêm sản phẩm')
       });
     }
   }
 
   cancel() {
     this.router.navigate(['/admin']);
-  }
-
-  onFileSelected(event: any) {
-    const file: File = event?.target?.files?.[0];
-    if (!file) return;
-
-    // Upload file to backend and set returned URL as product.image
-    this.productService.uploadImage(file).subscribe({
-      next: (res: any) => {
-        this.product.image = res.url;
-      },
-      error: () => alert('Failed to upload image')
-    });
   }
 }
