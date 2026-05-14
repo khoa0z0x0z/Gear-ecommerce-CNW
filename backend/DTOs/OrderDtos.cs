@@ -31,4 +31,6 @@ public class OrderCreateDto
     public string? FullAddress { get; set; }
     // Optional coupon code to apply during checkout
     public string? CouponCode { get; set; }
+    // Shipping fee calculated on the client side from admin settings
+    public decimal ShippingFee { get; set; } = 0;
 }

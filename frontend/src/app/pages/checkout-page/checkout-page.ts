@@ -124,7 +124,8 @@ export class CheckoutPage implements OnInit {
       note: form.companyName || '',
       city: form.townCity,
       fullAddress: `${form.streetAddress}${form.apartment ? ', ' + form.apartment : ''}`,
-      couponCode: this.appliedCouponCode() || form.couponCode || null
+      couponCode: this.appliedCouponCode() || form.couponCode || null,
+      shippingFee: this.calculatedShipping()
     };
 
     if (form.paymentMethod === 'vnpay') {

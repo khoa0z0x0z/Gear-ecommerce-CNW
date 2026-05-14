@@ -136,8 +136,8 @@ public class OrderService : IOrderService
             Note = orderDto.Note,
             Status = "Pending",
             CreatedAt = DateTime.Now,
-            ShippingFee = 0,
-            TotalAmount = subtotal - discountAmount
+            ShippingFee = orderDto.ShippingFee,
+            TotalAmount = subtotal - discountAmount + orderDto.ShippingFee
         };
 
         foreach (var item in cart.CartItems)
