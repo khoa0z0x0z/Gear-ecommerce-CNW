@@ -26,9 +26,16 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(UserLoginDto loginDto)
     {
-        var loginResponse = await _authService.LoginAsync(loginDto);
-        if (loginResponse == null) return Unauthorized(new { message = "Invalid email or password" });
-        return Ok(loginResponse);
+        try
+        {
+            var loginResponse = await _authService.LoginAsync(loginDto);
+            if (loginResponse == null) return Unauthorized(new { message = "Invalid email or password" });
+            return Ok(loginResponse);
+        }
+        catch (Exception ex) when (ex.Message == "ACCOUNT_LOCKED")
+        {
+            return BadRequest(new { message = "Tài khoản của bạn đã bị khóa vui lòng liên hệ hotline để giải quyết" });
+        }
     }
 
     [HttpPost("refresh-token")]

@@ -132,6 +132,12 @@ BEGIN
     ALTER TABLE Contacts ADD Phone nvarchar(50) NULL;
 END
         ");
+        context.Database.ExecuteSqlRaw(@"
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'AvatarUrl' AND Object_ID = Object_ID(N'Users'))
+BEGIN
+    ALTER TABLE Users ADD AvatarUrl nvarchar(500) NULL;
+END
+        ");
     } catch { }
 
     if (!context.Users.Any(u => u.Email == "admin@gmail.com"))

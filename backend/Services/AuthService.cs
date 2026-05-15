@@ -40,6 +40,9 @@ public class AuthService : IAuthService
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
             return null;
 
+        if (!user.IsActive)
+            throw new Exception("ACCOUNT_LOCKED");
+
         var token = _jwtHelper.GenerateToken(user);
         var refreshToken = _jwtHelper.GenerateRefreshToken();
 

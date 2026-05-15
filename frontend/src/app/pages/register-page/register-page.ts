@@ -24,6 +24,7 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -37,9 +38,9 @@ export class RegisterPage implements OnInit {
     this.loading = true;
     this.errorMessage = null;
 
-    const { name, email, password } = this.registerForm.value;
+    const { name, email, phone, password } = this.registerForm.value;
 
-    this.authService.register({ fullName: name, email, password }).subscribe({
+    this.authService.register({ fullName: name, email, phone, password }).subscribe({
       next: (res) => {
         alert('🎉 Chúc mừng ' + name + '! Đăng ký tài khoản thành công.');
         this.router.navigate(['/login']);

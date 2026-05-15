@@ -52,4 +52,36 @@ public class UploadController : ControllerBase
 
         return Ok(new { url });
     }
+
+    [Authorize]
+    [HttpPost("avatar")]
+    public async Task<IActionResult> UploadAvatar(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest(new { message = "No file provided" });
+
+        var allowedTypes = new[] { "image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp" };
+        if (!allowedTypes.Contains(file.ContentType.ToLower()))
+            return BadRequest(new { message = "Only image files are allowed" });
+
+        if (file.Length > 5 * 1024 * 1024)
+            return BadRequest(new { message = "File size must not exceed 5MB" });
+
+        var uploadFolder = Path.Combine(_env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "uploads", "avt");
+        Directory.CreateDirectory(uploadFolder);
+
+        var ext = Path.GetExtension(file.FileName).ToLower();
+        var fileName = $"{Guid.NewGuid()}{ext}";
+        var filePath = Path.Combine(uploadFolder, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        var url = $"{Request.Scheme}://{Request.Host}/uploads/avt/{fileName}";
+        _logger.LogInformation("Avatar uploaded: {FileName}", fileName);
+
+        return Ok(new { url });
+    }
 }

@@ -6,6 +6,7 @@ public interface IOrderService
 {
     Task<IEnumerable<OrderReadDto>> GetUserOrdersAsync(int userId);
     Task<OrderReadDto?> GetOrderByIdAsync(int orderId, int userId);
+    Task<OrderReadDto?> GetAdminOrderByIdAsync(int orderId);
     Task<OrderReadDto?> CreateOrderAsync(int userId, OrderCreateDto orderDto);
 
     // Admin methods

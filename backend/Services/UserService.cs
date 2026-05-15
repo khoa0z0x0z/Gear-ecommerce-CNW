@@ -50,6 +50,7 @@ public class UserService : IUserService
             Email = user.Email,
             FullName = user.FullName,
             Phone = user.Phone,
+            AvatarUrl = user.AvatarUrl,
             IsActive = user.IsActive,
             CreatedAt = user.CreatedAt,
             Addresses = user.Addresses.Select(a => new AddressReadDto
@@ -108,7 +109,8 @@ public class UserService : IUserService
         if (!string.IsNullOrWhiteSpace(updateDto.Phone))
             user.Phone = updateDto.Phone.Trim();
 
-        // Avatar handling is client-side only; do not persist avatar URL in database
+        if (updateDto.AvatarUrl != null)
+            user.AvatarUrl = updateDto.AvatarUrl;
 
         if (!string.IsNullOrWhiteSpace(updateDto.NewPassword))
         {

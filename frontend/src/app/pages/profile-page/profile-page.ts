@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile-page',
@@ -14,6 +16,7 @@ import { Router, RouterLink } from '@angular/router';
 export class ProfilePage implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
+  private http = inject(HttpClient);
 
   profile = signal<any>(null);
   isLoading = signal<boolean>(true);
@@ -59,16 +62,27 @@ export class ProfilePage implements OnInit {
   onAvatarSelected(files: FileList | null) {
     if (!files || files.length === 0) return;
     const file = files[0];
+
+    // Preview immediately locally while uploading
     const reader = new FileReader();
     reader.onload = () => {
-      const result = reader.result as string;
-      this.editData.avatarUrl = result;
-      // persist client-side
-      localStorage.setItem('avatarUrl', result);
-      // notify other components
-      window.dispatchEvent(new CustomEvent('avatarChanged', { detail: result }));
+      this.editData.avatarUrl = reader.result as string;
     };
     reader.readAsDataURL(file);
+
+    // Upload to server
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.http.post<any>(`${environment.apiUrl}/upload/avatar`, formData).subscribe({
+      next: (res) => {
+        // Replace base64 preview with real URL
+        this.editData.avatarUrl = res.url;
+      },
+      error: (err) => {
+        alert('Failed to upload avatar: ' + (err.error?.message || err.message));
+      }
+    });
   }
 
   saveChanges() {
@@ -81,6 +95,7 @@ export class ProfilePage implements OnInit {
       fullName: `${this.editData.firstName} ${this.editData.lastName}`.trim(),
       email: this.editData.email,
       phone: this.editData.phone,
+      avatarUrl: this.editData.avatarUrl,
       currentPassword: this.editData.currentPassword,
       newPassword: this.editData.newPassword
     };
@@ -92,7 +107,7 @@ export class ProfilePage implements OnInit {
         this.editData.currentPassword = '';
         this.editData.newPassword = '';
         this.editData.confirmPassword = '';
-        
+
         // Update local profile data
         this.profile.update(p => ({
           ...p,

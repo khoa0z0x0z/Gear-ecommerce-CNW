@@ -23,6 +23,13 @@ export class AuthService {
         }
         localStorage.setItem('role', res.user.role);
         localStorage.setItem('userId', res.user.id);
+        if (res.user.avatarUrl) {
+          localStorage.setItem('avatarUrl', res.user.avatarUrl);
+          window.dispatchEvent(new CustomEvent('avatarChanged', { detail: res.user.avatarUrl }));
+        } else {
+          localStorage.removeItem('avatarUrl');
+          window.dispatchEvent(new CustomEvent('avatarChanged', { detail: null }));
+        }
         localStorage.setItem('isLoggedIn', 'true');
         this.isLoggedIn.set(true);
       })

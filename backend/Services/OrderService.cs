@@ -43,6 +43,15 @@ public class OrderService : IOrderService
         return _mapper.Map<OrderReadDto>(order);
     }
 
+    public async Task<OrderReadDto?> GetAdminOrderByIdAsync(int orderId)
+    {
+        var order = await _context.Orders
+            .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+        return _mapper.Map<OrderReadDto>(order);
+    }
+
     public async Task<OrderReadDto?> CreateOrderAsync(int userId, OrderCreateDto orderDto)
     {
         var cart = await _context.Carts
