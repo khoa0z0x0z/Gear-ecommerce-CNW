@@ -10,14 +10,6 @@ namespace backend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "UsageLimit",
-                table: "Coupons");
-
-            migrationBuilder.DropColumn(
-                name: "UsedCount",
-                table: "Coupons");
-
             migrationBuilder.AddColumn<string>(
                 name: "AvatarUrl",
                 table: "Users",
@@ -32,20 +24,6 @@ namespace backend.Migrations
             migrationBuilder.DropColumn(
                 name: "AvatarUrl",
                 table: "Users");
-
-            migrationBuilder.AddColumn<int>(
-                name: "UsageLimit",
-                table: "Coupons",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "UsedCount",
-                table: "Coupons",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
         }
     }
 }

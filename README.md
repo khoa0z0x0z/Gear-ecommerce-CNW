@@ -175,9 +175,9 @@ frontend/
     *   *(Ghi chú: đảm bảo phải chạy `database update` THÀNH CÔNG trước khi dùng file `seed_data.sql` này)*
 5.  **Chạy Server API**:
     ```bash
-    dotnet run
+    dotnet run --launch-profile https
     ```
-    *API mặc định sẽ chạy ở cổng hiển thị trong Terminal (Ví dụ: `https://localhost:7057`)*
+    * tài khoản admin mặc định: admin@gmail.com/123456
 
 ### 3. Cấu hình và chạy Frontend
 1.  **Mở cửa sổ dòng lệnh ở thư mục frontend**:

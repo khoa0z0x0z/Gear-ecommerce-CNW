@@ -66,6 +66,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 // Audit logging (file-based)
 builder.Services.AddSingleton<backend.Services.Interfaces.IAuditService, backend.Services.AuditService>();
+// Chatbot AI
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IChatbotService, ChatbotService>();
 
 var app = builder.Build();
 

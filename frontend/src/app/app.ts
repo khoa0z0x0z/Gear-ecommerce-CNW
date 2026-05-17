@@ -4,11 +4,12 @@ import { Header } from './shared/header/header';
 import { Footer } from './shared/footer/footer';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+import { ChatbotWidget } from './shared/components/chatbot-widget/chatbot-widget';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Header, Footer, CommonModule],
+  imports: [RouterOutlet, Header, Footer, CommonModule, ChatbotWidget],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
