@@ -35,37 +35,24 @@ public class AuthService : IAuthService
     }
 
     public async Task<LoginResponseDto?> LoginAsync(UserLoginDto loginDto)
+{
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
+    if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
+        return null;
+    if (!user.IsActive)
+        throw new Exception("ACCOUNT_LOCKED");
+    var token = _jwtHelper.GenerateToken(user);
+    var refreshToken = _jwtHelper.GenerateRefreshToken();
+    var newRefreshToken = new RefreshToken
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
-            return null;
-
-        if (!user.IsActive)
-            throw new Exception("ACCOUNT_LOCKED");
-
-        var token = _jwtHelper.GenerateToken(user);
-        var refreshToken = _jwtHelper.GenerateRefreshToken();
-
-        // 2-hour expiration matching user request
-        var newRefreshToken = new RefreshToken
-        {
-            UserId = user.Id,
-            Token = refreshToken,
-            ExpiryDate = DateTime.UtcNow.AddHours(2),
-            IsRevoked = false
-        };
-
-        _context.RefreshTokens.Add(newRefreshToken);
-        await _context.SaveChangesAsync();
-
-        return new LoginResponseDto
-        {
-            Token = token,
-            RefreshToken = refreshToken,
-            User = _mapper.Map<UserDto>(user)
-        };
-    }
-
+        UserId = user.Id,
+        Token = refreshToken,
+        ExpiryDate = DateTime.UtcNow.AddHours(2),
+        IsRevoked = false
+    };
+    _context.RefreshTokens.Add(newRefreshToken);
+    await _context.SaveChangesAsync();
+}
     public async Task<LoginResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto requestDto)
     {
         var storedToken = await _context.RefreshTokens

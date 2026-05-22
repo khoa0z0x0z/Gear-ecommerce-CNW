@@ -9,5 +9,6 @@ public interface IProductService
     Task<ProductReadDto?> GetProductByIdAsync(int id);
     Task<ProductReadDto> CreateProductAsync(ProductUpsertDto productDto);
     Task<ProductReadDto?> UpdateProductAsync(int id, ProductUpsertDto productDto);
+    Task<IEnumerable<ProductReadDto>> SearchProductsAsync(string term);
     Task<bool> DeleteProductAsync(int id);
 }
