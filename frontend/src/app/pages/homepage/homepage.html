@@ -129,9 +129,15 @@
 
     <div class="promo-speaker-wrap">
       <div class="promo-speaker-shadow"></div>
-      <div class="promo-speaker">
-        <div class="speaker-logo">PRO GEAR</div>
-      </div>
+      <ng-container *ngIf="bestSellingProducts().length > 0; else defaultPromo">
+        <img [src]="bestSellingProducts()[0].image" [alt]="bestSellingProducts()[0].name" class="promo-product-img">
+        <div class="promo-badge">#1 BEST SELLER</div>
+      </ng-container>
+      <ng-template #defaultPromo>
+        <div class="promo-speaker">
+          <div class="speaker-logo">PRO GEAR</div>
+        </div>
+      </ng-template>
     </div>
   </section>
 

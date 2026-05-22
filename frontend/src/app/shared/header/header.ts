@@ -10,7 +10,6 @@ import { WishlistService } from '../../services/wishlist.service';
 import { NotificationService } from '../../services/notification.service';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
-import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({

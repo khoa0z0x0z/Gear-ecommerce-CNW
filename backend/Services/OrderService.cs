@@ -28,6 +28,7 @@ public class OrderService : IOrderService
         var orders = await _context.Orders
             .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
+                    .ThenInclude(p => p!.ProductImages)
             .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.CreatedAt)
             .ToListAsync();
@@ -39,6 +40,7 @@ public class OrderService : IOrderService
         var order = await _context.Orders
             .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
+                    .ThenInclude(p => p!.ProductImages)
             .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId);
         return _mapper.Map<OrderReadDto>(order);
     }
@@ -48,6 +50,7 @@ public class OrderService : IOrderService
         var order = await _context.Orders
             .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
+                    .ThenInclude(p => p!.ProductImages)
             .FirstOrDefaultAsync(o => o.Id == orderId);
         return _mapper.Map<OrderReadDto>(order);
     }
@@ -179,6 +182,7 @@ public class OrderService : IOrderService
             .Include(o => o.User)
             .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
+                    .ThenInclude(p => p!.ProductImages)
             .OrderByDescending(o => o.CreatedAt)
             .ToListAsync();
         return _mapper.Map<IEnumerable<OrderReadDto>>(orders);

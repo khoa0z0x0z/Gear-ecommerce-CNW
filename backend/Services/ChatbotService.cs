@@ -110,6 +110,10 @@ public class ChatbotService : IChatbotService
             contents = new[]
             {
                 new { parts = new[] { new { text = prompt } } }
+            },
+            generationConfig = new
+            {
+                responseMimeType = "application/json"
             }
         };
 
@@ -117,16 +121,32 @@ public class ChatbotService : IChatbotService
         var res = await _httpClient.PostAsync(url, content);
         
         if (!res.IsSuccessStatusCode)
+        {
+            var errStr = await res.Content.ReadAsStringAsync();
+            try { System.IO.File.WriteAllText("gemini_error.txt", errStr); } catch {}
+            
+            if (res.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                return "API Key của bạn đã bị Google khoá (có thể do bị lộ trên GitHub). Vui lòng tạo API Key mới!";
+                
             return "Hệ thống đang bận, xin vui lòng thử lại sau.";
+        }
 
         var resJson = await res.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(resJson);
         try
         {
+            var usage = doc.RootElement.GetProperty("usageMetadata");
+            int promptTokens = usage.GetProperty("promptTokenCount").GetInt32();
+            int candidatesTokens = usage.GetProperty("candidatesTokenCount").GetInt32();
+            int totalTokens = usage.GetProperty("totalTokenCount").GetInt32();
+            
+            Console.WriteLine($"\n[GEMINI API USAGE] Prompt: {promptTokens} | Candidate: {candidatesTokens} | Total: {totalTokens}\n");
+
             return doc.RootElement.GetProperty("candidates")[0].GetProperty("content").GetProperty("parts")[0].GetProperty("text").GetString() ?? "";
         }
-        catch
+        catch (Exception ex)
         {
+            try { System.IO.File.WriteAllText("gemini_error.txt", $"Parse Exception: {ex.Message}\nRaw: {resJson}"); } catch {}
             return "[Lỗi phân tích cú pháp từ AI]";
         }
     }

@@ -114,20 +114,6 @@ public class ProductService : IProductService
         return _mapper.Map<ProductReadDto>(product);
     }
 
-    public async Task<IEnumerable<ProductReadDto>> SearchProductsAsync(string term)
-    {
-        if (string.IsNullOrWhiteSpace(term))
-            return new List<ProductReadDto>();
-
-        var searchTerm = term.ToLower();
-        var products = await _context.Products
-            .Include(p => p.Category)
-            .Include(p => p.ProductImages)
-            .Where(p => p.Name.ToLower().Contains(searchTerm) || (p.Description != null && p.Description.ToLower().Contains(searchTerm)))
-            .ToListAsync();
-            
-        return _mapper.Map<IEnumerable<ProductReadDto>>(products);
-    }
 
     public async Task<bool> DeleteProductAsync(int id)
     {

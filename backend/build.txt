@@ -1,0 +1,39 @@
+﻿  Determining projects to restore...
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj : warning NU1903: Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+  All projects are up-to-date for restore.
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj : warning NU1903: Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Helpers\MappingProfile.cs(19,10): warning CS1030: #warning: 'Product mapping includes rating aggregates' [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\WishlistService.cs(26,39): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Controllers\NotificationsController.cs(59,9): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Controllers\CouponsController.cs(66,9): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Controllers\CategoriesController.cs(64,9): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\WishlistService.cs(86,40): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\AuthService.cs(37,42): error CS0161: 'AuthService.LoginAsync(UserLoginDto)': not all code paths return a value [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\CartService.cs(103,39): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Helpers\MappingProfile.cs(45,19): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\ProductService.cs(41,17): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\ProductService.cs(42,17): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\ProductService.cs(42,17): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\OrderService.cs(213,24): warning CS8601: Possible null reference assignment. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+
+Build FAILED.
+
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj : warning NU1903: Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj : warning NU1903: Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Helpers\MappingProfile.cs(19,10): warning CS1030: #warning: 'Product mapping includes rating aggregates' [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\WishlistService.cs(26,39): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Controllers\NotificationsController.cs(59,9): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Controllers\CouponsController.cs(66,9): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Controllers\CategoriesController.cs(64,9): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\WishlistService.cs(86,40): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\CartService.cs(103,39): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Helpers\MappingProfile.cs(45,19): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\ProductService.cs(41,17): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\ProductService.cs(42,17): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\ProductService.cs(42,17): warning CS8602: Dereference of a possibly null reference. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\OrderService.cs(213,24): warning CS8601: Possible null reference assignment. [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\Services\AuthService.cs(37,42): error CS0161: 'AuthService.LoginAsync(UserLoginDto)': not all code paths return a value [D:\hcmue\III\II\CNW\Gear-ecommerce-CNW\backend\backend.csproj]
+    14 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:01.66
