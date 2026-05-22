@@ -12,10 +12,12 @@ namespace backend.Controllers;
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService _orderService;
+    private readonly IAuditService _auditService;
 
-    public OrdersController(IOrderService orderService)
+    public OrdersController(IOrderService orderService, IAuditService auditService)
     {
         _orderService = orderService;
+        _auditService = auditService;
     }
 
     private int UserId => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -58,8 +60,15 @@ public class OrdersController : ControllerBase
     [HttpPut("{id}/status")]
     public async Task<IActionResult> UpdateStatus(int id, [FromBody] string status)
     {
+        var before = await _orderService.GetAdminOrderByIdAsync(id);
         var success = await _orderService.UpdateOrderStatusAsync(id, status);
         if (!success) return NotFound();
+        var after = await _orderService.GetAdminOrderByIdAsync(id);
+
+        int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "UpdateOrderStatus", "Order", id, before, after);
+
         return Ok(new { message = "Order status updated successfully" });
     }
 

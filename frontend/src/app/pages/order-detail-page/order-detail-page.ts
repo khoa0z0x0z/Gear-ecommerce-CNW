@@ -54,4 +54,24 @@ export class OrderDetailPage implements OnInit {
       default: return '';
     }
   }
+
+  // Sum of (price × qty) for each order item
+  itemsSubtotal(): number {
+    const o = this.order();
+    if (!o?.orderDetails) return 0;
+    return o.orderDetails.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
+  }
+
+  // Shipping fee stored in the order
+  shippingFee(): number {
+    return this.order()?.shippingFee ?? 0;
+  }
+
+  // Discount = itemsSubtotal + shipping - totalAmount
+  discountAmount(): number {
+    const o = this.order();
+    if (!o) return 0;
+    const computed = this.itemsSubtotal() + this.shippingFee() - o.totalAmount;
+    return computed > 0 ? computed : 0;
+  }
 }

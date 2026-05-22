@@ -13,10 +13,12 @@ namespace backend.Controllers;
 public class CouponsController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly backend.Services.Interfaces.IAuditService _auditService;
 
-    public CouponsController(AppDbContext context)
+    public CouponsController(AppDbContext context, backend.Services.Interfaces.IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     [HttpGet]
@@ -46,14 +48,20 @@ public class CouponsController : ControllerBase
         coupon.CreatedAt = DateTime.Now;
         _context.Coupons.Add(coupon);
         await _context.SaveChangesAsync();
+
+        int.TryParse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "Create", "Coupon", coupon.Id, null, coupon);
+
         return CreatedAtAction(nameof(Get), new { id = coupon.Id }, coupon);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, Coupon dto)
     {
+        var before = await _context.Coupons.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+        if (before == null) return NotFound();
         var item = await _context.Coupons.FindAsync(id);
-        if (item == null) return NotFound();
 
         item.Code = dto.Code;
         item.Description = dto.Description;
@@ -65,6 +73,11 @@ public class CouponsController : ControllerBase
         item.IsActive = dto.IsActive;
 
         await _context.SaveChangesAsync();
+
+        int.TryParse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "Update", "Coupon", id, before, item);
+
         return Ok(item);
     }
 
@@ -75,6 +88,11 @@ public class CouponsController : ControllerBase
         if (item == null) return NotFound();
         _context.Coupons.Remove(item);
         await _context.SaveChangesAsync();
+
+        int.TryParse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "Delete", "Coupon", id, item, null);
+
         return NoContent();
     }
 

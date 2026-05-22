@@ -13,10 +13,12 @@ namespace backend.Controllers;
 public class NotificationsController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly backend.Services.Interfaces.IAuditService _auditService;
 
-    public NotificationsController(AppDbContext context)
+    public NotificationsController(AppDbContext context, backend.Services.Interfaces.IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     [HttpGet]
@@ -39,14 +41,20 @@ public class NotificationsController : ControllerBase
     {
         _context.Notifications.Add(notification);
         await _context.SaveChangesAsync();
+
+        int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "Create", "Notification", notification.Id, null, notification);
+
         return CreatedAtAction(nameof(Get), new { id = notification.Id }, notification);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, Notification dto)
     {
+        var before = await _context.Notifications.AsNoTracking().FirstOrDefaultAsync(n => n.Id == id);
+        if (before == null) return NotFound();
         var item = await _context.Notifications.FindAsync(id);
-        if (item == null) return NotFound();
 
         item.Title = dto.Title;
         item.Message = dto.Message;
@@ -56,6 +64,11 @@ public class NotificationsController : ControllerBase
         item.IsActive = dto.IsActive;
 
         await _context.SaveChangesAsync();
+
+        int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "Update", "Notification", id, before, item);
+
         return Ok(item);
     }
 
@@ -66,6 +79,11 @@ public class NotificationsController : ControllerBase
         if (item == null) return NotFound();
         _context.Notifications.Remove(item);
         await _context.SaveChangesAsync();
+
+        int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var adminId);
+        var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "";
+        await _auditService.LogAsync(adminId, adminEmail, "Delete", "Notification", id, item, null);
+
         return NoContent();
     }
 

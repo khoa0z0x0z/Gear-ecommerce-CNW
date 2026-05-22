@@ -36,59 +36,59 @@ SET IDENTITY_INSERT Products ON;
 
 -- Category 1: Bàn phím
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(1, N'Keychron K2', N'Bàn phím không dây', 1800000, 50, 120, 1),
-(2, N'Akko 3068B', N'Layout 65% nhỏ gọn', 1600000, 30, 85, 1),
-(3, N'Razer Huntsman', N'Switch quang học', 4000000, 15, 45, 1),
-(4, N'Corsair K70', N'Fullsize cao cấp', 3500000, 20, 30, 1),
-(5, N'Leopold FC750R', N'Độ bền cực cao', 3200000, 10, 15, 1);
+(1, N'Keychron K2', N'Bàn phím cơ không dây đa năng, lý tưởng cho dân coder/văn phòng thích sự nhỏ gọn. Gõ cực êm không ồn ào.', 1800000, 50, 120, 1),
+(2, N'Akko 3068B', N'Bàn phím thiết kế layout 65% nhỏ gọn, màu sắc pastel nữ tính. Phù hợp cho setup góc làm việc tối giản.', 1600000, 30, 85, 1),
+(3, N'Razer Huntsman', N'Trang bị Switch quang học tốc độ siêu phản hồi. Dành riêng cho game thủ eSport try-hard cần độ trễ bằng 0.', 4000000, 15, 45, 1),
+(4, N'Corsair K70', N'Bàn phím Fullsize cao cấp khung nhôm máy bay bền bỉ, tích hợp kê tay. Phù hợp anh em thích hầm hố, gõ đầm tay.', 3500000, 20, 30, 1),
+(5, N'Leopold FC750R', N'Huyền thoại phím cơ cổ điển, Keycap PBT cực dày dặn, gõ êm ái vô địch trong tầm giá. Dành cho người gõ phím chuyên nghiệp.', 3200000, 10, 15, 1);
 
 -- Category 2: Chuột
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(6, N'Logitech G Pro X', N'Siêu nhẹ 63g', 3100000, 40, 200, 2),
-(7, N'Razer DeathAdder V3', N'Cảm biến 30K', 3500000, 25, 150, 2),
-(8, N'SteelSeries Rival 3', N'Giá rẻ hiệu năng cao', 800000, 100, 300, 2),
-(9, N'Zowie EC2', N'Chuột FPS huyền thoại', 1900000, 30, 90, 2),
-(10, N'Glorious Model O', N'Vỏ tổ ong', 1400000, 50, 110, 2);
+(6, N'Logitech G Pro X Superlight', N'Chỉ 63g siêu nhẹ, cảm biến HERO 25K đỉnh cao. Lựa chọn số 1 của các game thủ CS:GO và Valorant.', 3100000, 40, 200, 2),
+(7, N'Razer DeathAdder V3 Pro', N'Thiết kế công thái học ôm sát tay, cảm biến 30K siêu nhạy. Dành cho người tay to thích cầm theo kiểu Palm Grip.', 3500000, 25, 150, 2),
+(8, N'SteelSeries Rival 3', N'Chuột giá rẻ quốc dân nhưng hiệu năng cực cao, phù hợp HSSV và học sinh mua về học tập lẫn giải trí.', 800000, 100, 300, 2),
+(9, N'Zowie EC2', N'Huyền thoại bắn súng FPS form bất đối xứng. Không rườm rà LED lủng, tập trung 100% vào kỹ năng.', 1900000, 30, 90, 2),
+(10, N'Glorious Model O Wireless', N'Chuột vỏ tổ ong xuyên thấu độc đáo, trọng lượng nhẹ, led RGB siêu đẹp phù hợp góc setup sặc sỡ.', 1400000, 50, 110, 2);
 
 -- Category 3: Tai nghe
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(11, N'HyperX Cloud II', N'Âm thanh 7.1', 2500000, 60, 250, 3),
-(12, N'Logitech G733', N'Không dây RGB', 2900000, 20, 80, 3),
-(13, N'Razer BlackShark', N'Chống ồn cực tốt', 2200000, 45, 120, 3),
-(14, N'SteelSeries Arctis 7', N'Lossless wireless', 4500000, 15, 40, 3),
-(15, N'Corsair HS80', N'Dolby Atmos', 3800000, 25, 55, 3);
+(11, N'HyperX Cloud II', N'Tai nghe quốc dân với âm thanh vòm 7.1. Cảm giác đeo êm ái cả ngày dài, phù hợp nghe nhạc và chơi game.', 2500000, 60, 250, 3),
+(12, N'Logitech G733', N'Tai nghe không dây siêu nhẹ, mút xốp êm ái, màu sắc trẻ trung. Microphone chống ồn đàm thoại cực tốt.', 2900000, 20, 80, 3),
+(13, N'Razer BlackShark V2', N'Chụp tai cách âm bị động cực tốt, khử ồn bên ngoài xuất sắc. Trọng lượng nhẹ không gây đau đầu.', 2200000, 45, 120, 3),
+(14, N'SteelSeries Arctis 7', N'Công nghệ không dây Lossless mượt mà, thiết kế dải băng đô thông minh giúp phân bổ trọng lượng. Âm thanh cực chi tiết.', 4500000, 15, 40, 3),
+(15, N'Corsair HS80', N'Tích hợp công nghệ Dolby Atmos xịn xò. Cho trải nghiệm xem phim và chơi game AAA cực kỳ sống động.', 3800000, 25, 55, 3);
 
 -- Category 4: Laptop
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(16, N'ROG Strix G16', N'RTX 4060, i7-13650H', 38000000, 10, 25, 4),
-(17, N'MacBook M3', N'Mỏng nhẹ mạnh mẽ', 32000000, 15, 60, 4),
-(18, N'MSI Katana 15', N'Giá rẻ hiệu năng cao', 24000000, 20, 45, 4),
-(19, N'Acer Helios Neo', N'Tản nhiệt cực đỉnh', 31000000, 8, 12, 4),
-(20, N'Dell XPS 15', N'Đẳng cấp văn phòng', 50000000, 5, 8, 4);
+(16, N'ROG Strix G16', N'Chiếc Laptop Gaming sở hữu RTX 4060, CPU i7-13650H cực mạnh. Phù hợp để lập trình AI, edit video 4K hoặc chiến mượt các game nặng nhất.', 38000000, 10, 25, 4),
+(17, N'MacBook Air M3', N'Laptop mỏng nhẹ đẳng cấp, chip M3 siêu tiết kiệm pin tới 18 tiếng. Chuyên dụng cho dân văn phòng, lập trình viên web/mobile.', 32000000, 15, 60, 4),
+(18, N'MSI Katana 15', N'Laptop Gaming giá rẻ nhưng sở hữu Card rời RTX 3050 mạnh mẽ. Lựa chọn tuyệt vời cho sinh viên khối kỹ thuật và đồ họa cơ bản.', 24000000, 20, 45, 4),
+(19, N'Acer Helios Neo', N'Vua tản nhiệt phân khúc, máy luôn mát lạnh dù treo game cường độ cao. GPU RTX 4060 cùng màn hình 165Hz chuẩn màu.', 31000000, 8, 12, 4),
+(20, N'Dell XPS 15', N'Kiệt tác công nghệ với viền màn hình siêu mỏng, vỏ nhôm nguyên khối. Dành riêng cho Doanh nhân và Giám đốc yêu sự hoàn mỹ.', 50000000, 5, 8, 4);
 
 -- Category 5: Điện thoại
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(21, N'iPhone 15 Pro', N'Titan tự nhiên', 28000000, 20, 150, 5),
-(22, N'Samsung S24 Ultra', N'Galaxy AI', 26000000, 25, 130, 5),
-(23, N'ROG Phone 8', N'Chiến game đỉnh cao', 27000000, 10, 40, 5),
-(24, N'iPad Pro M4', N'Màn hình OLED', 27500000, 15, 35, 5),
-(25, N'Xiaomi 14', N'Camera Leica', 18000000, 30, 95, 5);
+(21, N'iPhone 15 Pro', N'Sự kết hợp hoàn hảo giữa vật liệu Titan siêu nhẹ và chip A17 Pro. Quay video điện ảnh chuẩn Hollywood, chụp đêm đỉnh cao.', 28000000, 20, 150, 5),
+(22, N'Samsung S24 Ultra', N'Kỷ nguyên Galaxy AI thông minh, dịch thuật trực tiếp, khoanh tròn tìm kiếm tiện lợi. Bút S-Pen hoàn hảo cho người làm nội dung.', 26000000, 25, 130, 5),
+(23, N'ROG Phone 8', N'Mãnh thú làng game Mobile, tản nhiệt buồng hơi siêu lớn, tần số quét 165Hz. Chơi Genshin Impact không tụt khung hình.', 27000000, 10, 40, 5),
+(24, N'iPad Pro M4', N'Sức mạnh xử lý vượt qua cả laptop, màn hình OLED Tandem siêu nét rực rỡ, thiết kế vuốt mỏng ấn tượng.', 27500000, 15, 35, 5),
+(25, N'Xiaomi 14', N'Smartphone nhỏ gọn sở hữu cụm Camera Leica nhiếp ảnh chuyên nghiệp. Sạc siêu tốc đáp ứng ngày dài bận rộn.', 18000000, 30, 95, 5);
 
 -- Category 6: Lót chuột
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(26, N'SteelSeries Qck+', N'Vải mịn Large', 450000, 100, 500, 6),
-(27, N'Razer Gigantus', N'Chống trượt', 550000, 80, 350, 6),
-(28, N'Logitech G640', N'Độ ma sát thấp', 600000, 50, 200, 6),
-(29, N'Lót chuột Custom', N'In hình theo yêu cầu', 250000, 200, 400, 6),
-(30, N'Asus ROG Scabbard', N'Cực đại 90x40', 1200000, 30, 120, 6);
+(26, N'SteelSeries Qck+', N'Quốc dân làng lót chuột với bề mặt vải nhám mịn, kiểm soát cực tốt (Control), phù hợp game bắn súng FPS.', 450000, 100, 500, 6),
+(27, N'Razer Gigantus V2', N'Độ dày ấn tượng, foam cao su đặc chống lún tốt. Giúp di chuột mượt mà cả ngày dài.', 550000, 80, 350, 6),
+(28, N'Logitech G640', N'Bề mặt ma sát thấp (Speed), phù hợp cho những pha lia chuột tốc độ cao trong LMHT hay Dota 2.', 600000, 50, 200, 6),
+(29, N'Lót chuột Custom', N'Sản phẩm cá nhân hóa, in mọi hình ảnh theo yêu cầu với chất lượng sắc nét, bo viền cẩn thận chống bung chỉ.', 250000, 200, 400, 6),
+(30, N'Asus ROG Scabbard', N'Kích cỡ bao toàn bộ bàn làm việc, vải Cordura chống nước, chống xước cực kỳ bền bỉ chuẩn quân đội.', 1200000, 30, 120, 6);
 
 -- Category 7: Ghế Gaming
 INSERT INTO Products (Id, Name, Description, Price, Stock, Sold, CategoryId) VALUES
-(31, N'Secretlab Titan', N'Ghế số 1 thế giới', 12000000, 5, 15, 7),
-(32, N'Warrior Raider', N'Da PU cao cấp', 3500000, 15, 40, 7),
-(33, N'E-Dra Midnight', N'Rẻ mà bền', 2200000, 20, 65, 7),
-(34, N'Sihoo M57', N'Công thái học', 3800000, 25, 50, 7),
-(35, N'Anda Seat Kaiser', N'Khung thép chắc chắn', 8500000, 10, 20, 7);
+(31, N'Secretlab Titan Evo', N'Biểu tượng xa xỉ của góc Gaming. Chất liệu da đệ nhất, form dáng chuẩn y khoa, độ êm vô đối xứng đáng từng xu.', 12000000, 5, 15, 7),
+(32, N'Warrior Raider', N'Ngon bổ rẻ cho người mới nhập môn, da PU dễ lau chùi, form người Việt Nam ngồi ôm lưng thoải mái.', 3500000, 15, 40, 7),
+(33, N'E-Dra Midnight', N'Rẻ nhất nhưng độ cứng cáp bất ngờ, mút đúc chống lún. Hợp ví tiền học sinh sinh viên lập góc chơi game.', 2200000, 20, 65, 7),
+(34, N'Sihoo M57', N'Ghế lưới công thái học tản nhiệt siêu thoáng. Cứu tinh đau mỏi vai gáy cho Coder làm việc 10 tiếng một ngày.', 3800000, 25, 50, 7),
+(35, N'Anda Seat Kaiser 3', N'Form cực kỳ rộng rãi cho người đô con (Tới 150kg). Khung thép gia cố siêu dày, gối tựa đầu từ tính xịn xò.', 8500000, 10, 20, 7);
 
 SET IDENTITY_INSERT Products OFF;
 
@@ -144,50 +144,54 @@ INSERT INTO ProductImages (ProductId, ImageUrl, IsPrimary) VALUES
 -- PRODUCT ATTRIBUTES
 -- ======================================================
 INSERT INTO ProductAttributes (ProductId, AttributeName, AttributeValue) VALUES
-(1, N'Kết nối', N'Bluetooth 5.1 / Wired'),
-(1, N'Switch', N'Gateron Mechanical'),
-(1, N'Layout', N'75%'),
-(2, N'Kết nối', N'2.4Ghz / Bluetooth / USB-C'),
-(2, N'Keycap', N'PBT Double-shot'),
-(3, N'Công nghệ', N'Razer Optical Switches'),
-(4, N'Chất liệu', N'Khung nhôm máy bay'),
-(5, N'Loại phím', N'TKL (Tenkeyless)'),
-(6, N'Trọng lượng', N'63 grams'),
-(6, N'Cảm biến', N'HERO 25K'),
-(7, N'Độ nhạy', N'30,000 DPI'),
-(8, N'Đèn nền', N'Prism RGB 3 vùng'),
-(9, N'Tần số quét', N'1000 Hz'),
-(10, N'Kiểu vỏ', N'Honeycomb (Tổ ong)'),
-(11, N'Kiểu kết nối', N'Wireless 2.4Ghz'),
-(11, N'Thời lượng pin', N'30 giờ'),
-(12, N'Trọng lượng', N'278 grams'),
-(13, N'Driver', N'Triforce Titanium 50mm'),
-(14, N'Âm thanh', N'DTS Headphone:X v2.0'),
-(15, N'Công nghệ mic', N'Broadcast-grade Omni-directional'),
-(16, N'CPU', N'Intel Core i7-13650HX'),
-(16, N'VGA', N'NVIDIA RTX 4060 8GB'),
-(17, N'Màn hình', N'Liquid Retina XDR'),
-(17, N'RAM', N'16GB Unified Memory'),
-(18, N'Ổ cứng', N'512GB NVMe SSD'),
-(19, N'Màn hình', N'16 inch 2K 165Hz'),
-(20, N'Độ phân giải', N'3.5K OLED Touch'),
-(21, N'Chipset', N'A17 Pro (3nm)'),
-(21, N'Camera', N'48MP Main / 5x Telephoto'),
-(22, N'Bút cảm ứng', N'S-Pen đi kèm'),
-(23, N'Tản nhiệt', N'GameCool 8 System'),
-(24, N'Màn hình', N'13 inch Ultra Retina Tandem OLED'),
-(25, N'Sạc nhanh', N'HyperCharge 90W'),
-(26, N'Kích thước', N'450 x 400 x 2 mm'),
-(27, N'Bề mặt', N'Hybrid (Speed & Control)'),
-(28, N'Độ dày', N'3 mm'),
-(29, N'Tính năng', N'Chống nước nhẹ'),
-(30, N'Chất liệu', N'Cordura Fabric'),
-(31, N'Chất liệu', N'Da giả cao cấp Hybrid Leatherette'),
-(31, N'Trọng tải tối đa', N'130 kg'),
-(32, N'Góc ngả', N'135 độ'),
-(33, N'Loại đệm', N'Mousse đúc nguyên khối'),
-(34, N'Cơ chế', N'Công thái học (Ergonomic)'),
-(35, N'Tay ghế', N'4D Adjustable');
+-- Keyboards (1-5)
+(1, N'Kết nối', N'Bluetooth 5.1 / Type-C'), (1, N'Switch', N'Gateron Brown'), (1, N'Layout', N'75% (84 phím)'), (1, N'Pin', N'4000mAh (Lên đến 240 giờ)'), (1, N'Trọng lượng', N'663g'), (1, N'Nhu cầu', N'Văn phòng, Lập trình'),
+(2, N'Kết nối', N'2.4Ghz / Bluetooth 5.0 / Type-C'), (2, N'Switch', N'Akko CS Jelly Pink'), (2, N'Layout', N'65% (68 phím)'), (2, N'Pin', N'1800mAh'), (2, N'Nhu cầu', N'Góc tối giản, Gõ phím nhẹ'),
+(3, N'Công nghệ', N'Razer Optical Switches (Linear)'), (3, N'Layout', N'Fullsize (104 phím)'), (3, N'Độ trễ', N'0.2ms'), (3, N'Nhu cầu', N'Moba, FPS eSport chuyên nghiệp'),
+(4, N'Chất liệu', N'Khung nhôm nguyên khối'), (4, N'Switch', N'Cherry MX Red'), (4, N'Tính năng', N'Kê tay rời, Con lăn âm lượng'), (4, N'Nhu cầu', N'Chơi game AAA, Streamer'),
+(5, N'Thiết kế', N'Cổ điển, Không LED'), (5, N'Keycap', N'PBT Double-shot siêu dày 1.5mm'), (5, N'Switch', N'Cherry MX Blue'), (5, N'Nhu cầu', N'Nhà văn, Coder chuyên đánh máy'),
+
+-- Mice (6-10)
+(6, N'Trọng lượng', N'63g siêu nhẹ'), (6, N'Cảm biến', N'HERO 25K'), (6, N'Pin', N'70 giờ liên tục'), (6, N'Form', N'Đối xứng'), (6, N'Nhu cầu', N'FPS, Try hard CSGO, Valorant'),
+(7, N'Trọng lượng', N'63g'), (7, N'Cảm biến', N'Focus Pro 30K Optical'), (7, N'Switch', N'Razer Optical Gen-3'), (7, N'Form', N'Công thái học lệch phải'), (7, N'Nhu cầu', N'Tay to, Bắn súng'),
+(8, N'Mắt đọc', N'TrueMove Core'), (8, N'Đèn LED', N'Prism RGB 3 vùng'), (8, N'Trọng lượng', N'77g'), (8, N'Nhu cầu', N'Học sinh sinh viên, Múc đích chung'),
+(9, N'Cảm biến', N'3360'), (9, N'Thiết kế', N'Plug and Play (Không Driver)'), (9, N'Form', N'Ergonomic (Lưng cao)'), (9, N'Nhu cầu', N'Tuyển thủ CSGO'),
+(10, N'Thiết kế', N'Vỏ đục lỗ tổ ong (Honeycomb)'), (10, N'Trọng lượng', N'69g'), (10, N'Pin', N'71 giờ (Tắt LED)'), (10, N'Nhu cầu', N'Setup RGB, Game MOBA'),
+
+-- Headsets (11-15)
+(11, N'Kết nối', N'Wireless 2.4Ghz'), (11, N'Âm thanh', N'Giả lập 7.1 Surround'), (11, N'Pin', N'Lên đến 30 giờ'), (11, N'Nhu cầu', N'Nghe tiếng bước chân FPS'),
+(12, N'Kết nối', N'Lightspeed Wireless'), (12, N'Trọng lượng', N'278g'), (12, N'Đèn nền', N'Lightsync RGB 2 vùng'), (12, N'Nhu cầu', N'Setup trẻ trung, Streamer'),
+(13, N'Màng loa', N'Triforce Titanium 50mm'), (13, N'Mic', N'HyperClear Cardioid'), (13, N'Cách âm', N'Passive Noise Cancellation'), (13, N'Nhu cầu', N'Phòng ồn, Giải đấu eSport'),
+(14, N'Kết nối', N'Băng tần kép (2.4Ghz & Bluetooth)'), (14, N'Chất liệu', N'Hợp kim thép, Vải dù'), (14, N'Phần mềm', N'Sonar Audio Desktop'), (14, N'Nhu cầu', N'Đa dụng PC, PS5, Mobile'),
+(15, N'Âm thanh', N'Hỗ trợ Dolby Atmos spatial audio'), (15, N'Mic', N'Broadcast-grade'), (15, N'Kết nối', N'Slipstream Wireless'), (15, N'Nhu cầu', N'Xem phim điện ảnh, Chơi game AAA'),
+
+-- Laptops (16-20)
+(16, N'CPU', N'Intel Core i7-13650HX (14 nhân)'), (16, N'VGA', N'NVIDIA RTX 4060 8GB'), (16, N'RAM', N'16GB DDR5 4800MHz'), (16, N'Màn hình', N'16" FHD+ 165Hz'), (16, N'Nhu cầu', N'Lập trình AI, Học máy, Game Nặng'),
+(17, N'Chip', N'Apple M3 (8-core CPU, 10-core GPU)'), (17, N'RAM', N'16GB Unified'), (17, N'Lưu trữ', N'512GB SSD'), (17, N'Pin', N'18 tiếng'), (17, N'Nhu cầu', N'Đi công tác, Code Web, Sang trọng'),
+(18, N'CPU', N'Intel Core i7-12650H'), (18, N'VGA', N'NVIDIA RTX 3050 4GB'), (18, N'Màn hình', N'15.6" FHD 144Hz'), (18, N'Trọng lượng', N'2.25kg'), (18, N'Nhu cầu', N'Sinh viên đồ họa nền tảng, Game tầm trung'),
+(19, N'CPU', N'Intel Core i5-13500HX'), (19, N'VGA', N'NVIDIA RTX 4060 140W'), (19, N'Màn hình', N'16" WQXGA 165Hz 100% sRGB'), (19, N'Tản nhiệt', N'Quạt AeroBlade 3D thế hệ 5'), (19, N'Nhu cầu', N'Cày cuốc game liên tục không sợ nóng'),
+(20, N'CPU', N'Intel Core i7-13700H'), (20, N'Màn hình', N'15.6" 3.5K OLED Cảm ứng'), (20, N'Vỏ', N'Nhôm nguyên khối cắt CNC, viền Carbon siêu mỏng'), (20, N'Nhu cầu', N'Giám đốc, Doanh nhân đẳng cấp'),
+
+-- Phones & Tablets (21-25)
+(21, N'Chip', N'A17 Pro (3nm)'), (21, N'Vật liệu', N'Titanium Cấp Hàng Không'), (21, N'Camera', N'48MP (Zoom Quang 5x)'), (21, N'Cổng sạc', N'USB-C 3.0 (10Gbps)'), (21, N'Nhu cầu', N'Quay Vlog TikTok, Nhiếp ảnh'),
+(22, N'Tính năng AI', N'Dịch trực tiếp, Khoanh tròn tìm kiếm, Note Assist'), (22, N'Bút cảm ứng', N'Trang bị S-Pen tích hợp'), (22, N'Màn hình', N'6.8" Dynamic AMOLED (Độ sáng 2600 nits)'), (22, N'Nhu cầu', N'Làm việc di động, Ghi chú sáng tạo'),
+(23, N'Chip', N'Snapdragon 8 Gen 3'), (23, N'Tản nhiệt', N'GameCool 8 (Dẫn nhiệt kim loại lỏng)'), (23, N'Màn hình', N'AMOLED 165Hz'), (23, N'Nhu cầu', N'Tuyển thủ PUBG, Genshin thủ'),
+(24, N'Chip', N'Apple M4 (Ai Engine Vượt trội)'), (24, N'Màn hình', N'13" Ultra Retina Tandem OLED'), (24, N'Độ mỏng', N'5.1 mm (Siêu mỏng)'), (24, N'Nhu cầu', N'Thiết kế đồ họa kĩ thuật số, Thay thế Laptop'),
+(25, N'Camera', N'Leica Summilux, Cảm biến Light Hunter 900'), (25, N'Sạc', N'90W (Có dây) / 50W (Không dây)'), (25, N'Kích thước', N'6.36 inch (Cầm vừa gọn tay)'), (25, N'Nhu cầu', N'Smartphone nhỏ gọn sức mạnh Flagship'),
+
+-- Lót chuột (26-30)
+(26, N'Bề mặt', N'Vải nhám mật độ cao (Micro-woven)'), (26, N'Kích thước', N'450 x 400 x 2mm (Large)'), (26, N'Form', N'Dành cho lối chơi Control'),
+(27, N'Bề mặt', N'Vải sợi nhám siêu mỏng'), (27, N'Chất nền', N'Cao su đặc bám bàn chân không'), (27, N'Độ dày', N'3mm'),
+(28, N'Bề mặt', N'Ma sát cực thấp (Speed)'), (28, N'Kích thước', N'400 x 460 x 3mm'), (28, N'Nhu cầu', N'Game cường độ quay chuột cao (Flick)'),
+(29, N'Dịch vụ', N'In theo hình cầu khách (Custom Art)'), (29, N'Bề mặt', N'Phủ Poly siêu mịn, chống nước văng'), (29, N'Viền', N'Bo mép chống bung 100%'),
+(30, N'Chất liệu', N'Nhựa Cordura siêu bền siêu trượt'), (30, N'Kích thước', N'900 x 400 x 3mm (Deskmat)'), (30, N'Tính năng', N'Chống xước, Chống đổ nước trực tiếp'),
+
+-- Ghế Gaming (31-35)
+(31, N'Chất liệu da', N'Neo Hybrid Leatherette (Bền gấp 12 lần)'), (31, N'Đệm tựa lưng', N'L-ADAPT™ 4 hướng có thể điều chỉnh'), (31, N'Kệ để tay', N'4D nam châm CloudSwap'), (31, N'Nhu cầu', N'Thượng lưu, Ngồi lâu không gãy lưng'),
+(32, N'Chất liệu da', N'Da PU chống xước'), (32, N'Khung', N'Thép chống gỉ siêu cường'), (32, N'Tải trọng', N'Đến 120kg'), (32, N'Nhu cầu', N'Kinh phí thấp mua xài ngay'),
+(33, N'Đệm mút', N'Cao su non nguyên khối siêu đàn hồi'), (33, N'Chân đế', N'Nylon cứng siêu bền chịu va đập'), (33, N'Góc ngả', N'180 độ'), (33, N'Nhu cầu', N'Phòng Stream giá rẻ, Ngả lưng ngủ ngon giấc'),
+(34, N'Chất liệu', N'Lưới cao cấp siêu thoáng mát'), (34, N'Cơ chế lưng', N'Lưng kép ôm tự động bám dính cột sống'), (34, N'Tay vịn', N'3D di chuyển'), (34, N'Nhu cầu', N'Dân lập trình Code ròng rã 12 tiếng'),
+(35, N'Kích cỡ', N'Size XL Rộng rãi'), (35, N'Đệm đầu', N'Ruột đệm mút hoạt tính, hít nam châm (Không dây)'), (35, N'Tải trọng tĩnh', N'Tối đa 180kg'), (35, N'Nhu cầu', N'Người đô con béo tròn ngồi cực sướng');
 
 -- ======================================================
 -- SETTINGS

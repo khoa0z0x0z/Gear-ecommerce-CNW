@@ -1,0 +1,78 @@
+<div id="ai-chat-root">
+  <!-- Window -->
+  <div class="chat-window" *ngIf="isOpen">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="header-left">
+        <div class="bot-avatar" style="font-size: 22px; color: transparent; text-shadow: 0 0 0 #2563eb;">
+          🤖
+        </div>
+        <div class="header-titles">
+          <h4>KAT Chat</h4>
+          <span><span class="status-dot"></span> Chat với chúng tôi</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button (click)="toggleChat()" class="btn-close">&times;</button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="chat-body" #chatBody>
+      <div *ngFor="let msg of messages" class="msg-wrapper" [ngClass]="msg.role === 'user' ? 'msg-user-wrap' : 'msg-bot-wrap'">
+        
+        <!-- Bot Message -->
+        <div *ngIf="msg.role === 'bot'" class="msg-bot">
+          <div class="bot-row">
+             <div class="bot-icon">🤖</div>
+             <div class="bot-content">
+               <div class="bot-bubble" [innerHTML]="formatHtml(msg.text)"></div>
+               <div class="bot-signature">KAT Chat</div>
+             </div>
+          </div>
+
+          <!-- Product Cards for Recommendation -->
+          <div *ngIf="msg.products && msg.products.length > 0" class="product-cards-container">
+             <span class="prod-title">Sản phẩm tham khảo:</span>
+             <a *ngFor="let p of msg.products" [href]="'/products/'+p.id" target="_blank" class="prod-card">
+                <img [src]="p.imageUrl" class="prod-img" onerror="this.src='https://dummyimage.com/150x150/f0f0f0/ccc'">
+                <div class="prod-details">
+                  <div class="prod-name">{{ p.name }}</div>
+                  <div class="prod-price">{{ formatPrice(p.price) }}</div>
+                  <div class="prod-specs" *ngIf="p.shortSpecs">{{ p.shortSpecs }}</div>
+                </div>
+             </a>
+          </div>
+        </div>
+
+        <!-- User Message -->
+        <div *ngIf="msg.role === 'user'" class="msg-user">
+          {{ msg.text }}
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div *ngIf="isTyping" class="typing-indicator-wrap">
+        <div class="bot-icon hidden-mobile">🤖</div>
+        <div class="typing-bubble">
+           <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Footer -->
+    <div class="chat-footer">
+       <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()" 
+              placeholder="Nhập nội dung..." class="chat-input border-0">
+       <button (click)="sendMessage()" [disabled]="!userInput.trim() || isTyping" class="btn-send border-0">
+          ➤
+       </button>
+    </div>
+  </div>
+
+  <!-- Bubble Toggle Button -->
+  <button class="chat-bubble" [ngClass]="isOpen ? 'chat-bubble-open' : 'chat-bubble-closed'" (click)="toggleChat()">
+    <span *ngIf="!isOpen" style="font-size: 24px;">💬</span>
+    <span *ngIf="isOpen" style="font-size: 24px;">✖</span>
+  </button>
+</div>

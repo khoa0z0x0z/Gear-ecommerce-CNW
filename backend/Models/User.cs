@@ -22,6 +22,9 @@ public class User
     [MaxLength(20)]
     public string? Phone { get; set; }
 
+    [MaxLength(500)]
+    public string? AvatarUrl { get; set; }
+
     [MaxLength(50)]
     public string Role { get; set; } = "Customer";
 

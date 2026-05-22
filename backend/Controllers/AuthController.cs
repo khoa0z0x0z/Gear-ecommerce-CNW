@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex) when (ex.Message == "ACCOUNT_LOCKED")
         {
-            return BadRequest(new { message = "Tài khoản của bạn đã bị khóa." });
+            return BadRequest(new { message = "Tài khoản của bạn đã bị khóa vui lòng liên hệ hotline để giải quyết" });
         }
     }
 

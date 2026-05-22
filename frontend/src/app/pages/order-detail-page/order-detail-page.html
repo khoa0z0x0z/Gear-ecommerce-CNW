@@ -62,11 +62,15 @@
           <h3>Order Summary</h3>
           <div class="summary-row">
             <span>Subtotal</span>
-            <span>{{ order().totalAmount | number:'1.0-0' }} VNĐ</span>
+            <span>{{ itemsSubtotal() | number:'1.0-0' }} VNĐ</span>
+          </div>
+          <div class="summary-row" *ngIf="discountAmount() > 0">
+            <span>Discount (Coupon)</span>
+            <span style="color: #16a34a;">- {{ discountAmount() | number:'1.0-0' }} VNĐ</span>
           </div>
           <div class="summary-row">
             <span>Shipping</span>
-            <span>0 VNĐ</span>
+            <span>{{ shippingFee() === 0 ? 'Free' : (shippingFee() | number:'1.0-0') + ' VNĐ' }}</span>
           </div>
           <div class="summary-row total">
             <span>Total</span>

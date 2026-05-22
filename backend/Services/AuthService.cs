@@ -53,7 +53,6 @@ public class AuthService : IAuthService
     _context.RefreshTokens.Add(newRefreshToken);
     await _context.SaveChangesAsync();
 }
-
     public async Task<LoginResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto requestDto)
     {
         var storedToken = await _context.RefreshTokens

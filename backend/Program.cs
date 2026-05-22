@@ -66,6 +66,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 // Audit logging (file-based)
 builder.Services.AddSingleton<backend.Services.Interfaces.IAuditService, backend.Services.AuditService>();
+// Chatbot AI
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IChatbotService, ChatbotService>();
 
 var app = builder.Build();
 
@@ -130,6 +133,12 @@ END
 IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'Phone' AND Object_ID = Object_ID(N'Contacts'))
 BEGIN
     ALTER TABLE Contacts ADD Phone nvarchar(50) NULL;
+END
+        ");
+        context.Database.ExecuteSqlRaw(@"
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'AvatarUrl' AND Object_ID = Object_ID(N'Users'))
+BEGIN
+    ALTER TABLE Users ADD AvatarUrl nvarchar(500) NULL;
 END
         ");
     } catch { }

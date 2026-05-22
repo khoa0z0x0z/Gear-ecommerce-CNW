@@ -43,6 +43,15 @@ public class OrderService : IOrderService
         return _mapper.Map<OrderReadDto>(order);
     }
 
+    public async Task<OrderReadDto?> GetAdminOrderByIdAsync(int orderId)
+    {
+        var order = await _context.Orders
+            .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+        return _mapper.Map<OrderReadDto>(order);
+    }
+
     public async Task<OrderReadDto?> CreateOrderAsync(int userId, OrderCreateDto orderDto)
     {
         var cart = await _context.Carts
@@ -136,8 +145,8 @@ public class OrderService : IOrderService
             Note = orderDto.Note,
             Status = "Pending",
             CreatedAt = DateTime.Now,
-            ShippingFee = 0,
-            TotalAmount = subtotal - discountAmount
+            ShippingFee = orderDto.ShippingFee,
+            TotalAmount = subtotal - discountAmount + orderDto.ShippingFee
         };
 
         foreach (var item in cart.CartItems)

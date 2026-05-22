@@ -116,7 +116,7 @@ export class Homepage implements OnInit, OnDestroy {
           if (topInCat) {
             heroItems.push({
               tag: topInCat.categoryName,
-              title: topInCat.name + '\n' + topInCat.description,
+              title: topInCat.name,
               btnText: 'Buy Now →',
               image: topInCat.image,
               id: topInCat.id
